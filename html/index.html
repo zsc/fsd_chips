@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>自动驾驶芯片发展史：从TDA4到智能汽车计算革命</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item active" >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">自动驾驶芯片发展史：从TDA4到智能汽车计算革命</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第1章：起点 - TDA4时代（2019-2020）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第2章：算力军备竞赛（2020-2021）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第3章：域控制器元年（2021-2022）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第4章：Tesla FSD芯片 - 垂直整合的极致</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第5章：大模型驱动的架构革新（2022-2023）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第6章：中国力量崛起（2023-2024）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第7章：智能汽车计算平台时代（2024-2025）</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第8章：芯片架构演进</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第9章：制程工艺与制造</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第10章：安全与可靠性</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第11章：算法与芯片协同优化</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第12章：全车电子电气架构与三电系统</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第13章：软件生态与开发工具链</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第14章：市场分析与商业模式</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第15章：标准与法规</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter16.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第16章：未来展望</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter17.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第17章：主要芯片详细规格对比</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="tda4">自动驾驶芯片发展史：从TDA4到智能汽车计算革命</h1>
+<h2 id="_1">前言</h2>
+<p>自2019年德州仪器发布TDA4以来，自动驾驶芯片经历了翻天覆地的变化。从最初的ADAS辅助驾驶，到如今的端到端自动驾驶；从分布式ECU架构，到域控制器再到中央计算平台；从传统视觉处理，到大模型与Transformer架构的落地。本文档将深入剖析这一历程中的技术演进、市场竞争与未来趋势。</p>
+<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+│                   自动驾驶芯片演进                      │
+├──────────────────────────────────────────────────────┤
+│  2019    2020    2021    2022    2023    2024    2025 │
+│   TDA4 ──→ Orin ──→ Journey5 ──→ Thor ──→ 鲲鹏 ──→ ?  │
+│   分布式 ───────→ 域控制 ────────→ 中央计算 ──────→    │
+│   CNN ──────────→ Transformer ──→ 大模型 ─────────→    │
+└──────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<h2 id="2019-2025">第一部分：编年史（2019-2025）</h2>
+<h3 id="1-tda42019-2020"><a href="chapter1.html">第1章：起点 - TDA4时代（2019-2020）</a></h3>
+<ul>
+<li>TI TDA4架构深度解析：Jacinto 7平台</li>
+<li>早期ADAS市场格局：Mobileye EyeQ4统治时期</li>
+<li>算力需求觉醒：从2 TOPS到10 TOPS的跨越</li>
+<li>中国玩家入场：地平线征程2（4 TOPS）、征程3（5 TOPS）、黑芝麻华山一号A500</li>
+</ul>
+<h3 id="22020-2021"><a href="chapter2.html">第2章：算力军备竞赛（2020-2021）</a></h3>
+<ul>
+<li>NVIDIA Orin横空出世：AGX Orin (275 TOPS) / Orin NX (100 TOPS) / Orin Nano (40 TOPS)</li>
+<li>Mobileye EyeQ5的反击：自研加速器战略</li>
+<li>高通Snapdragon Ride入局：通信巨头的野心</li>
+<li>华为MDC 810：鲲鹏+昇腾的本土化方案</li>
+</ul>
+<h3 id="32021-2022"><a href="chapter3.html">第3章：域控制器元年（2021-2022）</a></h3>
+<ul>
+<li>从分布式到集中式：E/E架构革命</li>
+<li>地平线征程5：单颗128 TOPS，支持多芯片级联（J5/J5P/J5M系列）</li>
+<li>黑芝麻华山二号A1000系列：国产替代加速</li>
+<li>Intel收购Mobileye后的EyeQ6战略</li>
+</ul>
+<h3 id="4tesla-fsd"><a href="chapter4_tesla.html">第4章：Tesla FSD芯片：垂直整合的极致</a></h3>
+<ul>
+<li>Hardware 3.0 (FSD Computer)：双芯片144 TOPS架构深度剖析</li>
+<li>Hardware 4.0：5nm制程与算力5倍提升</li>
+<li>Dojo训练芯片：从边缘到云端的全栈自研</li>
+<li>纯视觉方案的硬件优化策略</li>
+<li>影子模式与数据闭环的芯片级支持</li>
+</ul>
+<h3 id="52022-2023"><a href="chapter5.html">第5章：大模型驱动的架构革新（2022-2023）</a></h3>
+<ul>
+<li>Transformer对芯片设计的冲击</li>
+<li>NVIDIA Drive Thor发布：2000 TOPS的下一代平台（2024年量产）</li>
+<li>高通Snapdragon Ride Flex：异构计算新思路</li>
+<li>华为MDC Pro：端云协同计算架构</li>
+</ul>
+<h3 id="62023-2024"><a href="chapter6.html">第6章：中国力量崛起（2023-2024）</a></h3>
+<ul>
+<li>地平线征程6：单颗560 TOPS，双芯片1120 TOPS方案（J6E/J6P/J6M/J6L系列）</li>
+<li>黑芝麻武当系列：跨域融合架构</li>
+<li>芯驰科技X9系列：全场景覆盖</li>
+<li>寒武纪SD5223：云端训练反哺边缘</li>
+</ul>
+<h3 id="72024-2025"><a href="chapter7.html">第7章：智能汽车计算平台时代（2024-2025）</a></h3>
+<ul>
+<li>中央计算单元（CCU）架构演进</li>
+<li>端到端自动驾驶的硬件需求</li>
+<li>Chiplet与先进封装技术应用</li>
+<li>下一代芯片预测：3nm工艺与光子计算</li>
+</ul>
+<h2 id="_2">第二部分：专题深度剖析</h2>
+<h3 id="8"><a href="chapter8.html">第8章：芯片架构演进</a></h3>
+<ul>
+<li>CPU架构对比：ARM vs RISC-V vs x86</li>
+<li>AI加速器设计哲学：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────┐
+│         AI加速器架构对比                  │
+├─────────────────────────────────────────┤
+│  DSP型    : TI C71x, Qualcomm Hexagon    │
+│  GPU型    : NVIDIA CUDA, AMD RDNA        │
+│  NPU型    : 华为达芬奇, Apple Neural Eng  │
+│  ASIC型   : Tesla FSD, Mobileye EyeQ     │
+│  可重构型  : 黑芝麻NeuralIQ, Xilinx DPU   │
+└─────────────────────────────────────────┘
+</code></pre></div>
+
+<ul>
+<li>存储架构：HBM vs GDDR vs LPDDR权衡</li>
+<li>片上网络（NoC）设计趋势</li>
+<li>功耗管理：DVFS、电源门控、异构调度</li>
+</ul>
+<h3 id="9"><a href="chapter9.html">第9章：制程工艺与制造</a></h3>
+<ul>
+<li>制程节点演进：16nm → 7nm → 5nm → 3nm</li>
+<li>代工厂选择策略：TSMC vs Samsung vs SMIC</li>
+<li>先进封装技术：CoWoS、InFO、Chiplet</li>
+<li>供应链安全与本土化制造</li>
+</ul>
+<h3 id="10"><a href="chapter10.html">第10章：安全与可靠性</a></h3>
+<ul>
+<li>ISO 26262功能安全标准实现</li>
+<li>ASIL-D级别设计挑战</li>
+<li>冗余架构：Lockstep、ECC、TMR</li>
+<li>信息安全：HSM、Secure Boot、OTA安全</li>
+<li>故障注入测试与验证方法论</li>
+</ul>
+<h3 id="11"><a href="chapter11.html">第11章：算法与芯片协同优化</a></h3>
+<ul>
+<li>量化技术：INT8/INT4/混合精度</li>
+<li>稀疏化与剪枝：结构化vs非结构化</li>
+<li>编译器优化：TVM、MLIR、专有SDK</li>
+<li>算子融合与内存优化</li>
+<li>BEV感知算法的硬件加速</li>
+<li>端到端模型的部署挑战</li>
+</ul>
+<h3 id="12"><a href="chapter12.html">第12章：全车电子电气架构与三电系统</a></h3>
+<ul>
+<li>域控制器到中央计算平台演进</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>分布式ECU (2019)          域控制器 (2022)           中央计算 (2025)
+┌──┐┌──┐┌──┐┌──┐         ┌────────┐┌────────┐      ┌──────────────┐
+│E1││E2││E3││E4│   →     │动力域   ││智驾域   │  →   │              │
+└──┘└──┘└──┘└──┘         ├────────┤├────────┤      │   中央计算    │
+┌──┐┌──┐┌──┐┌──┐         │底盘域   ││座舱域   │      │   单元CCU     │
+│E5││E6││E7││E8│         └────────┘└────────┘      └──────────────┘
+└──┘└──┘└──┘└──┘         
+</code></pre></div>
+
+<ul>
+<li>三电系统（电机、电控、电池）与智驾芯片协同</li>
+<li>VCU/MCU/BMS集成趋势</li>
+<li>IGBT/SiC功率器件与计算芯片的协调</li>
+<li>整车OTA与硬件抽象层（HAL）</li>
+</ul>
+<h3 id="13"><a href="chapter13.html">第13章：软件生态与开发工具链</a></h3>
+<ul>
+<li>操作系统：Linux、QNX、Android Automotive</li>
+<li>中间件：AUTOSAR、ROS、DDS</li>
+<li>AI框架适配：TensorRT、ONNX、MindSpore</li>
+<li>仿真与验证平台</li>
+<li>DevOps与持续集成</li>
+</ul>
+<h3 id="14"><a href="chapter14.html">第14章：市场分析与商业模式</a></h3>
+<ul>
+<li>主要玩家市场份额演变</li>
+<li>OEM采购策略变化</li>
+<li>Tier 1供应商转型</li>
+<li>中美技术脱钩影响</li>
+<li>成本分析：芯片BOM vs 系统成本</li>
+<li>商业模式：一次性授权 vs 订阅服务</li>
+</ul>
+<h3 id="15"><a href="chapter15.html">第15章：标准与法规</a></h3>
+<ul>
+<li>各国自动驾驶法规对比</li>
+<li>数据安全与隐私保护</li>
+<li>标准化组织：ISO、SAE、IEEE</li>
+<li>认证流程与测试规范</li>
+</ul>
+<h3 id="16"><a href="chapter16.html">第16章：未来展望</a></h3>
+<ul>
+<li>2025-2030技术路线图</li>
+<li>量子计算与光子芯片可能性</li>
+<li>车路云一体化架构</li>
+<li>AGI对自动驾驶的影响</li>
+<li>新玩家与颠覆性技术</li>
+</ul>
+<h3 id="17"><a href="chapter17.html">第17章：主要芯片详细规格对比</a></h3>
+<ul>
+<li>完整技术参数对比矩阵</li>
+<li>性能基准测试结果</li>
+<li>功耗与散热数据</li>
+<li>各代际芯片演进对比</li>
+<li>成本与量产情况分析</li>
+</ul>
+<h2 id="_3">附录</h2>
+<h3 id="a"><a href="appendix_a.html">附录A：术语表</a></h3>
+<ul>
+<li>专业术语中英文对照</li>
+<li>缩略语列表</li>
+</ul>
+<h3 id="b"><a href="appendix_b.html">附录B：参考资料</a></h3>
+<ul>
+<li>技术白皮书</li>
+<li>学术论文</li>
+<li>行业报告</li>
+</ul>
+<hr />
+<p><strong>更新日期</strong>: 2025年1月<br />
+<strong>版本</strong>: 1.0<br />
+<strong>作者</strong>: AI驾驶芯片研究组</p>
+<p><em>本文档持续更新中，欢迎反馈与建议</em></p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link next">第1章：起点 - TDA4时代（2019-2020） →</a></nav>
+        </main>
+    </div>
+</body>
+</html>
