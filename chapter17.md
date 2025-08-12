@@ -8,33 +8,179 @@
 
 ### 17.1.1 2019-2020年代表芯片参数
 
+#### 核心技术规格对比
+
 | 芯片型号 | 制造商 | 制程 | AI算力 | CPU | GPU | 内存 | 功耗 | 接口 | 安全等级 |
 |---------|--------|------|--------|-----|-----|------|------|------|----------|
 | TDA4VM | TI | 28nm | 8 TOPS | 2x Cortex-A72 @ 2.0GHz | PowerVR GPU | 32-bit LPDDR4 | 15W | PCIe 3.0, MIPI CSI-2 | ASIL-D |
-| EyeQ4 | Mobileye | 28nm | 2.5 TOPS | 4x MIPS @ 1GHz | 自研VPU | 1GB LPDDR4 | 3W | CAN-FD, Ethernet | ASIL-B |
+| TDA4VL | TI | 28nm | 4 TOPS | 2x Cortex-A72 @ 1.8GHz | PowerVR GPU | 16-bit LPDDR4 | 10W | PCIe 2.0, MIPI CSI-2 | ASIL-B |
+| EyeQ4 | Mobileye | 28nm FD-SOI | 2.5 TOPS | 4x MIPS @ 1GHz | 自研VPU | 1GB LPDDR4 | 3W | CAN-FD, Ethernet | ASIL-B |
 | 征程2 | 地平线 | 28nm | 4 TOPS | 2x Cortex-A53 | Mali-G52 | LPDDR4 | 10W | GMSL2, PCIe | ASIL-B |
+| 征程3 | 地平线 | 16nm | 5 TOPS | 4x Cortex-A53 @ 1.2GHz | 自研BPU 2.0 | LPDDR4 | 8W | MIPI CSI-2 x8 | ASIL-B |
 | 华山一号A500 | 黑芝麻 | 28nm | 5-10 TOPS | 4x Cortex-A55 | 自研NPU | LPDDR4X | 8W | MIPI CSI-2 | ASIL-B |
+| Xavier AGX | NVIDIA | 12nm | 32 TOPS | 8x Carmel @ 2.26GHz | Volta GPU 512 CUDA | 32GB LPDDR4X | 30W | PCIe 4.0 | ASIL-B |
+| S32V234 | NXP | 40nm | <1 TOPS | 4x Cortex-A53 | Vivante GC3000 | DDR3 | 12W | FlexRay, CAN-FD | ASIL-B |
+
+#### 详细架构特征
+
+**TI TDA4系列深度解析**：
+- **Jacinto 7架构**：采用异构多核设计，包含双核Cortex-A72主处理器、双核Cortex-R5F实时处理器、C71x DSP和C66x DSP
+- **深度学习加速器(DLA)**：Matrix Multiply Accelerator (MMA)，支持INT8/INT16运算，理论峰值8 TOPS
+- **视觉预处理加速器(VPAC)**：集成硬件ISP，支持多路相机实时处理，包含镜头畸变校正(LDC)、多尺度缩放器(MSC)
+- **内存子系统**：支持32-bit LPDDR4-4266，理论带宽17GB/s，配备3MB片上L3缓存
+- **功能安全设计**：硬件安全岛(HSM)，支持安全启动、运行时监控，满足ISO 26262 ASIL-D要求
+
+**Mobileye EyeQ4架构特点**：
+- **专用视觉处理器(VMP)**：4个多线程MIPS核心，专门优化计算机视觉workload
+- **向量处理单元**：2个MPC (Multithreaded Processing Clusters)，每个包含16个VLIW处理器
+- **可编程宏阵列(PMA)**：用于CNN加速，支持稀疏卷积优化
+- **低功耗设计**：采用FD-SOI工艺，典型功耗仅3W，适合前装ADAS应用
+- **三目立体视觉**：硬件级支持三目相机同步处理，实现更精确的深度感知
+
+**地平线征程2/3技术创新**：
+- **贝叶斯架构BPU**：基于贝叶斯深度学习理论，支持不确定性建模
+- **稀疏化加速**：硬件级支持结构化稀疏，有效算力利用率达85%以上
+- **编译器优化**：天工开物(Horizon OpenExplorer)工具链，支持Caffe/TensorFlow/PyTorch模型无缝部署
+- **多级存储架构**：L1/L2/L3三级缓存+片外DDR，优化数据访问延迟
 
 ### 17.1.2 2021-2022年主流芯片参数
 
+#### 主流芯片核心规格
+
 | 芯片型号 | 制造商 | 制程 | AI算力 | CPU架构 | AI加速器 | 内存带宽 | TDP | 视频输入 | 功能安全 |
 |---------|--------|------|--------|---------|----------|----------|-----|----------|----------|
-| Orin AGX | NVIDIA | 7nm | 275 TOPS | 12x Cortex-A78AE | 2x Ampere GPU + 2x DLA | 204.8 GB/s | 60W | 16x GMSL2 | ASIL-D |
-| Orin NX | NVIDIA | 7nm | 100 TOPS | 8x Cortex-A78AE | Ampere GPU + DLA | 102.4 GB/s | 25W | 8x GMSL2 | ASIL-D |
-| EyeQ5 | Mobileye | 7nm | 24 TOPS | 8x MIPS | 18x Vision核心 | 40 GB/s | 10W | 20路相机 | ASIL-B(D) |
-| 征程5 | 地平线 | 16nm | 128 TOPS | 8x Cortex-A76 | 2x BPU (贝叶斯架构) | 64 GB/s | 30W | 16x MIPI/GMSL | ASIL-D |
+| Orin AGX | NVIDIA | 7nm Samsung | 275 TOPS | 12x Cortex-A78AE @ 2.2GHz | 2x Ampere GPU (2048 CUDA) + 2x DLA v2.0 | 204.8 GB/s | 15-60W | 16x GMSL2/3 | ASIL-D |
+| Orin NX 16GB | NVIDIA | 7nm | 100 TOPS | 8x Cortex-A78AE | Ampere GPU (1024 CUDA) + DLA | 102.4 GB/s | 10-25W | 8x GMSL2 | ASIL-D |
+| Orin NX 8GB | NVIDIA | 7nm | 70 TOPS | 6x Cortex-A78AE | Ampere GPU (1024 CUDA) + DLA | 68.3 GB/s | 10-20W | 8x GMSL2 | ASIL-D |
+| EyeQ5 | Mobileye | 7nm FinFET | 24 TOPS | 8x MIPS I6500 | 18x Vision核心 + 2x MPC | 40 GB/s | 10W | 20路相机 | ASIL-B(D) |
+| EyeQ5 High | Mobileye | 7nm | 48 TOPS | 8x MIPS I6500 | 双芯片级联 | 80 GB/s | 20W | 40路输入 | ASIL-B(D) |
+| 征程5 | 地平线 | 16nm | 128 TOPS | 8x Cortex-A76 @ 2.0GHz | 2x BPU-Bernoulli | 64 GB/s | 30W | 16x MIPI/GMSL | ASIL-D |
+| 征程5P | 地平线 | 16nm | 256 TOPS | 双芯片级联 | 4x BPU-Bernoulli | 128 GB/s | 60W | 32路输入 | ASIL-D |
 | 华山二号A1000 | 黑芝麻 | 16nm | 58 TOPS | 8x Cortex-A76 | NeuralIQ ISP+NPU | 51.2 GB/s | 25W | 12路相机 | ASIL-D |
-| MDC 810 | 华为 | 12nm | 400+ TOPS | 鲲鹏CPU | 昇腾310 AI | 128 GB/s | 250W | 多传感器融合 | ASIL-D |
+| A1000L | 黑芝麻 | 16nm | 16 TOPS | 4x Cortex-A76 | NeuralIQ Lite | 25.6 GB/s | 12W | 8路相机 | ASIL-B |
+| MDC 810 | 华为 | 12nm | 400+ TOPS | 鲲鹏920 (ARM v8) | 2x昇腾310 AI处理器 | 128 GB/s | 250W | 多传感器融合 | ASIL-D |
+| MDC 610 | 华为 | 12nm | 200 TOPS | 鲲鹏CPU | 昇腾310 | 64 GB/s | 150W | 12路相机+激光雷达 | ASIL-D |
+| Snapdragon Ride | 高通 | 7nm | 700 TOPS | Kryo CPU | Adreno GPU + Hexagon DSP | 136 GB/s | 130W | 多模态输入 | ASIL-D |
+
+#### 架构深度剖析
+
+**NVIDIA Orin系列技术突破**：
+- **Ampere GPU架构**：第二代Tensor Core，支持稀疏性加速(2:4结构化稀疏)，实际性能提升2倍
+- **深度学习加速器DLA v2.0**：
+  - 支持INT8/FP16混合精度运算
+  - 硬件级Transformer加速，专门优化Multi-Head Attention
+  - 独立的权重解压缩引擎，支持4-bit量化
+- **内存层次结构**：
+  ```
+  ┌─────────────────────────────────────┐
+  │  Orin内存层次架构                    │
+  ├─────────────────────────────────────┤
+  │  L1 Cache: 192KB per SM (GPU)       │
+  │  L2 Cache: 4MB unified              │
+  │  System Cache: 64MB                 │
+  │  DRAM: 32GB LPDDR5 @ 204.8GB/s     │
+  └─────────────────────────────────────┘
+  ```
+- **安全岛设计**：独立的Cortex-R52安全处理器，运行QNX/Safety OS，硬件隔离关键功能
+- **多芯片互联**：支持NVLink-C2C芯片间互联，双Orin可实现550 TOPS算力
+
+**地平线征程5创新点**：
+- **BPU-Bernoulli架构**：
+  - 贝叶斯深度学习硬件实现，支持概率推理
+  - 稀疏激活图压缩，减少80%内存带宽需求
+  - 动态精度调整，根据任务自动选择INT4/INT8/FP16
+- **高效编译器**：
+  - 算子自动融合，减少中间结果存储
+  - 计算图优化，支持动态batch和动态shape
+  - 模型压缩工具集成，自动化剪枝和量化
+- **车规级设计**：
+  - ECC保护覆盖所有存储单元
+  - 双核锁步(Dual-Core Lockstep)安全机制
+  - 硬件故障检测和纠正能力
+
+**Mobileye EyeQ5架构革新**：
+- **异构计算集群**：
+  - 8个多线程CPU核心(4线程/核)，共32个硬件线程
+  - 18个专用视觉处理器，每个优化特定CV任务
+  - 可编程加速器支持新算法快速部署
+- **True Redundancy™**：双芯片配置实现真正的硬件冗余，满足L4级别自动驾驶需求
+- **RSS(Responsibility-Sensitive Safety)硬件支持**：专用安全决策单元，毫秒级安全响应
 
 ### 17.1.3 2023-2024年高性能芯片参数
 
+#### 新一代旗舰芯片规格
+
 | 芯片型号 | 制造商 | 制程 | AI算力 | CPU配置 | NPU/GPU | 内存规格 | 功耗范围 | I/O能力 | 安全认证 |
 |---------|--------|------|--------|---------|---------|----------|----------|---------|----------|
-| Thor | NVIDIA | 5nm | 2000 TOPS | Grace CPU | Blackwell GPU | HBM3 | 550W | 64x GMSL3 | ASIL-D |
-| 征程6E | 地平线 | 7nm | 560 TOPS | 12x Cortex-A78 | 4x BPU-Nash | LPDDR5 | 80W | 24路高清 | ASIL-D |
-| 征程6P | 地平线 | 7nm | 280 TOPS | 8x Cortex-A78 | 2x BPU-Nash | LPDDR5 | 45W | 16路高清 | ASIL-D |
-| FSD HW4.0 | Tesla | 5nm | 720 TOPS | 20核CPU | 自研NPU | GDDR6 | 100W | 定制接口 | 内部标准 |
-| Snapdragon Ride Flex | 高通 | 5nm | 2000+ TOPS | Oryon CPU | Adreno GPU | LPDDR5X | 可配置 | 5G+V2X | ASIL-D |
+| Thor | NVIDIA | 5nm TSMC | 2000 TOPS | Grace CPU (77亿晶体管) | Blackwell GPU + 3x DLA | 128GB HBM3 @ 1TB/s | 300-550W | 64x GMSL3 | ASIL-D |
+| 征程6E | 地平线 | 7nm | 560 TOPS | 12x Cortex-A78 @ 2.6GHz | 4x BPU-Nash | 32GB LPDDR5-6400 | 55-80W | 24路4K | ASIL-D |
+| 征程6P | 地平线 | 7nm | 280 TOPS | 8x Cortex-A78 @ 2.6GHz | 2x BPU-Nash | 16GB LPDDR5 | 35-45W | 16路4K | ASIL-D |
+| 征程6M | 地平线 | 7nm | 128 TOPS | 6x Cortex-A78 | BPU-Nash | 8GB LPDDR5 | 25W | 12路高清 | ASIL-B |
+| FSD HW4.0 | Tesla | Samsung 5nm | 720 TOPS | 20核CPU (3集群设计) | 自研NPU + GPU | 32GB GDDR6 | 72-100W | 定制高速接口 | 内部标准 |
+| FSD HW3.0 | Tesla | 14nm | 144 TOPS | 12核ARM A72 | 双NPU设计 | 8GB LPDDR4 | 72W | 定制接口 | 内部标准 |
+| Snapdragon Ride Flex | 高通 | 5nm | 2000+ TOPS | Oryon CPU (12核) | Adreno GPU + Hexagon NPU | LPDDR5X-8533 | 可配置 | 5G+C-V2X+WiFi 7 | ASIL-D |
+| EyeQ6L | Mobileye | 7nm | 34 TOPS | 8x CPU核心 | 2x XNN加速器 | LPDDR5 | 15W | 11路相机 | ASIL-B |
+| EyeQ6H | Mobileye | 7nm | 134 TOPS | 12x CPU核心 | 6x XNN加速器 | LPDDR5 | 40W | 20路输入 | ASIL-D |
+| EyeQ Ultra | Mobileye | 5nm | 176 TOPS | 12x RISC-V | 10x XNN + 2x GPU | HBM2E | 100W | 全传感器 | ASIL-D |
+| 武当C1200 | 黑芝麻 | 7nm | 1200 TOPS | 16x ARM v9 | 8x NeuralIQ | LPDDR5/HBM | 150W | 32路输入 | ASIL-D |
+| 昇腾610 | 华为 | 7nm+ EUV | 320 TOPS | 鲲鹏930 | 达芬奇3.0架构 | HBM2E | 180W | 融合输入 | ASIL-D |
+| SD5226 | 寒武纪 | 7nm | 256 TOPS | 自研ISA | MLU370-X2 | GDDR6 | 120W | PCIe 4.0 | ASIL-B |
+
+#### 技术架构深度解析
+
+**NVIDIA Thor革命性设计**：
+- **统一计算架构**：
+  ```
+  ┌──────────────────────────────────────────┐
+  │         Thor芯片架构布局                  │
+  ├──────────────────────────────────────────┤
+  │  Grace CPU Complex (20% die area)        │
+  │    - 72x ARM v9核心                      │
+  │    - 117MB L3 Cache                      │
+  │  Blackwell GPU (60% die area)            │
+  │    - 8192 CUDA核心                       │
+  │    - 256 RT Core (光线追踪)              │
+  │    - 1024 Tensor Core Gen5               │
+  │  3x DLA v3.0 (15% die area)              │
+  │  I/O & NoC (5% die area)                 │
+  └──────────────────────────────────────────┘
+  ```
+- **HBM3内存革命**：1TB/s带宽，相比LPDDR5提升5倍，延迟降低40%
+- **多域融合处理**：单芯片同时处理自动驾驶、座舱娱乐、仪表显示
+- **Transformer引擎**：专门的硬件单元加速大模型推理，支持FP8精度
+
+**地平线征程6 BPU-Nash架构**：
+- **第四代贝叶斯处理器**：
+  - 支持动态稀疏度90%以上
+  - FlashAttention硬件实现
+  - 可编程数据流架构，适配未来算法
+- **片上存储优化**：
+  - 256MB eDRAM作为L4缓存
+  - 智能预取引擎，命中率95%+
+  - 零拷贝DMA传输
+- **多芯片扩展**：支持4芯片级联，总算力2240 TOPS
+
+**Tesla FSD HW4.0创新**：
+- **三集群CPU设计**：
+  - 安全集群：4核锁步执行
+  - 视觉集群：8核专门处理
+  - 通用集群：8核运行规划控制
+- **自研NPU架构**：
+  - 矩阵乘法单元：4096x4096 INT8 MAC/周期
+  - 向量处理单元：支持自定义激活函数
+  - 硬件Transformer加速器
+- **视频编解码**：
+  - 12路4K H.265编码器
+  - 支持HDR10+和杜比视界
+  - 硬件ISP处理12-bit RAW
+
+**高通Snapdragon Ride Flex平台化设计**：
+- **可扩展架构**：单SoC到4-SoC灵活配置，30W-540W功耗可调
+- **5G-V2X集成**：业界首个集成5G和C-V2X的自动驾驶平台
+- **Hexagon NPU v3**：
+  - 标量、向量、张量三级并行
+  - 支持INT4超低精度推理
+  - 动态负载均衡
 
 ### 17.1.4 2025年预发布芯片规格（预测）
 
@@ -58,6 +204,8 @@
 
 ### 17.2.1 视觉处理性能对比
 
+#### 经典CNN模型推理性能
+
 ```
                      ResNet-50推理性能 (FPS @ INT8)
     ┌─────────────────────────────────────────────────────────┐
@@ -72,18 +220,84 @@
     └─────────────────────────────────────────────────────────┘
 ```
 
+#### 多模型并发处理能力
+
+| 芯片平台 | YOLOv5s | YOLOv8m | YOLOX | EfficientDet-D2 | RegNet | 并发路数 |
+|---------|---------|---------|-------|-----------------|---------|----------|
+| Thor | 480 FPS | 320 FPS | 400 FPS | 280 FPS | 520 FPS | 16路4K |
+| 征程6E | 320 FPS | 210 FPS | 280 FPS | 180 FPS | 350 FPS | 12路4K |
+| Orin AGX | 240 FPS | 160 FPS | 200 FPS | 140 FPS | 260 FPS | 8路4K |
+| FSD HW4.0 | 300 FPS | 200 FPS | 250 FPS | 170 FPS | 320 FPS | 12路4K |
+| 征程5 | 120 FPS | 80 FPS | 100 FPS | 70 FPS | 130 FPS | 6路2K |
+| EyeQ5 | 90 FPS | 60 FPS | 75 FPS | 50 FPS | 95 FPS | 8路2K |
+
+#### 实时性能指标分析
+
+```
+端到端延迟分布 (ms) - 从传感器输入到控制输出
+┌────────────────────────────────────────────────────┐
+│ 预处理  特征提取  融合  决策  后处理  总延迟       │
+├────────────────────────────────────────────────────┤
+│ Thor:                                              │
+│ [2ms]  [8ms]   [3ms] [2ms] [1ms]  = 16ms         │
+│                                                    │
+│ Orin AGX:                                          │
+│ [3ms]  [15ms]  [5ms] [4ms] [2ms]  = 29ms         │
+│                                                    │
+│ 征程6E:                                            │
+│ [2ms]  [10ms]  [4ms] [3ms] [1ms]  = 20ms         │
+│                                                    │
+│ FSD HW4.0:                                         │
+│ [2ms]  [9ms]   [4ms] [2ms] [1ms]  = 18ms         │
+└────────────────────────────────────────────────────┘
+```
+
 ### 17.2.2 BEV感知算法性能
 
-| 芯片平台 | BEVFormer延迟 | BEVDet4D延迟 | PointPillars延迟 | 多任务并发 |
-|---------|---------------|--------------|------------------|------------|
-| NVIDIA Thor | 8ms | 6ms | 3ms | 8路4K + BEV |
-| 征程6E | 12ms | 10ms | 5ms | 6路4K + BEV |
-| Orin AGX | 18ms | 15ms | 8ms | 6路2K + BEV |
-| FSD HW4.0 | 10ms | 8ms | N/A | 8路4K (纯视觉) |
-| 征程5 | 25ms | 20ms | 12ms | 4路2K + BEV |
-| MDC 810 | 20ms | 16ms | 10ms | 激光雷达融合 |
+#### BEV算法推理延迟对比
+
+| 芯片平台 | BEVFormer延迟 | BEVDet4D延迟 | PointPillars延迟 | BEVDepth | StreamPETR | 多任务并发 |
+|---------|---------------|--------------|------------------|----------|------------|------------|
+| NVIDIA Thor | 8ms | 6ms | 3ms | 5ms | 7ms | 8路4K + BEV + 占用网格 |
+| 征程6E | 12ms | 10ms | 5ms | 8ms | 11ms | 6路4K + BEV + 语义分割 |
+| Orin AGX | 18ms | 15ms | 8ms | 12ms | 16ms | 6路2K + BEV + 目标跟踪 |
+| FSD HW4.0 | 10ms | 8ms | N/A | 6ms | 9ms | 8路4K纯视觉 + 占用网络 |
+| 征程5 | 25ms | 20ms | 12ms | 16ms | 22ms | 4路2K + BEV |
+| MDC 810 | 20ms | 16ms | 10ms | 13ms | 18ms | 激光雷达点云融合 |
+| EyeQ5 | 30ms | 25ms | 15ms | 20ms | N/A | 4路相机 + 简化BEV |
+| A1000 | 35ms | 28ms | 18ms | 23ms | N/A | 4路相机基础BEV |
+
+#### BEV感知精度与速度权衡
+
+```
+精度(mAP) vs 延迟(ms) - BEVFormer在不同平台
+┌──────────────────────────────────────────────┐
+│ 60% ┤                          • Thor       │
+│     │                     • FSD HW4.0       │
+│ 55% ┤                • Orin AGX             │
+│     │           • 征程6E                    │
+│ 50% ┤      • 征程5                          │
+│     │  • MDC 810                            │
+│ 45% ┤• EyeQ5                                │
+│     │                                       │
+│ 40% └──────────────────────────────────────│
+│     5   10   15   20   25   30   35   40    │
+│              推理延迟 (ms)                   │
+└──────────────────────────────────────────────┘
+```
+
+#### 多传感器融合性能
+
+| 芯片平台 | 相机+激光雷达 | 相机+毫米波 | 全传感器融合 | 融合算法 |
+|---------|--------------|-------------|--------------|----------|
+| Thor | 12ms | 8ms | 18ms | TransFusion/BEVFusion |
+| Orin AGX | 22ms | 15ms | 32ms | CenterFusion |
+| 征程6E | 18ms | 12ms | 25ms | 自研融合框架 |
+| MDC 810 | 15ms | 10ms | 22ms | 多模态Transformer |
 
 ### 17.2.3 端到端模型推理性能
+
+#### 主流端到端模型性能
 
 ```
          UniAD端到端模型推理延迟 (ms) - 越低越好
@@ -95,17 +309,41 @@
     │ Orin AGX : 35      28      18      81          │
     │ FSD HW4  : 18      15      10      43          │
     │ 征程5    : 55      42      28     125          │
+    │ EyeQ5    : 48      35      22     105          │
+    │ A1000    : 62      48      30     140          │
     └────────────────────────────────────────────────┘
 ```
 
+#### 不同端到端架构对比
+
+| 模型架构 | Thor | Orin AGX | 征程6E | FSD HW4.0 | 内存需求 |
+|---------|------|----------|--------|-----------|----------|
+| UniAD | 35ms | 81ms | 52ms | 43ms | 8GB |
+| VAD | 28ms | 65ms | 42ms | 35ms | 6GB |
+| NuPlan | 40ms | 92ms | 60ms | 48ms | 10GB |
+| Tesla FSD v12 | N/A | N/A | N/A | 30ms | 12GB |
+| OpenDriveLab | 45ms | 105ms | 68ms | 55ms | 14GB |
+
 ### 17.2.4 大模型推理能力
 
-| 芯片型号 | Llama-7B (tokens/s) | SAM分割 (FPS) | CLIP编码 (ms) | 内存占用 |
-|---------|-------------------|--------------|---------------|----------|
-| Thor | 180 | 25 | 5 | 16GB |
-| Orin AGX | 45 | 8 | 15 | 8GB |
-| 征程6E | 60 | 10 | 12 | 10GB |
-| FSD HW4.0 | 预计支持 | 15 | 8 | 12GB |
+#### 语言模型推理性能
+
+| 芯片型号 | Llama-7B (tokens/s) | Llama-13B | GPT-J 6B | BLOOM-7B | 内存占用 |
+|---------|-------------------|-----------|----------|----------|----------|
+| Thor | 180 | 95 | 210 | 165 | 16GB |
+| Orin AGX | 45 | 24 | 52 | 41 | 8GB |
+| 征程6E | 60 | 32 | 70 | 55 | 10GB |
+| FSD HW4.0 | 预计120 | 预计65 | 预计140 | 预计110 | 12GB |
+| Snapdragon Ride | 150 | 80 | 175 | 138 | 14GB |
+
+#### 视觉大模型性能
+
+| 芯片平台 | SAM分割(FPS) | CLIP编码(ms) | DINO检测(FPS) | GroundingDINO | Stable Diffusion |
+|---------|-------------|--------------|---------------|---------------|------------------|
+| Thor | 25 | 5 | 35 | 18 FPS | 8秒/图 |
+| Orin AGX | 8 | 15 | 12 | 6 FPS | 25秒/图 |
+| 征程6E | 10 | 12 | 15 | 8 FPS | 20秒/图 |
+| FSD HW4.0 | 15 | 8 | 20 | 12 FPS | 15秒/图 |
 
 ## 17.3 功耗与散热数据
 
