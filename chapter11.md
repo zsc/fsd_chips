@@ -22,7 +22,29 @@
 
 ### 1.1 量化技术演进历程
 
-量化技术从2019年的INT8为主，发展到2024年的INT4甚至INT2，每一代技术都在精度损失与计算效率之间寻找平衡点。
+量化技术从2019年的INT8为主，发展到2024年的INT4甚至INT2，每一代技术都在精度损失与计算效率之间寻找平衡点。量化技术的本质是用低精度数值表示来替代高精度浮点数，通过牺牲一定的数值精度来换取显著的计算加速和内存节省。
+
+#### 量化技术发展阶段
+
+**第一阶段（2019-2020）：INT8探索期**
+- 主要依赖训练后量化（PTQ），精度损失较大（3-5%）
+- 量化工具不成熟，需要大量手工调优
+- 硬件支持有限，主要是NVIDIA T4和部分DSP
+
+**第二阶段（2021-2022）：INT8成熟期**
+- 量化感知训练（QAT）普及，精度损失降至1%以内
+- 自动化量化工具成熟（TensorRT、ONNX Runtime）
+- 所有主流芯片原生支持INT8推理
+
+**第三阶段（2023-2024）：超低比特突破期**
+- INT4量化技术成熟，开始商用部署
+- 混合精度成为标配，关键层保持高精度
+- 硬件专门优化，如NVIDIA H100的FP8支持
+
+**第四阶段（2025-）：自适应量化期**
+- 动态量化策略，根据场景自动调整精度
+- 神经架构搜索（NAS）与量化联合优化
+- 量化训练一体化，模型设计即考虑量化
 
 #### 1.1.1 INT8量化：工业标准的确立（2019-2021）
 
@@ -53,6 +75,50 @@ FP32 → INT8 量化流程：
 | 地平线J5 | 96 | 自研工具链 | <1.5% | 混合bit量化 |
 | Mobileye EyeQ5 | 24 | 专用加速器 | <0.5% | 任务特定量化 |
 | Tesla FSD | 72 | 自研框架 | <1% | 在线量化校准 |
+| 高通8295 | 30 | SNPE | <2% | 自适应量化 |
+| 黑芝麻A1000 | 58 | 华山SDK | <1.5% | 通道级优化 |
+
+**量化校准数据集选择策略：**
+
+不同场景需要不同的校准数据分布：
+
+```
+校准数据集构建原则：
+┌────────────────────────────────────────┐
+│ 场景类型    │ 数据量  │ 分布要求        │
+├────────────┼────────┼────────────────┤
+│ 城市道路    │ 2000   │ 60%白天+40%夜晚 │
+│ 高速公路    │ 1000   │ 均匀速度分布     │
+│ 泊车场景    │ 1500   │ 各角度全覆盖     │
+│ 恶劣天气    │ 500    │ 雨雪雾各占1/3   │
+└────────────────────────────────────────┘
+```
+
+**量化误差补偿技术：**
+
+1. **偏移校正（Bias Correction）**
+   - 统计量化前后激活值的均值偏移
+   - 通过可学习的偏移参数进行补偿
+   - 在BN层后特别有效
+
+2. **量化误差建模**
+   ```python
+   # 误差补偿网络
+   class QuantErrorCompensation(nn.Module):
+       def __init__(self, channels):
+           super().__init__()
+           self.error_predictor = nn.Conv2d(channels, channels, 1)
+           
+       def forward(self, x_quant, x_fp32):
+           error = x_fp32 - x_quant
+           predicted_error = self.error_predictor(x_quant)
+           return x_quant + 0.1 * predicted_error  # 软补偿
+   ```
+
+3. **自适应量化阈值**
+   - 基于输入分布动态调整量化范围
+   - 使用滑动平均更新量化参数
+   - 减少异常值影响
 
 ### 1.2 INT4/INT2超低比特量化（2022-2024）
 
@@ -142,6 +208,60 @@ class DynamicPrecisionScheduler:
 | 部署时间 | 长（数天到数周） | 短（数小时） |
 | 适用场景 | 高精度要求 | 快速部署 |
 | 芯片支持 | 全面支持 | 全面支持 |
+
+**QAT实现细节：**
+
+```python
+class QATConv2d(nn.Module):
+    """量化感知训练的卷积层"""
+    def __init__(self, in_channels, out_channels, kernel_size):
+        super().__init__()
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size)
+        # 量化参数（可学习）
+        self.scale = nn.Parameter(torch.ones(out_channels))
+        self.zero_point = nn.Parameter(torch.zeros(out_channels))
+        
+    def forward(self, x):
+        # 训练时：模拟量化
+        if self.training:
+            # 量化权重
+            w_quant = fake_quantize(self.conv.weight, self.scale, self.zero_point)
+            # 使用量化权重进行卷积
+            out = F.conv2d(x, w_quant, self.conv.bias, 
+                          self.conv.stride, self.conv.padding)
+        # 推理时：真实量化
+        else:
+            out = quantized_conv2d(x, self.conv.weight, 
+                                 self.scale, self.zero_point)
+        return out
+    
+def fake_quantize(x, scale, zero_point, bits=8):
+    """伪量化函数，用于训练时模拟量化效果"""
+    # 量化
+    x_int = torch.round(x / scale + zero_point)
+    x_int = torch.clamp(x_int, 0, 2**bits - 1)
+    # 反量化
+    x_quant = (x_int - zero_point) * scale
+    # 直通估计器（STE）用于梯度回传
+    return x + (x_quant - x).detach()
+```
+
+**PTQ高级技术：**
+
+1. **AdaRound（自适应舍入）**
+   - 不是简单的四舍五入，而是学习最优舍入方向
+   - 通过优化重构误差确定每个权重的舍入方式
+   - 相比普通PTQ提升0.5-1%精度
+
+2. **BRECQ（块级重构量化）**
+   - 逐块优化量化参数
+   - 考虑块间依赖关系
+   - 使用二阶泰勒展开近似损失函数
+
+3. **ZeroQ（零样本量化）**
+   - 无需真实校准数据
+   - 通过蒸馏生成伪数据
+   - 适用于数据敏感场景
 
 ### 1.5 硬件量化加速单元设计
 
@@ -272,6 +392,103 @@ Tensor Core代际演进：
 └──────────────────────────────────────────────┘
 ```
 
+**剪枝策略实施细节：**
+
+```python
+class YOLOPruner:
+    def __init__(self, model, target_sparsity=0.5):
+        self.model = model
+        self.target_sparsity = target_sparsity
+        self.importance_scores = {}
+        
+    def calculate_importance(self):
+        """计算每层的重要性分数"""
+        for name, module in self.model.named_modules():
+            if isinstance(module, nn.Conv2d):
+                # 基于L1范数的重要性
+                importance = torch.norm(module.weight, p=1, dim=(1,2,3))
+                self.importance_scores[name] = importance
+                
+    def structured_prune(self):
+        """结构化剪枝：移除整个通道"""
+        for name, module in self.model.named_modules():
+            if name in self.importance_scores:
+                scores = self.importance_scores[name]
+                k = int(len(scores) * (1 - self.target_sparsity))
+                
+                # 保留top-k个重要通道
+                _, indices = torch.topk(scores, k)
+                
+                # 创建新的卷积层
+                new_conv = nn.Conv2d(
+                    module.in_channels,
+                    k,
+                    module.kernel_size,
+                    module.stride,
+                    module.padding
+                )
+                
+                # 复制保留通道的权重
+                new_conv.weight.data = module.weight[indices]
+                if module.bias is not None:
+                    new_conv.bias.data = module.bias[indices]
+                
+                # 替换原模块
+                setattr(self.model, name, new_conv)
+```
+
+#### 2.4.2 Transformer剪枝（用于BEVFormer）
+
+```
+注意力头剪枝策略：
+┌────────────────────────────────────────────┐
+│ Layer │ 原始头数 │ 剪枝后 │ 保留策略      │
+├───────┼─────────┼────────┼──────────────┤
+│ L1-L3 │    8    │   8    │ 全部保留      │
+│ L4-L6 │    8    │   6    │ 去除冗余头    │
+│ L7-L9 │    8    │   4    │ 激进剪枝      │
+│ L10-L12│   8    │   4    │ 激进剪枝      │
+└────────────────────────────────────────────┘
+
+效果：参数量减少35%，速度提升40%，精度损失<1.5%
+```
+
+#### 2.4.3 动态稀疏网络
+
+```python
+class DynamicSparseNetwork(nn.Module):
+    """动态稀疏网络：运行时自适应激活子网络"""
+    def __init__(self, base_model):
+        super().__init__()
+        self.base_model = base_model
+        self.gates = nn.ModuleList()  # 门控单元
+        
+        # 为每层添加门控
+        for layer in base_model.layers:
+            gate = nn.Sequential(
+                nn.AdaptiveAvgPool2d(1),
+                nn.Linear(layer.out_channels, layer.out_channels // 8),
+                nn.ReLU(),
+                nn.Linear(layer.out_channels // 8, layer.out_channels),
+                nn.Sigmoid()
+            )
+            self.gates.append(gate)
+    
+    def forward(self, x, sparsity_budget=0.5):
+        for layer, gate in zip(self.base_model.layers, self.gates):
+            # 计算门控值
+            gate_values = gate(x)
+            
+            # 动态选择激活通道
+            k = int(gate_values.size(1) * sparsity_budget)
+            _, active_channels = torch.topk(gate_values, k, dim=1)
+            
+            # 稀疏前向传播
+            x = self.sparse_forward(layer, x, active_channels)
+        
+        return x
+```
+
 ## 3. 编译器优化：TVM、MLIR、专有SDK
 
 ### 3.1 编译器技术栈架构
@@ -375,6 +592,84 @@ Output
 内存访问：3次               内存访问：1次
 Kernel启动：3次             Kernel启动：1次
 性能提升：1.5-2倍
+```
+
+**高级融合模式：**
+
+```python
+class AdvancedFusionOptimizer:
+    def __init__(self, graph):
+        self.graph = graph
+        self.fusion_patterns = [
+            # 模式1：Conv-BN-ReLU
+            ['Conv2d', 'BatchNorm2d', 'ReLU'],
+            # 模式2：Linear-LayerNorm-Activation
+            ['Linear', 'LayerNorm', 'GELU'],
+            # 模式3：多头注意力组件
+            ['MatMul', 'Add', 'Softmax', 'MatMul'],
+            # 模式4：残差连接
+            ['Conv2d', 'BatchNorm2d', 'Add', 'ReLU']
+        ]
+    
+    def detect_fusion_opportunities(self):
+        """检测可融合的算子序列"""
+        opportunities = []
+        for pattern in self.fusion_patterns:
+            matches = self.find_pattern_in_graph(pattern)
+            opportunities.extend(matches)
+        return opportunities
+    
+    def generate_fused_kernel(self, ops):
+        """生成融合后的CUDA kernel"""
+        kernel_code = """
+        __global__ void fused_kernel(
+            float* input, float* output, 
+            float* weight, float* bias,
+            int N, int C, int H, int W
+        ) {
+            int idx = blockIdx.x * blockDim.x + threadIdx.x;
+            if (idx >= N * C * H * W) return;
+            
+            // Conv2D operation
+            float val = conv2d_op(input, weight, idx);
+            
+            // BatchNorm operation (融合到一个计算)
+            val = (val - mean[c]) * inv_std[c] * gamma[c] + beta[c];
+            
+            // ReLU activation (无额外内存访问)
+            val = fmaxf(val, 0.0f);
+            
+            output[idx] = val;
+        }
+        """
+        return kernel_code
+```
+
+**跨层融合优化：**
+
+```
+ResNet Block融合示例：
+┌────────────────────────────────┐
+│        原始执行流程              │
+│  Conv1 → BN1 → ReLU1           │
+│    ↓                           │
+│  Conv2 → BN2                   │
+│    ↓                           │
+│  Add (with residual)           │
+│    ↓                           │
+│  ReLU2                         │
+└────────────────────────────────┘
+            ↓
+┌────────────────────────────────┐
+│        融合后执行流程            │
+│  FusedResBlock:                │
+│  - 单次内存读取输入             │
+│  - 寄存器级中间结果传递          │
+│  - 单次内存写入输出             │
+└────────────────────────────────┘
+
+内存带宽节省：60%
+计算延迟降低：45%
 ```
 
 #### 3.5.2 内存优化策略
