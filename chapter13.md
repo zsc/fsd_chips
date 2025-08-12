@@ -38,11 +38,49 @@ Linux凭借开源、生态丰富的优势，成为自动驾驶领域最广泛采
 | PREEMPT_RT | 硬实时 | <100μs | 控制系统 | 地平线、黑芝麻 |
 | Xenomai | 硬实时 | <50μs | 安全关键 | 部分欧洲OEM |
 | AGL Linux | 软实时 | 1-5ms | 座舱系统 | 丰田、马自达 |
+| Yocto Linux | 可定制 | 取决配置 | 嵌入式系统 | NXP、瑞萨 |
 
-**2023年的重要进展：**
-- Linux 6.1 LTS版本正式集成PREEMPT_RT补丁
+**实时Linux内核优化技术深度剖析：**
+
+1. **中断线程化（Threaded IRQ）**
+   - 将硬中断处理转换为内核线程，使其可被调度
+   - 允许高优先级任务抢占中断处理
+   - 典型配置：`CONFIG_IRQ_FORCED_THREADING=y`
+
+2. **优先级继承协议（Priority Inheritance）**
+   - 解决优先级反转问题
+   - 低优先级任务持有锁时临时提升优先级
+   - 实现：`CONFIG_RT_MUTEXES=y`
+
+3. **高精度定时器（HRTimer）**
+   - 纳秒级精度定时器
+   - 支持单次触发和周期性定时
+   - 时钟源：TSC、HPET、ACPI PM Timer
+
+4. **CPU隔离（CPU Isolation）**
+   ```bash
+   # 隔离CPU 2-7用于实时任务
+   isolcpus=2-7 nohz_full=2-7 rcu_nocbs=2-7
+   # 绑定中断到CPU 0-1
+   echo 3 > /proc/irq/default_smp_affinity
+   ```
+
+**2023-2024年的重要进展：**
+- Linux 6.1 LTS版本正式集成PREEMPT_RT补丁，标志着实时Linux主线化完成
 - 实时性能大幅提升，最坏情况延迟降至50μs以下
-- NVIDIA Drive OS 6.0基于Ubuntu 20.04 RT优化
+- NVIDIA Drive OS 6.0基于Ubuntu 20.04 RT优化，支持多核异构调度
+- Linux 6.6引入EEVDF调度器，改善交互延迟
+- eBPF在内核态数据处理中的应用，减少上下文切换开销
+
+**各厂商Linux发行版定制化策略：**
+
+| 厂商 | 基础版本 | 定制重点 | 特色功能 |
+|------|---------|---------|----------|
+| Tesla | Ubuntu 18.04 | 深度裁剪 | 自研调度器、影子模式支持 |
+| 小鹏 | Ubuntu 20.04 | AI优化 | GPU调度优化、DMA优化 |
+| 蔚来 | Debian 11 | 安全加固 | SELinux强制、内核加固 |
+| 理想 | CentOS 8 Stream | 稳定性 | 长期支持、冗余机制 |
+| 华为 | OpenEuler | 国产化 | 鲲鹏优化、安全增强 |
 
 ### 13.1.2 QNX：安全关键系统的首选
 
