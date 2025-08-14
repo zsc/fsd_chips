@@ -184,7 +184,7 @@
                 <h1 id="10">第10章：安全与可靠性</h1>
 <h2 id="_1">章节概述</h2>
 <p>自动驾驶芯片的安全与可靠性是整个系统的基石。一个计算错误可能导致车辆失控，一个安全漏洞可能被恶意利用。本章深入探讨自动驾驶芯片在功能安全（Functional Safety）和信息安全（Cybersecurity）两个维度的设计理念、实现方法和验证策略。</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                    汽车芯片安全体系架构                       │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -203,12 +203,12 @@
 │  │    硬件安全模块(HSM) + 安全岛(Safety Island) │            │
 │  └────────────────────────────────────────────┘            │
 └─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="101-iso-26262">10.1 ISO 26262功能安全标准实现</h2>
 <h3 id="1011-iso-26262">10.1.1 ISO 26262标准体系</h3>
 <p>ISO 26262是道路车辆功能安全国际标准，定义了从概念到退役的完整安全生命周期。对于自动驾驶芯片，主要涉及Part 5（硬件层面）、Part 6（软件层面）和Part 11（半导体指南）。</p>
-<div class="codehilite"><pre><span></span><code>ISO 26262-2018 标准结构（与芯片相关部分）
+<pre class="codehilite"><code>ISO 26262-2018 标准结构（与芯片相关部分）
 ┌────────────────────────────────────────────────────┐
 │ Part 1: 术语                                        │
 ├────────────────────────────────────────────────────┤
@@ -226,7 +226,7 @@
 ├────────────────────────────────────────────────────┤
 │ Part 11: 半导体指南 → IP核、芯片级应用 ◄────────     │
 └────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1012-asil">10.1.2 ASIL等级与芯片设计</h3>
 <p>汽车安全完整性等级（ASIL）从A到D，D级要求最高。不同ASIL等级对应不同的硬件指标要求：</p>
@@ -237,22 +237,22 @@
 <li><strong>暴露度（Exposure, E）</strong>：E0-E4，危险场景出现的概率</li>
 <li><strong>可控度（Controllability, C）</strong>：C0-C3，驾驶员避免伤害的能力</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>ASIL = f(S, E, C)
+<pre class="codehilite"><code>ASIL = f(S, E, C)
 
 严重度S3 + 暴露度E4 + 可控度C3 = ASIL-D
 严重度S3 + 暴露度E3 + 可控度C3 = ASIL-C
 严重度S2 + 暴露度E3 + 可控度C2 = ASIL-B
 严重度S1 + 暴露度E2 + 可控度C2 = ASIL-A
-</code></pre></div>
+</code></pre>
 
 <p><strong>ASIL分解策略</strong></p>
 <p>ASIL分解允许将高等级要求分解为多个低等级要求的组合：</p>
-<div class="codehilite"><pre><span></span><code>ASIL-D = ASIL-D(D) （无分解）
+<pre class="codehilite"><code>ASIL-D = ASIL-D(D) （无分解）
 ASIL-D = ASIL-B(D) + ASIL-B(D) （对称分解）
 ASIL-D = ASIL-C(D) + ASIL-A(D) （非对称分解）
 ASIL-C = ASIL-B(C) + ASIL-A(C)
 ASIL-B = ASIL-A(B) + ASIL-A(B)
-</code></pre></div>
+</code></pre>
 
 <p>这种分解策略在实际芯片设计中的应用：</p>
 <ul>
@@ -362,7 +362,7 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 <li>OTA安全框架集成</li>
 </ul>
 <h3 id="1014">10.1.4 功能安全架构设计模式</h3>
-<div class="codehilite"><pre><span></span><code>典型ASIL-D芯片安全架构
+<pre class="codehilite"><code>典型ASIL-D芯片安全架构
 ┌─────────────────────────────────────────────────────┐
 │                    主处理系统                         │
 │  ┌─────────┐  ┌─────────┐  ┌─────────┐            │
@@ -385,14 +385,14 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 │  │   加密引擎 │ 密钥存储 │ 安全启动     │           │
 │  └─────────────────────────────────────┘           │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1015">10.1.5 安全机制实现细节</h3>
 <ol>
 <li><strong>处理器级安全机制</strong></li>
 </ol>
 <p><strong>双核锁步（DCLS）实现</strong></p>
-<div class="codehilite"><pre><span></span><code>锁步核心微架构
+<pre class="codehilite"><code>锁步核心微架构
 ┌─────────────────────────────────────┐
 │         锁步控制器（LSC）              │
 ├─────────────────────────────────────┤
@@ -409,7 +409,7 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 │  • 数据总线比较                       │
 │  • 控制信号比较                       │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>锁步实现的关键参数：</p>
 <ul>
@@ -426,51 +426,51 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 <li>缺点：性能降低50-67%</li>
 </ul>
 <p><strong>软件多样性技术</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 主算法实现</span>
-<span class="kt">float</span><span class="w"> </span><span class="nf">calc_distance_primary</span><span class="p">(</span><span class="n">point</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="o">-</span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-c">// 主算法实现
+float calc_distance_primary(point a, point b) {
+    return sqrt(pow(a.x-b.x, 2) + pow(a.y-b.y, 2));
+}
 
-<span class="c1">// 多样性算法实现</span>
-<span class="kt">float</span><span class="w"> </span><span class="nf">calc_distance_diverse</span><span class="p">(</span><span class="n">point</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">dy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="c1">// 使用泰勒级数近似替代sqrt</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">taylor_sqrt</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dy</span><span class="o">*</span><span class="n">dy</span><span class="p">);</span>
-<span class="p">}</span>
+// 多样性算法实现
+float calc_distance_diverse(point a, point b) {
+    float dx = a.x - b.x;
+    float dy = a.y - b.y;
+    // 使用泰勒级数近似替代sqrt
+    return taylor_sqrt(dx*dx + dy*dy);
+}
 
-<span class="c1">// 结果比较与仲裁</span>
-<span class="kt">float</span><span class="w"> </span><span class="nf">safe_distance</span><span class="p">(</span><span class="n">point</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calc_distance_primary</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calc_distance_diverse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">d1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">d2</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">TOLERANCE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">trigger_safety_action</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">d1</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+// 结果比较与仲裁
+float safe_distance(point a, point b) {
+    float d1 = calc_distance_primary(a, b);
+    float d2 = calc_distance_diverse(a, b);
+    if (abs(d1 - d2) &gt; TOLERANCE) {
+        trigger_safety_action();
+    }
+    return d1;
+}
+</code></pre>
 
 <ol start="2">
 <li><strong>内存保护机制</strong></li>
 </ol>
 <p><strong>ECC实现细节</strong></p>
 <p>Hamming码实现（SECDED）：</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">64</span><span class="n">位数据</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">8</span><span class="n">位ECC示例</span>
-<span class="n">数据位</span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="err">[</span><span class="mf">63</span><span class="p">:</span><span class="mf">0</span><span class="err">]</span>
-<span class="n">ECC位</span><span class="p">:</span><span class="w"> </span><span class="n">P</span><span class="err">[</span><span class="mf">7</span><span class="p">:</span><span class="mf">0</span><span class="err">]</span>
+<pre class="codehilite"><code>64位数据 + 8位ECC示例
+数据位: D[63:0]
+ECC位: P[7:0]
 
-<span class="n">生成矩阵H</span><span class="err">（</span><span class="mf">72</span><span class="n">x8</span><span class="err">）</span><span class="p">:</span>
-<span class="n">P0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D0</span><span class="err">⊕</span><span class="n">D1</span><span class="err">⊕</span><span class="n">D3</span><span class="err">⊕</span><span class="n">D4</span><span class="err">⊕</span><span class="n">D6</span><span class="err">⊕</span><span class="n">D8</span><span class="err">⊕</span><span class="n">D10</span><span class="err">⊕</span><span class="mf">...</span>
-<span class="n">P1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D0</span><span class="err">⊕</span><span class="n">D2</span><span class="err">⊕</span><span class="n">D3</span><span class="err">⊕</span><span class="n">D5</span><span class="err">⊕</span><span class="n">D6</span><span class="err">⊕</span><span class="n">D9</span><span class="err">⊕</span><span class="n">D10</span><span class="err">⊕</span><span class="mf">...</span>
-<span class="mf">...</span>
-<span class="n">P7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">所有位的奇偶校验</span>
+生成矩阵H（72x8）:
+P0 = D0⊕D1⊕D3⊕D4⊕D6⊕D8⊕D10⊕...
+P1 = D0⊕D2⊕D3⊕D5⊕D6⊕D9⊕D10⊕...
+...
+P7 = 所有位的奇偶校验
 
-<span class="n">综合征计算</span><span class="err">：</span>
-<span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="err">[</span><span class="n">D</span><span class="err">|</span><span class="n">P</span><span class="err">]</span><span class="o">^</span><span class="n">T</span>
-<span class="n">S</span><span class="o">=</span><span class="mf">0</span><span class="p">:</span><span class="w"> </span><span class="n">无错误</span>
-<span class="n">S</span><span class="err">≠</span><span class="mf">0</span><span class="n">且P7正确</span><span class="p">:</span><span class="w"> </span><span class="n">单比特纠正</span>
-<span class="n">S</span><span class="err">≠</span><span class="mf">0</span><span class="n">且P7错误</span><span class="p">:</span><span class="w"> </span><span class="n">双比特检测</span>
-</code></pre></div>
+综合征计算：
+S = H × [D|P]^T
+S=0: 无错误
+S≠0且P7正确: 单比特纠正
+S≠0且P7错误: 双比特检测
+</code></pre>
 
 <p>不同存储层次的ECC策略：
 | 存储类型 | ECC方案 | 开销 | 纠错能力 | 延迟影响 |</p>
@@ -523,7 +523,7 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 </tbody>
 </table>
 <p><strong>内存保护单元（MPU）配置</strong></p>
-<div class="codehilite"><pre><span></span><code>MPU区域配置示例（ARM Cortex-R52）
+<pre class="codehilite"><code>MPU区域配置示例（ARM Cortex-R52）
 ┌────────────────────────────────┐
 │  Region 0: 代码段（只读）        │
 │  Base: 0x00000000              │
@@ -545,7 +545,7 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 │  Size: 64KB                    │
 │  Attr: RW, Device, XN=1        │
 └────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>地址线保护技术</strong></p>
 <ul>
@@ -616,90 +616,90 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 </tbody>
 </table>
 <p>E2E保护数据格式：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌──────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="n">Header</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Payload</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">E2E尾部</span><span class="w">   </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="mi">4</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="n">N</span><span class="w"> </span><span class="n">bytes</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="n">bytes</span><span class="w">   </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">┌────────┐</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">Counter</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="p">(</span><span class="mi">2</span><span class="n">B</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">├────────┤</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">DataID</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="p">(</span><span class="mi">2</span><span class="n">B</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">├────────┤</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">CRC</span><span class="o">-</span><span class="mi">32</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="p">(</span><span class="mi">4</span><span class="n">B</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">          </span><span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="err">└────────┘</span><span class="w"> </span><span class="err">│</span>
-<span class="err">└──────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌──────────────────────────────────┐
+│  Header  │  Payload  │  E2E尾部   │
+├──────────────────────────────────┤
+│  4 bytes │  N bytes  │  8 bytes   │
+├──────────────────────────────────┤
+│          │           │ ┌────────┐ │
+│          │           │ │Counter │ │
+│          │           │ │(2B)    │ │
+│          │           │ ├────────┤ │
+│          │           │ │DataID  │ │
+│          │           │ │(2B)    │ │
+│          │           │ ├────────┤ │
+│          │           │ │CRC-32  │ │
+│          │           │ │(4B)    │ │
+│          │           │ └────────┘ │
+└──────────────────────────────────┘
+</code></pre>
 
 <p><strong>时间监控实现</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">;</span><span class="w">      </span><span class="c1">// 超时阈值</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">last_rx_time</span><span class="p">;</span><span class="w">    </span><span class="c1">// 上次接收时间</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">alive_counter</span><span class="p">;</span><span class="w">   </span><span class="c1">// 存活计数器</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">timeout_count</span><span class="p">;</span><span class="w">   </span><span class="c1">// 超时次数</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">max_timeout</span><span class="p">;</span><span class="w">     </span><span class="c1">// 最大允许超时</span>
-<span class="p">}</span><span class="w"> </span><span class="n">comm_monitor_t</span><span class="p">;</span>
+<pre class="codehilite"><code class="language-c">typedef struct {
+    uint32_t timeout_ms;      // 超时阈值
+    uint32_t last_rx_time;    // 上次接收时间
+    uint32_t alive_counter;   // 存活计数器
+    uint8_t  timeout_count;   // 超时次数
+    uint8_t  max_timeout;     // 最大允许超时
+} comm_monitor_t;
 
-<span class="c1">// 通信监控状态机</span>
-<span class="k">enum</span><span class="w"> </span><span class="n">comm_state</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">COMM_INIT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">COMM_WAIT_FIRST</span><span class="p">,</span>
-<span class="w">    </span><span class="n">COMM_NORMAL</span><span class="p">,</span>
-<span class="w">    </span><span class="n">COMM_TIMEOUT_1</span><span class="p">,</span>
-<span class="w">    </span><span class="n">COMM_TIMEOUT_2</span><span class="p">,</span>
-<span class="w">    </span><span class="n">COMM_FAILED</span>
-<span class="p">};</span>
+// 通信监控状态机
+enum comm_state {
+    COMM_INIT,
+    COMM_WAIT_FIRST,
+    COMM_NORMAL,
+    COMM_TIMEOUT_1,
+    COMM_TIMEOUT_2,
+    COMM_FAILED
+};
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">check_communication</span><span class="p">(</span><span class="n">comm_monitor_t</span><span class="o">*</span><span class="w"> </span><span class="n">mon</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_system_time_ms</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mon</span><span class="o">-&gt;</span><span class="n">last_rx_time</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">mon</span><span class="o">-&gt;</span><span class="n">timeout_ms</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">mon</span><span class="o">-&gt;</span><span class="n">timeout_count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mon</span><span class="o">-&gt;</span><span class="n">timeout_count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">mon</span><span class="o">-&gt;</span><span class="n">max_timeout</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">trigger_safe_state</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+void check_communication(comm_monitor_t* mon) {
+    uint32_t current = get_system_time_ms();
+    if (current - mon-&gt;last_rx_time &gt; mon-&gt;timeout_ms) {
+        mon-&gt;timeout_count++;
+        if (mon-&gt;timeout_count &gt;= mon-&gt;max_timeout) {
+            trigger_safe_state();
+        }
+    }
+}
+</code></pre>
 
 <p><strong>数据完整性三重冗余表决（TMR）</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 三重冗余数据结构</span>
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value_a</span><span class="p">;</span><span class="w">  </span><span class="c1">// 通道A数据</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value_b</span><span class="p">;</span><span class="w">  </span><span class="c1">// 通道B数据</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value_c</span><span class="p">;</span><span class="w">  </span><span class="c1">// 通道C数据</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">voted</span><span class="p">;</span><span class="w">    </span><span class="c1">// 表决结果</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">status</span><span class="p">;</span><span class="w">   </span><span class="c1">// 状态标志</span>
-<span class="p">}</span><span class="w"> </span><span class="n">tmr_data_t</span><span class="p">;</span>
+<pre class="codehilite"><code class="language-c">// 三重冗余数据结构
+typedef struct {
+    uint32_t value_a;  // 通道A数据
+    uint32_t value_b;  // 通道B数据
+    uint32_t value_c;  // 通道C数据
+    uint32_t voted;    // 表决结果
+    uint8_t  status;   // 状态标志
+} tmr_data_t;
 
-<span class="c1">// 2/3表决算法</span>
-<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">tmr_vote</span><span class="p">(</span><span class="n">tmr_data_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">voted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_a</span><span class="p">;</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">status</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">CHANNEL_C_FAULT</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">voted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_a</span><span class="p">;</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">status</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">CHANNEL_B_FAULT</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">voted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">value_b</span><span class="p">;</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">status</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">CHANNEL_A_FAULT</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// 三个值都不同，触发安全动作</span>
-<span class="w">        </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">status</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">TMR_FAIL</span><span class="p">;</span>
-<span class="w">        </span><span class="n">trigger_safety_action</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">-&gt;</span><span class="n">voted</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+// 2/3表决算法
+uint32_t tmr_vote(tmr_data_t* data) {
+    if (data-&gt;value_a == data-&gt;value_b) {
+        data-&gt;voted = data-&gt;value_a;
+        if (data-&gt;value_a != data-&gt;value_c) {
+            data-&gt;status |= CHANNEL_C_FAULT;
+        }
+    } else if (data-&gt;value_a == data-&gt;value_c) {
+        data-&gt;voted = data-&gt;value_a;
+        data-&gt;status |= CHANNEL_B_FAULT;
+    } else if (data-&gt;value_b == data-&gt;value_c) {
+        data-&gt;voted = data-&gt;value_b;
+        data-&gt;status |= CHANNEL_A_FAULT;
+    } else {
+        // 三个值都不同，触发安全动作
+        data-&gt;status |= TMR_FAIL;
+        trigger_safety_action();
+    }
+    return data-&gt;voted;
+}
+</code></pre>
 
 <h2 id="102-asil-d">10.2 ASIL-D级别设计挑战</h2>
 <h3 id="1021-asil-d">10.2.1 ASIL-D的严苛要求</h3>
 <p>ASIL-D作为最高安全等级，其设计挑战体现在多个维度：</p>
-<div class="codehilite"><pre><span></span><code>ASIL-D设计挑战金字塔
+<pre class="codehilite"><code>ASIL-D设计挑战金字塔
             ╱╲
            ╱  ╲
           ╱系统╲         ← 系统级功能安全
@@ -712,7 +712,7 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
    ╱──────────────────╲
   ╱    全生命周期管理   ╲ ← 持续监控维护
  ╱──────────────────────╲
-</code></pre></div>
+</code></pre>
 
 <h3 id="1022">10.2.2 硬件架构挑战与解决方案</h3>
 <ol>
@@ -728,13 +728,13 @@ ASIL-B = ASIL-A(B) + ASIL-A(B)
 <li>配置寄存器</li>
 </ul>
 <p><strong>单点故障分析（SPFM）计算</strong></p>
-<div class="codehilite"><pre><span></span><code>SPFM = Σ(λ_SPF_detected) / Σ(λ_SPF)
+<pre class="codehilite"><code>SPFM = Σ(λ_SPF_detected) / Σ(λ_SPF)
 其中：
 λ_SPF: 单点故障率
 λ_SPF_detected: 被检测到的单点故障率
 
 ASIL-D要求: SPFM ≥ 99%
-</code></pre></div>
+</code></pre>
 
 <p>单点故障消除策略：
 | 故障点 | 传统风险 | ASIL-D解决方案 | 检测时间 |</p>
@@ -775,7 +775,7 @@ ASIL-D要求: SPFM ≥ 99%
 </tbody>
 </table>
 <p>ASIL-D解决方案：</p>
-<div class="codehilite"><pre><span></span><code>时钟冗余架构示例
+<pre class="codehilite"><code>时钟冗余架构示例
 ┌─────────────────────────────────────┐
 │  主时钟源    备用时钟源   监控时钟    │
 │    (PLL1)     (PLL2)    (Crystal)   │
@@ -789,7 +789,7 @@ ASIL-D要求: SPFM ≥ 99%
 │              ↓                       │
 │      分布式时钟网络(带监测点)         │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>瞬态故障防护</strong></li>
@@ -803,23 +803,23 @@ ASIL-D要求: SPFM ≥ 99%
 <li>老化引起的闾值变化</li>
 </ul>
 <p><strong>软错误率（SER）评估</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">SER计算模型</span><span class="err">：</span>
-<span class="n">SER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">Φ</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">σ</span>
+<pre class="codehilite"><code>SER计算模型：
+SER = N × A × Φ × σ
 
-<span class="n">其中</span><span class="err">：</span>
-<span class="nl">N</span><span class="p">:</span><span class="w"> </span><span class="n">敏感节点数量</span>
-<span class="nl">A</span><span class="p">:</span><span class="w"> </span><span class="n">芯片面积</span><span class="p">(</span><span class="n">cm²</span><span class="p">)</span>
-<span class="nl">Φ</span><span class="p">:</span><span class="w"> </span><span class="n">中子通量</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">cm²</span><span class="o">/</span><span class="n">h</span><span class="p">)</span>
-<span class="nl">σ</span><span class="p">:</span><span class="w"> </span><span class="n">截面积</span><span class="p">(</span><span class="n">cm²</span><span class="p">)</span>
+其中：
+N: 敏感节点数量
+A: 芯片面积(cm²)
+Φ: 中子通量(n/cm²/h)
+σ: 截面积(cm²)
 
-<span class="n">典型值</span><span class="mi">@7</span><span class="n">nm工艺</span><span class="err">：</span>
-<span class="nl">SRAM</span><span class="p">:</span><span class="w"> </span><span class="mi">100-1000</span><span class="w"> </span><span class="n">FIT</span><span class="o">/</span><span class="n">Mb</span>
-<span class="nl">FF</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="mi">-1</span><span class="w"> </span><span class="n">FIT</span><span class="o">/</span><span class="n">bit</span>
-<span class="nl">逻辑</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01-0.1</span><span class="w"> </span><span class="n">FIT</span><span class="o">/</span><span class="n">gate</span>
-</code></pre></div>
+典型值@7nm工艺：
+SRAM: 100-1000 FIT/Mb
+FF: 0.1-1 FIT/bit
+逻辑: 0.01-0.1 FIT/gate
+</code></pre>
 
 <p><strong>分层软错误防护策略</strong></p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────┐
 │ 应用层: 算法冗余、检查点            │
 ├───────────────────────────────────┤
 │ 系统层: 进程冗余、监控器            │
@@ -830,7 +830,7 @@ ASIL-D要求: SPFM ≥ 99%
 ├───────────────────────────────────┤
 │ 器件层: 加固单元、屏蔽、滤波       │
 └───────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>防护措施对比：</p>
 <p>| 防护技术 | 面积开销 | 功耗开销 | 故障覆盖率 | 实现复杂度 |</p>
@@ -880,7 +880,7 @@ ASIL-D要求: SPFM ≥ 99%
 <li><strong>确定性执行要求</strong></li>
 </ol>
 <p>自动驾驶系统要求严格的实时性：</p>
-<div class="codehilite"><pre><span></span><code>端到端延迟需求（从L3到L5）
+<pre class="codehilite"><code>端到端延迟需求（从L3到L5）
 ┌──────────────────────────────────────┐
 │ 功能        │ L3      │ L4     │ L5     │
 ├──────────────────────────────────────┤
@@ -889,7 +889,7 @@ ASIL-D要求: SPFM ≥ 99%
 │ 控制延迟    │ &lt;20ms   │ &lt;10ms  │ &lt;5ms   │
 │ 总延迟      │ &lt;270ms  │ &lt;160ms │ &lt;85ms  │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>实时调度算法对比</strong>
 | 调度算法 | 确定性 | 复杂度 | WCET可预测 | 适用场景 |</p>
@@ -935,7 +935,7 @@ ASIL-D要求: SPFM ≥ 99%
 </tbody>
 </table>
 <p>挑战与对策：</p>
-<div class="codehilite"><pre><span></span><code>实时性保障架构
+<pre class="codehilite"><code>实时性保障架构
 ┌──────────────────────────────────────┐
 │         应用层（ASIL-B）              │
 │   感知算法 │ 规划算法 │ 预测算法      │
@@ -949,13 +949,13 @@ ASIL-D要求: SPFM ≥ 99%
 │      硬件抽象层（ASIL-D）             │
 │   驱动程序 │ BSP │ 硬件监控           │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>混合关键性系统设计</strong></li>
 </ol>
 <p><strong>不同ASIL等级的隔离机制</strong></p>
-<div class="codehilite"><pre><span></span><code>混合ASIL系统架构
+<pre class="codehilite"><code>混合ASIL系统架构
 ┌────────────────────────────────────────┐
 │  ASIL-D分区          │  ASIL-B分区         │
 │  ┌───────────┐     │  ┌───────────┐    │
@@ -971,7 +971,7 @@ ASIL-D要求: SPFM ≥ 99%
 │            安全通信网关                     │
 │         (ASIL-D认证)                       │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>隔离机制实现细节</strong></p>
 <ol>
@@ -985,14 +985,14 @@ ASIL-D要求: SPFM ≥ 99%
 <p><strong>时间隔离</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>时间分区调度(10ms主周期)
+<pre class="codehilite"><code>时间分区调度(10ms主周期)
 ┌──────────────────────────────┐
 │ 0-2ms:  ASIL-D任务          │
 │ 2-6ms:  ASIL-B/C任务        │
 │ 6-9ms:  QM任务              │
 │ 9-10ms: 空闲/监控           │
 └──────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>通信隔离</strong>
@@ -1006,7 +1006,7 @@ ASIL-D要求: SPFM ≥ 99%
 </ol>
 <p>ASIL-D验证指标：</p>
 <p><strong>代码覆盖率分级要求</strong></p>
-<div class="codehilite"><pre><span></span><code>覆盖率类型及要求：
+<pre class="codehilite"><code>覆盖率类型及要求：
 ┌────────────────────────────────────┐
 │ 覆盖类型     │ ASIL-B │ ASIL-C │ ASIL-D │
 ├────────────────────────────────────┤
@@ -1015,40 +1015,40 @@ ASIL-D要求: SPFM ≥ 99%
 │ MC/DC覆盖   │ 不要求  │ &gt;90%   │ &gt;99%   │
 │ 路径覆盖     │ 不要求  │ 不要求  │ 关键路径 │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>MC/DC（修正条件/判定覆盖）示例</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 原始条件: if (A &amp;&amp; (B || C))</span>
-<span class="c1">// MC/DC测试用例：</span>
-<span class="err">┌────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">TC</span><span class="err">#</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">结果</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">独立影响</span><span class="w"> </span><span class="err">│</span>
-<span class="err">├────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">基准</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">A影响</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="mi">3</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">B影响</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="mi">4</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">T</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">C影响</span><span class="w">    </span><span class="err">│</span>
-<span class="err">└────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-c">// 原始条件: if (A &amp;&amp; (B || C))
+// MC/DC测试用例：
+┌────────────────────────────┐
+│ TC# │ A │ B │ C │ 结果 │ 独立影响 │
+├────────────────────────────┤
+│ 1   │ T │ T │ F │ T   │ 基准     │
+│ 2   │ F │ T │ F │ F   │ A影响    │
+│ 3   │ T │ F │ F │ F   │ B影响    │
+│ 4   │ T │ F │ T │ T   │ C影响    │
+└────────────────────────────┘
+</code></pre>
 
 <p><strong>故障注入覆盖率计算</strong></p>
-<div class="codehilite"><pre><span></span><code>诊断覆盖率(DC) = Σ(λ_detected × DC_i) / Σλ_total
+<pre class="codehilite"><code>诊断覆盖率(DC) = Σ(λ_detected × DC_i) / Σλ_total
 
 实际计算示例：
 部件: CPU核心
 故障率: 100 FIT
 检测机制:
 
-<span class="k">-</span> 锁步: 95 FIT (DC=95%)
-<span class="k">-</span> WDT: 3 FIT (DC=3%)
-<span class="k">-</span> 未检测: 2 FIT
+- 锁步: 95 FIT (DC=95%)
+- WDT: 3 FIT (DC=3%)
+- 未检测: 2 FIT
 
 总DC = (95+3)/100 = 98%
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>认证流程复杂性</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>ASIL-D认证流程（典型18-24个月）
+<pre class="codehilite"><code>ASIL-D认证流程（典型18-24个月）
 ┌──────────────┐
 │ 1.安全概念   │ 2-3月
 ├──────────────┤
@@ -1064,11 +1064,11 @@ ASIL-D要求: SPFM ≥ 99%
 ├──────────────┤
 │ 7.认证审核   │ 1-2月（TÜV/SGS）
 └──────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1025">10.2.5 成本与性能权衡</h3>
 <p><strong>ASIL-D成本分析</strong></p>
-<div class="codehilite"><pre><span></span><code>ASIL-D相对于QM的成本增加
+<pre class="codehilite"><code>ASIL-D相对于QM的成本增加
 ┌──────────────────────────────────────┐
 │ 成本项         │ 增加比例 │ 主要驱动因素     │
 ├──────────────────────────────────────┤
@@ -1079,27 +1079,27 @@ ASIL-D要求: SPFM ≥ 99%
 │ 工具链         │ 150-200%│ 认证工具、测试   │
 │ 上市周期       │ 12-18月 │ 认证流程         │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>性能影响缓解策略</strong></p>
 <ol>
 <li><strong>选择性冗余</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="n">关键路径识别</span><span class="err">：</span>
-<span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">感知输入</span><span class="w"> </span><span class="err">│──→│</span><span class="w"> </span><span class="n">预处理</span><span class="w">   </span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">   </span><span class="err">└──────────┘</span>
-<span class="w">                      </span><span class="err">↓</span>
-<span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">决策</span><span class="o">[</span><span class="n">锁步</span><span class="o">]</span><span class="err">│←──│</span><span class="w"> </span><span class="n">融合</span><span class="o">[</span><span class="n">普通</span><span class="o">]</span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">   </span><span class="err">└──────────┘</span>
-<span class="w">                      </span><span class="err">↓</span>
-<span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">控制</span><span class="o">[</span><span class="n">TMR</span><span class="o">]</span><span class="w"> </span><span class="err">│──→│</span><span class="w"> </span><span class="n">执行器</span><span class="w">   </span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">   </span><span class="err">└──────────┘</span>
+<pre class="codehilite"><code>关键路径识别：
+┌──────────┐   ┌──────────┐
+│ 感知输入 │──→│ 预处理   │
+└──────────┘   └──────────┘
+                      ↓
+┌──────────┐   ┌──────────┐
+│ 决策[锁步]│←──│ 融合[普通]│
+└──────────┘   └──────────┘
+                      ↓
+┌──────────┐   ┌──────────┐
+│ 控制[TMR] │──→│ 执行器   │
+└──────────┘   └──────────┘
 
-<span class="n">仅关键路径实施完整冗余</span>
-</code></pre></div>
+仅关键路径实施完整冗余
+</code></pre>
 
 <ol start="2">
 <li><strong>自适应安全级别</strong>
@@ -1146,17 +1146,17 @@ ASIL-D要求: SPFM ≥ 99%
 <p><strong>异构冗余</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>异构冗余架构
+<pre class="codehilite"><code>异构冗余架构
 ┌──────────────────────────────┐
 │ 主计算: ARM Cortex-A78       │
 │ 监控器: RISC-V RV32          │
 │ 校验器: DSP C66x             │
 └──────────────────────────────┘
 优点: 共因失效率低，成本可控
-</code></pre></div>
+</code></pre>
 
 <p><strong>投资回报分析(ROI)</strong></p>
-<div class="codehilite"><pre><span></span><code>ASIL-D投资回报周期
+<pre class="codehilite"><code>ASIL-D投资回报周期
 年份:     0      1      2      3      4
 投入: -$10M   -$5M   -$2M   -$1M   -$1M
 收益:   $0    $2M    $8M   $15M   $20M
@@ -1164,7 +1164,7 @@ ASIL-D要求: SPFM ≥ 99%
 
 盈亏平衡点: 2.5年
 ROI(5年): 137%
-</code></pre></div>
+</code></pre>
 
 <p>性能影响缓解策略：</p>
 <ol>
@@ -1177,7 +1177,7 @@ ROI(5年): 137%
 <h3 id="1031-lockstep">10.3.1 锁步技术（Lockstep）</h3>
 <p>锁步技术是实现高可靠性计算的核心技术，通过两个或多个处理器核心同步执行相同指令，实时比较结果。</p>
 <p><strong>双核锁步（DCLS）架构</strong></p>
-<div class="codehilite"><pre><span></span><code>双核锁步系统架构
+<pre class="codehilite"><code>双核锁步系统架构
 ┌────────────────────────────────────────────┐
 │                输入数据流                    │
 │                    ↓                        │
@@ -1199,7 +1199,7 @@ ROI(5年): 137%
 │                ↓                            │
 │         正常输出 / 错误信号                   │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>锁步模式对比</strong></p>
 <p>| 锁步类型 | 延迟 | 故障检测能力 | 功耗开销 | 典型应用 |</p>
@@ -1262,7 +1262,7 @@ ROI(5年): 137%
 <h3 id="1032-ecc">10.3.2 错误检查和纠正（ECC）</h3>
 <p>ECC是保护存储器和数据通路的关键技术，不同于简单的奇偶校验，ECC能够纠正错误。</p>
 <p><strong>ECC编码方案对比</strong></p>
-<div class="codehilite"><pre><span></span><code>不同ECC方案的权衡
+<pre class="codehilite"><code>不同ECC方案的权衡
 ┌────────────────────────────────────────────────┐
 │ 编码类型     | 数据位 | 校验位 | 能力         │
 ├────────────────────────────────────────────────┤
@@ -1272,10 +1272,10 @@ ROI(5年): 137%
 │ ChipKill    | 512   | 64     | 整片故障纠正  │
 │ RS编码      | 可变   | 可变    | 多位纠错      │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>分层ECC保护策略</strong></p>
-<div class="codehilite"><pre><span></span><code>芯片存储层次ECC保护
+<pre class="codehilite"><code>芯片存储层次ECC保护
 ┌─────────────────────────────────────┐
 │  寄存器文件  │ 奇偶校验/ECC         │
 ├─────────────────────────────────────┤
@@ -1291,7 +1291,7 @@ ROI(5年): 137%
 ├─────────────────────────────────────┤
 │  Flash/NVM  │ BCH/LDPC编码         │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>ECC实现的性能影响</strong></p>
 <ul>
@@ -1303,7 +1303,7 @@ ROI(5年): 137%
 <h3 id="1033-tmr">10.3.3 三模冗余（TMR）</h3>
 <p>TMR通过三个独立模块执行相同操作，通过表决器输出多数结果，可自动屏蔽单个模块故障。</p>
 <p><strong>经典TMR架构</strong></p>
-<div class="codehilite"><pre><span></span><code>三模冗余系统
+<pre class="codehilite"><code>三模冗余系统
          输入
            ↓
     ┌──────────────┐
@@ -1320,7 +1320,7 @@ ROI(5年): 137%
     └──────────────┘
            ↓
          输出
-</code></pre></div>
+</code></pre>
 
 <p><strong>TMR变体与优化</strong></p>
 <ol>
@@ -1383,7 +1383,7 @@ ROI(5年): 137%
 </table>
 <h3 id="1034">10.3.4 冗余架构的协同设计</h3>
 <p><strong>多层次冗余策略</strong></p>
-<div class="codehilite"><pre><span></span><code>分层冗余架构
+<pre class="codehilite"><code>分层冗余架构
 ┌──────────────────────────────────┐
 │     系统级冗余（域控制器冗余）      │
 ├──────────────────────────────────┤
@@ -1395,10 +1395,10 @@ ROI(5年): 137%
 ├──────────────────────────────────┤
 │     物理级冗余（版图加固）          │
 └──────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>冗余技术选择决策树</strong></p>
-<div class="codehilite"><pre><span></span><code>                 安全需求
+<pre class="codehilite"><code>                 安全需求
                     ↓
               ┌─────────────┐
               │ ASIL等级？   │
@@ -1408,7 +1408,7 @@ ROI(5年): 137%
      ASIL-A/B    ASIL-C     ASIL-D
         ↓          ↓          ↓
       ECC      锁步+ECC   TMR+锁步+ECC
-</code></pre></div>
+</code></pre>
 
 <h3 id="1035">10.3.5 冗余架构的成本效益分析</h3>
 <p><strong>不同冗余方案的综合比较</strong></p>
@@ -1479,7 +1479,7 @@ ROI(5年): 137%
 <h3 id="1041-hsm">10.4.1 硬件安全模块（HSM）</h3>
 <p>HSM是自动驾驶芯片信息安全的核心，提供密码学运算、密钥管理和安全服务。</p>
 <p><strong>HSM架构与功能</strong></p>
-<div class="codehilite"><pre><span></span><code>硬件安全模块(HSM)架构
+<pre class="codehilite"><code>硬件安全模块(HSM)架构
 ┌──────────────────────────────────────────┐
 │              HSM安全边界                   │
 │  ┌────────────────────────────────┐      │
@@ -1510,7 +1510,7 @@ ROI(5年): 137%
 │  │  • 篡改检测                    │      │
 │  └────────────────────────────────┘      │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>主流芯片HSM实现对比</strong></p>
 <p>| 芯片平台 | HSM规格 | 加密算法支持 | 密钥存储 | 安全认证 |</p>
@@ -1558,7 +1558,7 @@ ROI(5年): 137%
 <h3 id="1042-secure-boot">10.4.2 安全启动（Secure Boot）</h3>
 <p>安全启动确保从芯片上电到操作系统运行的整个启动链可信。</p>
 <p><strong>多级安全启动流程</strong></p>
-<div class="codehilite"><pre><span></span><code>安全启动链
+<pre class="codehilite"><code>安全启动链
 ┌──────────────┐
 │   硬件ROM     │ ← 不可修改，包含根信任
 └──────────────┘
@@ -1582,7 +1582,7 @@ ROI(5年): 137%
 ┌──────────────┐
 │    RootFS     │ ← 根文件系统
 └──────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>安全启动技术细节</strong></p>
 <ol>
@@ -1596,7 +1596,7 @@ ROI(5年): 137%
 <p><strong>签名验证机制</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>启动镜像格式
+<pre class="codehilite"><code>启动镜像格式
 ┌─────────────────┐
 │    镜像头部      │
 │  • 版本信息      │
@@ -1612,7 +1612,7 @@ ROI(5年): 137%
 │  • 证书链        │
 │  • 防回滚版本    │
 └─────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>防回滚保护</strong>
@@ -1623,7 +1623,7 @@ ROI(5年): 137%
 <h3 id="1043-ota">10.4.3 OTA安全更新</h3>
 <p>OTA（Over-The-Air）更新是自动驾驶系统持续演进的关键，但也带来安全风险。</p>
 <p><strong>OTA安全架构</strong></p>
-<div class="codehilite"><pre><span></span><code>端到端OTA安全流程
+<pre class="codehilite"><code>端到端OTA安全流程
 ┌────────────────────────────────────────┐
 │            OTA服务器                     │
 │  • 更新包生成                           │
@@ -1646,7 +1646,7 @@ ROI(5年): 137%
 │  └──────────────┘  └──────────────┘   │
 │         A/B分区双备份机制                │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>OTA安全机制</strong></p>
 <ol>
@@ -1706,7 +1706,7 @@ ROI(5年): 137%
 <ol start="3">
 <li><strong>更新包安全验证</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>OTA包安全结构
+<pre class="codehilite"><code>OTA包安全结构
 ┌─────────────────────────┐
 │      元数据头           │
 │  • 版本信息             │
@@ -1722,12 +1722,12 @@ ROI(5年): 137%
 │  • 时间戳               │
 │  • 证书链               │
 └─────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1044">10.4.4 车载网络安全</h3>
 <p><strong>CAN总线安全增强</strong></p>
 <p>传统CAN总线缺乏安全机制，需要额外保护：</p>
-<div class="codehilite"><pre><span></span><code>CAN-FD安全框架
+<pre class="codehilite"><code>CAN-FD安全框架
 ┌────────────────────────────────┐
 │        标准CAN帧                │
 │  ID | DLC | Data | CRC          │
@@ -1740,7 +1740,7 @@ ROI(5年): 137%
 
 MAC: 消息认证码 (CMAC-AES128)
 Fresh: 新鲜值 (防重放攻击)
-</code></pre></div>
+</code></pre>
 
 <p><strong>车载以太网安全</strong></p>
 <p>| 安全层次 | 技术方案 | 应用场景 |</p>
@@ -1777,7 +1777,7 @@ Fresh: 新鲜值 (防重放攻击)
 </table>
 <h3 id="1045">10.4.5 入侵检测与响应</h3>
 <p><strong>车载IDS/IPS架构</strong></p>
-<div class="codehilite"><pre><span></span><code>分层入侵检测系统
+<pre class="codehilite"><code>分层入侵检测系统
 ┌──────────────────────────────────┐
 │      中央安全运营中心(SOC)         │
 │  • 威胁情报                       │
@@ -1798,7 +1798,7 @@ Fresh: 新鲜值 (防重放攻击)
 │  • 模式匹配                       │
 │  • 本地响应                       │
 └──────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>异常检测算法</strong></p>
 <ol>
@@ -1854,7 +1854,7 @@ Fresh: 新鲜值 (防重放攻击)
 <h3 id="1051">10.5.1 故障注入技术概述</h3>
 <p>故障注入是验证安全机制有效性的关键技术，通过主动引入故障来测试系统的容错能力。</p>
 <p><strong>故障注入技术分类</strong></p>
-<div class="codehilite"><pre><span></span><code>故障注入技术体系
+<pre class="codehilite"><code>故障注入技术体系
 ┌────────────────────────────────────────┐
 │            硬件故障注入                  │
 │  • 物理注入（激光、电磁）                │
@@ -1875,7 +1875,7 @@ Fresh: 新鲜值 (防重放攻击)
 │  • FPGA原型验证                        │
 │  • 硬件仿真加速                         │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1052">10.5.2 硬件故障注入方法</h3>
 <ol>
@@ -1890,7 +1890,7 @@ Fresh: 新鲜值 (防重放攻击)
 <ol start="2">
 <li><strong>电磁故障注入（EMFI）</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>电磁脉冲故障注入设置
+<pre class="codehilite"><code>电磁脉冲故障注入设置
 ┌─────────────────────────────┐
 │      脉冲发生器              │
 │   • 频率: 1-500MHz          │
@@ -1908,7 +1908,7 @@ Fresh: 新鲜值 (防重放攻击)
 │   • 去封装/保留封装          │
 │   • 实时监控                │
 └─────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>电压/时钟毛刺注入</strong></li>
@@ -1954,23 +1954,23 @@ Fresh: 新鲜值 (防重放攻击)
 <ol>
 <li><strong>基于调试器的故障注入</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 故障注入脚本示例</span>
-<span class="k">class</span> <span class="nc">FaultInjector</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debugger</span> <span class="o">=</span> <span class="n">connect_debugger</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fault_model</span> <span class="o">=</span> <span class="n">FaultModel</span><span class="p">()</span>
+<pre class="codehilite"><code class="language-python"># 故障注入脚本示例
+class FaultInjector:
+    def __init__(self, target):
+        self.debugger = connect_debugger(target)
+        self.fault_model = FaultModel()
 
-    <span class="k">def</span> <span class="nf">inject_bit_flip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">bit</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;单比特翻转注入&quot;&quot;&quot;</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugger</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
-        <span class="n">faulted</span> <span class="o">=</span> <span class="n">value</span> <span class="o">^</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">bit</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debugger</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">faulted</span><span class="p">)</span>
+    def inject_bit_flip(self, address, bit):
+        &quot;&quot;&quot;单比特翻转注入&quot;&quot;&quot;
+        value = self.debugger.read_memory(address)
+        faulted = value ^ (1 &lt;&lt; bit)
+        self.debugger.write_memory(address, faulted)
 
-    <span class="k">def</span> <span class="nf">inject_stuck_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">register</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;寄存器固定故障&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debugger</span><span class="o">.</span><span class="n">set_breakpoint</span><span class="p">(</span><span class="n">register_access</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debugger</span><span class="o">.</span><span class="n">override_value</span><span class="p">(</span><span class="n">register</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-</code></pre></div>
+    def inject_stuck_at(self, register, value):
+        &quot;&quot;&quot;寄存器固定故障&quot;&quot;&quot;
+        self.debugger.set_breakpoint(register_access)
+        self.debugger.override_value(register, value)
+</code></pre>
 
 <ol start="2">
 <li><strong>编译器辅助故障注入</strong></li>
@@ -1984,7 +1984,7 @@ Fresh: 新鲜值 (防重放攻击)
 <ol start="3">
 <li><strong>虚拟化平台故障注入</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>QEMU/GEM5故障注入框架
+<pre class="codehilite"><code>QEMU/GEM5故障注入框架
 ┌────────────────────────────┐
 │     应用程序                │
 ├────────────────────────────┤
@@ -2000,7 +2000,7 @@ Fresh: 新鲜值 (防重放攻击)
 ├────────────────────────────┤
 │    QEMU/GEM5               │
 └────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1054">10.5.4 故障模型与覆盖率</h3>
 <ol>
@@ -2052,7 +2052,7 @@ Fresh: 新鲜值 (防重放攻击)
 <ol start="2">
 <li><strong>故障覆盖率计算</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>故障覆盖率 = 检测到的故障数 / 注入的故障总数
+<pre class="codehilite"><code>故障覆盖率 = 检测到的故障数 / 注入的故障总数
 
 诊断覆盖率(DC) = Σ(λ_detected × DC_i) / Σλ_total
 
@@ -2060,11 +2060,11 @@ Fresh: 新鲜值 (防重放攻击)
 λ_detected: 被检测到的故障率
 DC_i: 各安全机制的诊断覆盖率
 λ_total: 总故障率
-</code></pre></div>
+</code></pre>
 
 <h3 id="1055">10.5.5 自动化测试平台</h3>
 <p><strong>故障注入自动化流程</strong></p>
-<div class="codehilite"><pre><span></span><code>自动化故障注入测试平台
+<pre class="codehilite"><code>自动化故障注入测试平台
 ┌─────────────────────────────────┐
 │      测试管理器                  │
 │  • 测试用例生成                 │
@@ -2092,7 +2092,7 @@ DC_i: 各安全机制的诊断覆盖率
 │  • 失效模式分析                 │
 │  • 改进建议                     │
 └─────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1056">10.5.6 验证策略与最佳实践</h3>
 <ol>
@@ -2147,7 +2147,7 @@ DC_i: 各安全机制的诊断覆盖率
 <ol start="3">
 <li><strong>回归测试策略</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>持续集成中的故障注入
+<pre class="codehilite"><code>持续集成中的故障注入
 ┌──────────────┐
 │  代码提交     │
 └──────────────┘
@@ -2171,7 +2171,7 @@ DC_i: 各安全机制的诊断覆盖率
 ┌──────────────┐
 │  报告生成     │
 └──────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="106">10.6 实际案例分析</h2>
 <h3 id="1061-tesla-fsd">10.6.1 Tesla FSD芯片安全设计</h3>

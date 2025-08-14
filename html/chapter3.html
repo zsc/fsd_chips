@@ -187,54 +187,54 @@
 <h2 id="31-ee">3.1 E/E架构革命：从分布式到集中式</h2>
 <h3 id="311">3.1.1 传统分布式架构的困境</h3>
 <p>2021年之前，汽车电子系统采用分布式ECU架构，一辆高端车型可能包含超过100个ECU，分别控制不同功能。以2020年奥迪A8为例，整车包含超过150个ECU，涵盖动力、底盘、车身、信息娱乐等各个领域：</p>
-<div class="codehilite"><pre><span></span><code><span class="n">传统分布式ECU架构</span><span class="err">（</span><span class="mi">2020</span><span class="n">年典型配置</span><span class="err">）</span>
-<span class="err">┌─────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="n">前视摄像头</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU1</span><span class="o">]</span><span class="w"> </span><span class="err">──┐</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">侧视摄像头</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU2</span><span class="o">]</span><span class="w"> </span><span class="err">──┤</span><span class="w">   </span><span class="n">处理器配置</span><span class="err">：</span><span class="w">                   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">后视摄像头</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU3</span><span class="o">]</span><span class="w"> </span><span class="err">──┤</span><span class="w">   </span><span class="err">•</span><span class="w"> </span><span class="nl">MCU</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="o">-</span><span class="nc">bit</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="mi">200</span><span class="n">MHz</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">毫米波雷达</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU4</span><span class="o">]</span><span class="w"> </span><span class="err">──┼──→</span><span class="w"> </span><span class="n">CAN</span><span class="o">/</span><span class="n">LIN总线</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="n">中央网关</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">超声波雷达</span><span class="w"> </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU5</span><span class="o">]</span><span class="w"> </span><span class="err">──┤</span><span class="w">   </span><span class="nl">带宽</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="n">Kbps</span><span class="w"> </span><span class="p">(</span><span class="n">CAN</span><span class="p">)</span><span class="w">          </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">激光雷达</span><span class="w">   </span><span class="err">──→</span><span class="w"> </span><span class="o">[</span><span class="n">ECU6</span><span class="o">]</span><span class="w"> </span><span class="err">──┤</span><span class="w">         </span><span class="err">↓</span><span class="w">                       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                           </span><span class="err">│</span><span class="w">    </span><span class="n">各执行单元</span><span class="w">                     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="nl">每个ECU独立配置</span><span class="p">:</span><span class="w">          </span><span class="err">│</span><span class="w">   </span><span class="p">(</span><span class="n">制动</span><span class="o">/</span><span class="n">转向</span><span class="o">/</span><span class="n">动力</span><span class="p">)</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nl">CPU</span><span class="p">:</span><span class="w"> </span><span class="n">ARM</span><span class="w"> </span><span class="n">Cortex</span><span class="o">-</span><span class="n">M4</span><span class="w">     </span><span class="err">│</span><span class="w">                                 </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nl">RAM</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="n">KB</span><span class="o">-</span><span class="mi">2</span><span class="n">MB</span><span class="w">         </span><span class="err">│</span><span class="w">   </span><span class="nl">总线负载率</span><span class="p">:</span><span class="w"> </span><span class="o">&gt;</span><span class="mi">70</span><span class="o">%</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nl">Flash</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">MB</span><span class="o">-</span><span class="mi">4</span><span class="n">MB</span><span class="w">         </span><span class="err">│</span><span class="w">   </span><span class="nl">消息延迟</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="o">-</span><span class="mi">100</span><span class="n">ms</span><span class="w">           </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────────────────────────────┘</span>
+<pre class="codehilite"><code>传统分布式ECU架构（2020年典型配置）
+┌─────────────────────────────────────────────────────────────┐
+│  前视摄像头 ──→ [ECU1] ──┐                                  │
+│  侧视摄像头 ──→ [ECU2] ──┤   处理器配置：                   │
+│  后视摄像头 ──→ [ECU3] ──┤   • MCU: 32-bit @ 200MHz       │
+│  毫米波雷达 ──→ [ECU4] ──┼──→ CAN/LIN总线 ──→ 中央网关      │
+│  超声波雷达 ──→ [ECU5] ──┤   带宽: 500Kbps (CAN)          │
+│  激光雷达   ──→ [ECU6] ──┤         ↓                       │
+│                           │    各执行单元                     │
+│  每个ECU独立配置:          │   (制动/转向/动力)               │
+│  • CPU: ARM Cortex-M4     │                                 │
+│  • RAM: 256KB-2MB         │   总线负载率: &gt;70%              │
+│  • Flash: 1MB-4MB         │   消息延迟: 10-100ms           │
+└─────────────────────────────────────────────────────────────┘
 
-<span class="n">关键问题详解</span><span class="err">：</span>
-<span class="err">•</span><span class="w"> </span><span class="n">线束复杂度高</span><span class="err">：</span>
+关键问题详解：
+• 线束复杂度高：
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">总重量</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="o">-</span><span class="mi">80</span><span class="n">kg</span><span class="w"> </span><span class="p">(</span><span class="n">特斯拉Model</span><span class="w"> </span><span class="mi">3</span><span class="n">仅15kg</span><span class="p">)</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">线束长度</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="n">km</span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">域控架构减少至1</span><span class="mf">.5</span><span class="n">km</span><span class="p">)</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">成本</span><span class="p">:</span><span class="w"> </span><span class="err">$</span><span class="mi">3000</span><span class="o">-</span><span class="mi">4000</span><span class="w"> </span><span class="p">(</span><span class="n">占整车BOM</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="mi">10</span><span class="o">%</span><span class="p">)</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">装配工时</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="o">+</span><span class="w"> </span><span class="n">小时</span>
+  - 总重量: 60-80kg (特斯拉Model 3仅15kg)
+  - 线束长度: 5km+ (域控架构减少至1.5km)
+  - 成本: $3000-4000 (占整车BOM 8-10%)
+  - 装配工时: 20+ 小时
 
-<span class="err">•</span><span class="w"> </span><span class="n">数据孤岛</span><span class="err">：</span>
+• 数据孤岛：
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">各ECU独立处理</span><span class="err">，</span><span class="n">数据格式不统一</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">跨ECU通信延迟高达100ms</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">无法实现多传感器时空同步</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">算法迭代需要多方协调</span>
+  - 各ECU独立处理，数据格式不统一
+  - 跨ECU通信延迟高达100ms
+  - 无法实现多传感器时空同步
+  - 算法迭代需要多方协调
 
-<span class="err">•</span><span class="w"> </span><span class="n">算力浪费</span><span class="err">：</span>
+• 算力浪费：
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">平均CPU利用率</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="o">-</span><span class="mi">30</span><span class="o">%</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">峰值负载不均衡</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">冗余配置导致成本增加</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">无法动态调配计算资源</span>
+  - 平均CPU利用率: 15-30%
+  - 峰值负载不均衡
+  - 冗余配置导致成本增加
+  - 无法动态调配计算资源
 
-<span class="err">•</span><span class="w"> </span><span class="n">OTA困难</span><span class="err">：</span>
+• OTA困难：
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">需要逐个更新ECU固件</span><span class="w"> </span><span class="p">(</span><span class="n">平均耗时2</span><span class="o">-</span><span class="mi">4</span><span class="n">小时</span><span class="p">)</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">版本依赖复杂</span><span class="err">，</span><span class="n">容易出现兼容性问题</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">回滚机制不完善</span><span class="err">，</span><span class="n">风险高</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">用户体验差</span><span class="err">，</span><span class="n">需要到店升级</span>
-</code></pre></div>
+  - 需要逐个更新ECU固件 (平均耗时2-4小时)
+  - 版本依赖复杂，容易出现兼容性问题
+  - 回滚机制不完善，风险高
+  - 用户体验差，需要到店升级
+</code></pre>
 
 <h3 id="312">3.1.2 域控制器架构优势</h3>
 <p>域控制器将功能相近的ECU整合到统一计算平台，实现了计算资源的集中化和标准化：</p>
-<div class="codehilite"><pre><span></span><code>域控制器架构（2021-2022年主流方案）
+<pre class="codehilite"><code>域控制器架构（2021-2022年主流方案）
 ┌──────────────────────────────────────────────────────────────────┐
 │                         整车域控制器布局                           │
 ├──────────────────────────────────────────────────────────────────┤
@@ -275,7 +275,7 @@
 • OTA时间缩短90%：整域更新仅需15分钟
 • 开发周期缩短40%：标准化接口和中间件
 • BOM成本降低25%：减少冗余硬件配置
-</code></pre></div>
+</code></pre>
 
 <h3 id="313">3.1.3 技术挑战与解决方案</h3>
 <h4 id="_2">实时性保证</h4>
@@ -283,7 +283,7 @@
 <li><strong>问题</strong>：多传感器数据需要严格时间同步，毫秒级偏差即可导致感知失败</li>
 <li><strong>方案</strong>：采用TSN（时间敏感网络）+ PTP（精确时间协议）</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>时间同步架构：
+<pre class="codehilite"><code>时间同步架构：
 GPS/北斗授时 ──→ 主时钟(Grandmaster) 
                        ↓ PTP协议
        ┌──────────────┼──────────────┐
@@ -297,14 +297,14 @@ GPS/北斗授时 ──→ 主时钟(Grandmaster)
 • 网络延迟：&lt;1ms (确定性保证)
 • 抖动：&lt;100μs
 • 丢包率：&lt;10^-6
-</code></pre></div>
+</code></pre>
 
 <h4 id="_3">功能安全设计</h4>
 <ul>
 <li><strong>ASIL-D要求</strong>：故障率 &lt; 10 FIT (10^-8/h)，99.999%可用性</li>
 <li><strong>多层冗余架构</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>三重冗余安全架构：
+<pre class="codehilite"><code>三重冗余安全架构：
 
 Level 1: 硬件冗余
 主处理器 ────→ [Lock-Step比对] ←──── 影子处理器
@@ -324,14 +324,14 @@ Level 3: 系统冗余
 
 故障响应时间：&lt;50ms
 安全状态切换：&lt;10ms
-</code></pre></div>
+</code></pre>
 
 <h4 id="_4">热管理挑战</h4>
 <ul>
 <li><strong>功耗挑战</strong>：域控制器功耗200W~500W，是传统ECU的10倍</li>
 <li><strong>散热方案对比</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>散热技术演进：
+<pre class="codehilite"><code>散热技术演进：
 ┌────────────┬──────────┬──────────┬──────────┐
 │ 方案        │ 散热能力  │ 成本     │ 应用案例  │
 ├────────────┼──────────┼──────────┼──────────┤
@@ -346,7 +346,7 @@ Level 3: 系统冗余
 • 60-70°C：降频至90%
 • 70-80°C：降频至70%，关闭非关键功能
 • &gt;80°C：进入安全模式，仅保留基础功能
-</code></pre></div>
+</code></pre>
 
 <h3 id="314">3.1.4 主要玩家布局</h3>
 <h4 id="2021-2022">域控制器供应商格局（2021-2022）</h4>
@@ -430,7 +430,7 @@ Level 3: 系统冗余
 </tbody>
 </table>
 <h4 id="_5">技术路线对比</h4>
-<div class="codehilite"><pre><span></span><code>不同厂商技术路线特点：
+<pre class="codehilite"><code>不同厂商技术路线特点：
 
 博世(传统Tier1代表)：
 • 策略：与芯片厂深度绑定，提供完整解决方案
@@ -446,12 +446,12 @@ Level 3: 系统冗余
 • 策略：灵活选择芯片，快速迭代
 • 优势：成本控制好，响应速度快
 • 劣势：技术积累不足，安全认证经验少
-</code></pre></div>
+</code></pre>
 
 <h2 id="32-5">3.2 地平线征程5：国产算力突破</h2>
 <h3 id="321">3.2.1 芯片架构创新</h3>
 <p>征程5（Journey 5）采用地平线自研BPU（Brain Processing Unit）架构：</p>
-<div class="codehilite"><pre><span></span><code>征程5芯片架构
+<pre class="codehilite"><code>征程5芯片架构
 ┌────────────────────────────────────────────────────────────┐
 │                     Journey 5 SoC架构                       │
 ├────────────────────────────────────────────────────────────┤
@@ -497,12 +497,12 @@ Level 3: 系统冗余
 制程: 16nm FinFET (TSMC)
 功耗: 30W (典型)
 封装: FCBGA 37.5x37.5mm
-</code></pre></div>
+</code></pre>
 
 <h3 id="322-bpu">3.2.2 BPU贝叶斯架构深度解析</h3>
 <p>地平线BPU采用创新的贝叶斯架构，专为视觉感知优化，是征程5实现高能效比的核心：</p>
 <h4 id="_6">架构设计理念</h4>
-<div class="codehilite"><pre><span></span><code>BPU 3.0 贝叶斯架构核心设计：
+<pre class="codehilite"><code>BPU 3.0 贝叶斯架构核心设计：
 ┌──────────────────────────────────────────────────────┐
 │                    BPU核心架构                         │
 ├──────────────────────────────────────────────────────┤
@@ -528,13 +528,13 @@ Level 3: 系统冗余
 │  │  L3: LPDDR4   (8GB外存)                      │    │
 │  └─────────────────────────────────────────────┘    │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_7">核心创新点</h4>
 <ol>
 <li><strong>稀疏计算优化</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>稀疏度加速机制：
+<pre class="codehilite"><code>稀疏度加速机制：
 • 动态稀疏检测：硬件自动识别零值，跳过计算
 • 结构化剪枝：
 
@@ -547,12 +547,12 @@ Level 3: 系统冗余
 密集计算：1.2ms/帧
 50%稀疏：0.6ms/帧
 75%稀疏：0.4ms/帧
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>混合精度计算</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>数据类型支持与性能：
+<pre class="codehilite"><code>数据类型支持与性能：
 ┌──────────────────────────────────────────────┐
 │ 数据类型 │ 峰值算力 │ 典型功耗 │ 应用场景      │
 ├──────────────────────────────────────────────┤
@@ -567,12 +567,12 @@ Level 3: 系统冗余
 • 首层/末层：INT16保证精度
 • 中间层：INT8平衡精度与性能
 • 激活值：动态量化
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>算子融合技术</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>融合模式：
+<pre class="codehilite"><code>融合模式：
 • Conv+BN+ReLU：3合1融合，减少2次内存访问
 • Conv+Add+ReLU：残差块优化
 • MatMul+Softmax：Attention优化
@@ -582,7 +582,7 @@ Level 3: 系统冗余
 未融合：100%内存带宽占用
 融合后：40%内存带宽占用
 性能提升：2.5倍
-</code></pre></div>
+</code></pre>
 
 <h4 id="_8">与竞品对比优势</h4>
 <p>| 特性 | 征程5 BPU | Mobileye EyeQ5 | NVIDIA Xavier |</p>
@@ -624,7 +624,7 @@ Level 3: 系统冗余
 </table>
 <h3 id="323">3.2.3 软件生态与工具链</h3>
 <h4 id="horizon-openexplorer">天工开物（Horizon OpenExplorer）平台</h4>
-<div class="codehilite"><pre><span></span><code>开发流程
+<pre class="codehilite"><code>开发流程
 ┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
 │ AI模型    │────→│ 模型转换  │────→│ 量化优化  │────→│ 部署运行  │
 │ PyTorch  │     │ ONNX     │     │ INT8     │     │ Runtime  │
@@ -635,7 +635,7 @@ Level 3: 系统冗余
 • YOLO系列        • &lt;1%精度损失      • 自动算子融合     • C++/Python API
 • CenterNet       • PTQ/QAT支持      • 内存优化        • ROS集成
 • BEVFormer       • 逐层分析工具      • 多流并发        • Docker镜像
-</code></pre></div>
+</code></pre>
 
 <h4 id="_9">算法适配案例</h4>
 <p><strong>BEV感知算法优化</strong></p>
@@ -668,7 +668,7 @@ Level 3: 系统冗余
 </li>
 </ol>
 <h4 id="_11">成本优势分析</h4>
-<div class="codehilite"><pre><span></span><code>成本对比（2022年Q4批量价格）
+<pre class="codehilite"><code>成本对比（2022年Q4批量价格）
 ┌────────────────────────────────────┐
 │ 征程5单片：      ~$120            │
 │ EyeQ5单片：      ~$200            │
@@ -680,12 +680,12 @@ Level 3: 系统冗余
 EyeQ5:  8.33
 Xavier: 15.0
 Orin:   2.91
-</code></pre></div>
+</code></pre>
 
 <h2 id="33-a1000">3.3 黑芝麻华山二号A1000系列：高端突破</h2>
 <h3 id="331">3.3.1 产品矩阵与定位</h3>
 <p>黑芝麻智能在2021年推出华山二号A1000系列，形成完整产品矩阵：</p>
-<div class="codehilite"><pre><span></span><code>A1000系列产品线
+<pre class="codehilite"><code>A1000系列产品线
 ┌──────────────────────────────────────────────────────────┐
 │  型号      算力      目标市场        典型应用            │
 ├──────────────────────────────────────────────────────────┤
@@ -694,54 +694,54 @@ Orin:   2.91
 │  A1000 Pro 58 TOPS   L2++级         城市NOA            │
 │  A1000-SE  116 TOPS  L3/L4级        Robotaxi预研        │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="332">3.3.2 核心技术架构</h3>
 <h4 id="neuraliq-isp-npu">NeuralIQ ISP + NPU融合架构</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">A1000</span><span class="w"> </span><span class="n">Pro架构框图</span>
-<span class="err">┌─────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">                      </span><span class="n">A1000</span><span class="w"> </span><span class="n">Pro</span><span class="w"> </span><span class="n">SoC</span><span class="w">                           </span><span class="err">│</span>
-<span class="err">├─────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="n">CPU</span><span class="w"> </span><span class="n">Complex</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="n">核ARM</span><span class="p">)</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">┌─────────────────┐</span><span class="w">  </span><span class="err">┌─────────────────┐</span><span class="w">       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">4</span><span class="n">x</span><span class="w"> </span><span class="n">Cortex</span><span class="o">-</span><span class="n">A76</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">4</span><span class="n">x</span><span class="w"> </span><span class="n">Cortex</span><span class="o">-</span><span class="n">A55</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="p">@</span><span class="w"> </span><span class="mf">2.0</span><span class="n">GHz</span><span class="w">         </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="p">@</span><span class="w"> </span><span class="mf">1.5</span><span class="n">GHz</span><span class="w">        </span><span class="err">│</span><span class="w">       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└────────┬─────────┘</span><span class="w">  </span><span class="err">└────────┬────────┘</span><span class="w">       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">            </span><span class="err">└──────────┬───────────┘</span><span class="w">                </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                       </span><span class="err">↓</span><span class="w">                            </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">┌─────────────────┐</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span><span class="w">  </span><span class="n">L3</span><span class="w"> </span><span class="n">Cache</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="n">MB</span><span class="p">)</span><span class="w"> </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">└─────────────────┘</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────┬───────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                          </span><span class="err">│</span><span class="w">                                   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────┼───────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">          </span><span class="n">NeuralIQ</span><span class="w"> </span><span class="n">Engine</span><span class="w"> </span><span class="p">(</span><span class="n">NPU</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ISP融合</span><span class="p">)</span><span class="w">          </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                       </span><span class="err">│</span><span class="w">                           </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">┌──────────┐</span><span class="w">  </span><span class="err">┌────┴─────┐</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="n">ISP</span><span class="mi">-0</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">NPU</span><span class="mi">-0</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">ISP</span><span class="mi">-1</span><span class="w">   </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">4</span><span class="n">K</span><span class="mf">@30f</span><span class="n">ps</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">29</span><span class="w"> </span><span class="n">TOPS</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">4</span><span class="n">K</span><span class="mf">@30f</span><span class="n">ps</span><span class="w"> </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└────┬─────┘</span><span class="w">  </span><span class="err">└─────┬────┘</span><span class="w">  </span><span class="err">└────┬─────┘</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">        </span><span class="err">│</span><span class="w">               </span><span class="err">│</span><span class="w">             </span><span class="err">│</span><span class="w">            </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">┌────┴────────────────┴────────────┴────┐</span><span class="w">      </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">         </span><span class="n">统一内存池</span><span class="w"> </span><span class="p">(</span><span class="n">UMA</span><span class="p">)</span><span class="w">               </span><span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">    </span><span class="n">智能调度</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">零拷贝</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">动态分配</span><span class="w">        </span><span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└────────────────────────────────────────┘</span><span class="w">      </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                                                   </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">┌──────────┐</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="n">NPU</span><span class="mi">-1</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">DSP</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">VPU</span><span class="w">    </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">29</span><span class="w"> </span><span class="n">TOPS</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Vector</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">H</span><span class="mf">.265</span><span class="w">   </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└──────────┘</span><span class="w">  </span><span class="err">└──────────┘</span><span class="w">  </span><span class="err">└──────────┘</span><span class="w">     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────────────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                 </span><span class="n">高速互联架构</span><span class="w">                       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">PCIe</span><span class="w"> </span><span class="mf">4.0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CAN</span><span class="o">-</span><span class="n">FD</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Ethernet</span><span class="w"> </span><span class="n">TSN</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">MIPI</span><span class="w"> </span><span class="n">CSI</span><span class="mi">-2</span><span class="w">  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────────────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">功耗</span><span class="o">:</span><span class="w"> </span><span class="mi">15</span><span class="n">W</span><span class="w"> </span><span class="p">(</span><span class="n">典型</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">制程</span><span class="o">:</span><span class="w"> </span><span class="mi">16</span><span class="n">nm</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">内存</span><span class="o">:</span><span class="w"> </span><span class="n">LPDDR4X</span><span class="w"> </span><span class="mi">64</span><span class="n">bit</span><span class="w">       </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>A1000 Pro架构框图
+┌─────────────────────────────────────────────────────────────┐
+│                      A1000 Pro SoC                           │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────────┐      │
+│  │              CPU Complex (8核ARM)                  │      │
+│  │   ┌─────────────────┐  ┌─────────────────┐       │      │
+│  │   │ 4x Cortex-A76    │  │ 4x Cortex-A55   │       │      │
+│  │   │ @ 2.0GHz         │  │ @ 1.5GHz        │       │      │
+│  │   └────────┬─────────┘  └────────┬────────┘       │      │
+│  │            └──────────┬───────────┘                │      │
+│  │                       ↓                            │      │
+│  │              ┌─────────────────┐                  │      │
+│  │              │  L3 Cache (4MB) │                  │      │
+│  │              └─────────────────┘                  │      │
+│  └───────────────────────┬───────────────────────────┘      │
+│                          │                                   │
+│  ┌───────────────────────┼───────────────────────────┐      │
+│  │          NeuralIQ Engine (NPU + ISP融合)          │      │
+│  │                       │                           │      │
+│  │   ┌──────────┐  ┌────┴─────┐  ┌──────────┐     │      │
+│  │   │  ISP-0   │  │  NPU-0    │  │  ISP-1   │     │      │
+│  │   │ 4K@30fps │  │  29 TOPS  │  │ 4K@30fps │     │      │
+│  │   └────┬─────┘  └─────┬────┘  └────┬─────┘     │      │
+│  │        │               │             │            │      │
+│  │   ┌────┴────────────────┴────────────┴────┐      │      │
+│  │   │         统一内存池 (UMA)               │      │      │
+│  │   │    智能调度 | 零拷贝 | 动态分配        │      │      │
+│  │   └────────────────────────────────────────┘      │      │
+│  │                                                   │      │
+│  │   ┌──────────┐  ┌──────────┐  ┌──────────┐     │      │
+│  │   │  NPU-1   │  │   DSP    │  │   VPU    │     │      │
+│  │   │ 29 TOPS  │  │  Vector  │  │  H.265   │     │      │
+│  │   └──────────┘  └──────────┘  └──────────┘     │      │
+│  └───────────────────────────────────────────────────┘      │
+│                                                              │
+│  ┌───────────────────────────────────────────────────┐      │
+│  │                 高速互联架构                       │      │
+│  │   PCIe 4.0 | CAN-FD | Ethernet TSN | MIPI CSI-2  │      │
+│  └───────────────────────────────────────────────────┘      │
+│                                                              │
+│  功耗: 15W (典型) | 制程: 16nm | 内存: LPDDR4X 64bit       │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
 
 <h4 id="_12">关键创新技术</h4>
 <ol>
@@ -766,7 +766,7 @@ Orin:   2.91
 </ol>
 <h3 id="333">3.3.3 算法优化与部署</h3>
 <h4 id="_13">山海工具链平台</h4>
-<div class="codehilite"><pre><span></span><code>算法部署流程
+<pre class="codehilite"><code>算法部署流程
 ┌────────────────────────────────────────────────────────┐
 │                     山海平台架构                         │
 ├────────────────────────────────────────────────────────┤
@@ -796,7 +796,7 @@ Orin:   2.91
 │  │  • 多核调度  • 资源管理  • 性能监控            │   │
 │  └────────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_14">典型算法性能表现</h4>
 <p>| 模型 | 输入分辨率 | A1000 Pro延迟 | 功耗 | 精度(mAP) |</p>
@@ -869,7 +869,7 @@ Orin:   2.91
 <li><strong>夜间性能</strong>：检测距离提升25%</li>
 </ul>
 <h3 id="335">3.3.5 技术发展路线图</h3>
-<div class="codehilite"><pre><span></span><code>黑芝麻技术演进
+<pre class="codehilite"><code>黑芝麻技术演进
 2020        2021         2022         2023         2024
 A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──→ 武当C1600
 (5T)      (40T)       (58T)        (200T)       (400T)
@@ -878,12 +878,12 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
  └─────────┴───────────┴────────────┴────────────┘
         关键里程碑：
         • ISP融合  • 跨域计算  • Chiplet  • 3D封装
-</code></pre></div>
+</code></pre>
 
 <h2 id="34-intelmobileye-eyeq6">3.4 Intel/Mobileye EyeQ6战略转型</h2>
 <h3 id="341">3.4.1 收购后的战略调整</h3>
 <p>2022年，Intel完成对Mobileye的分拆上市，但保持多数股权控制。这一举措反映了新的战略方向：</p>
-<div class="codehilite"><pre><span></span><code>Mobileye战略转型
+<pre class="codehilite"><code>Mobileye战略转型
 ┌──────────────────────────────────────────────────────┐
 │  阶段一：垂直整合（2017-2020）                         │
 │  • Intel收购，整合制造能力                             │
@@ -900,11 +900,11 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 │  • Chauffeur L4方案                                  │
 │  • 自动驾驶即服务(ADaaS)                             │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="342-eyeq6">3.4.2 EyeQ6架构革新</h3>
 <h4 id="_16">双芯片设计理念</h4>
-<div class="codehilite"><pre><span></span><code>EyeQ6H/EyeQ6L架构对比
+<pre class="codehilite"><code>EyeQ6H/EyeQ6L架构对比
 ┌─────────────────────────────────────────────────────────┐
 │                    EyeQ6H (High)                         │
 │  ┌─────────────────────────────────────────────┐       │
@@ -936,7 +936,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 │  └─────────────────────────────────────────────┘       │
 │  总算力：35 TOPS | 功耗：15W | 制程：7nm              │
 └─────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_17">关键技术特性</h4>
 <ol>
@@ -961,7 +961,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 </ol>
 <h3 id="343-supervision">3.4.3 SuperVision全栈系统</h3>
 <h4 id="_18">系统架构</h4>
-<div class="codehilite"><pre><span></span><code>SuperVision系统架构
+<pre class="codehilite"><code>SuperVision系统架构
 ┌────────────────────────────────────────────────────┐
 │                  感知层                             │
 │  11个高清摄像头 + 雷达融合                          │
@@ -987,7 +987,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 │                  执行层                             │
 │  横向控制 | 纵向控制 | 故障处理                      │
 └────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_19">部署案例</h4>
 <p><strong>极氪001 FR版</strong></p>
@@ -1017,7 +1017,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 </ol>
 <h2 id="35">3.5 域控制器时代的产业影响</h2>
 <h3 id="351">3.5.1 供应链重构</h3>
-<div class="codehilite"><pre><span></span><code>供应链演变
+<pre class="codehilite"><code>供应链演变
 传统模式（2020前）              域控时代（2021-2022）
 ┌──────────┐                   ┌──────────┐
 │   OEM    │                   │   OEM    │
@@ -1038,7 +1038,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 • 芯片厂商直接与OEM合作
 • 软件能力成为核心竞争力
 • OEM自研比例大幅提升
-</code></pre></div>
+</code></pre>
 
 <h3 id="352">3.5.2 技术标准演进</h3>
 <h4 id="_22">主要标准对比</h4>
@@ -1086,7 +1086,7 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 </tbody>
 </table>
 <h3 id="353">3.5.3 成本结构变化</h3>
-<div class="codehilite"><pre><span></span><code>整车成本占比变化
+<pre class="codehilite"><code>整车成本占比变化
 2020年传统车型                 2022年智能车型
 ┌────────────────┐            ┌────────────────┐
 │ 机械部件  45%   │            │ 机械部件  35%   │
@@ -1103,23 +1103,23 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 • 存储器：15-20%
 • 连接器：10-15%
 • 散热及结构件：5-10%
-</code></pre></div>
+</code></pre>
 
 <h2 id="36">3.6 本章总结与展望</h2>
 <h3 id="361">3.6.1 关键芯片性能对比</h3>
-<div class="codehilite"><pre><span></span><code><span class="mf">2021</span><span class="o">-</span><span class="mf">2022</span><span class="n">年主流芯片综合对比</span>
-<span class="err">┌──────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">芯片型号</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">算力</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">功耗</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">制程</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">内存带宽</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">单价</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">量产</span><span class="w"> </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">地平线J5</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">128</span><span class="n">T</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">30</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">16</span><span class="n">nm</span><span class="err">│</span><span class="w"> </span><span class="mf">25.6</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">120</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">2021</span><span class="n">Q4</span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">黑芝麻A1000</span><span class="err">│</span><span class="w"> </span><span class="mf">58</span><span class="n">T</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">15</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">16</span><span class="n">nm</span><span class="err">│</span><span class="w"> </span><span class="mf">19.2</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">80</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">2021</span><span class="n">Q3</span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">EyeQ6H</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="mf">128</span><span class="n">T</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">35</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">7</span><span class="n">nm</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">38.4</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">250</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">2022</span><span class="n">Q4</span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="ow">Or</span><span class="n">in</span><span class="o">-</span><span class="n">X</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="mf">275</span><span class="n">T</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">60</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">7</span><span class="n">nm</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">204</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">450</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">2022</span><span class="n">Q1</span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">TDA4</span><span class="o">-</span><span class="n">Mid</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">8</span><span class="n">T</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">15</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">28</span><span class="n">nm</span><span class="err">│</span><span class="w"> </span><span class="mf">17</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">45</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">2021</span><span class="n">Q1</span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">高通SA8540</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">100</span><span class="n">T</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">45</span><span class="n">W</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">5</span><span class="n">nm</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">64</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">$</span><span class="mf">200</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">2022</span><span class="n">Q3</span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────────────────────────┘</span>
-<span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">TO</span><span class="n">PS</span>
-</code></pre></div>
+<pre class="codehilite"><code>2021-2022年主流芯片综合对比
+┌──────────────────────────────────────────────────────────────┐
+│ 芯片型号    │ 算力   │ 功耗 │ 制程 │ 内存带宽 │ 单价  │ 量产 │
+├──────────────────────────────────────────────────────────────┤
+│ 地平线J5   │ 128T  │ 30W │ 16nm│ 25.6GB/s│ $120 │ 2021Q4│
+│ 黑芝麻A1000│ 58T   │ 15W │ 16nm│ 19.2GB/s│ $80  │ 2021Q3│
+│ EyeQ6H     │ 128T  │ 35W │ 7nm │ 38.4GB/s│ $250 │ 2022Q4│
+│ Orin-X     │ 275T  │ 60W │ 7nm │ 204GB/s │ $450 │ 2022Q1│
+│ TDA4-Mid   │ 8T    │ 15W │ 28nm│ 17GB/s  │ $45  │ 2021Q1│
+│ 高通SA8540 │ 100T  │ 45W │ 5nm │ 64GB/s  │ $200 │ 2022Q3│
+└──────────────────────────────────────────────────────────────┘
+T = TOPS
+</code></pre>
 
 <h3 id="362">3.6.2 技术发展趋势</h3>
 <ol>
@@ -1143,24 +1143,24 @@ A500 ───→ A1000 ────→ A1000Pro ───→ 武当C1200 ──
 </li>
 </ol>
 <h3 id="363">3.6.3 市场格局预判</h3>
-<div class="codehilite"><pre><span></span><code><span class="mf">2022</span><span class="n">年底市场份额</span><span class="err">（</span><span class="n">中国市场</span><span class="err">）</span>
-<span class="err">┌────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">Mobileye</span><span class="w">      </span><span class="mf">25</span><span class="err">%</span><span class="w"> </span><span class="err">↓</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">NVIDIA</span><span class="w">        </span><span class="mf">20</span><span class="err">%</span><span class="w"> </span><span class="err">↑</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">地平线</span><span class="w">         </span><span class="mf">18</span><span class="err">%</span><span class="w"> </span><span class="err">↑↑</span><span class="w">           </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">高通</span><span class="w">          </span><span class="mf">12</span><span class="err">%</span><span class="w"> </span><span class="err">→</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">黑芝麻</span><span class="w">         </span><span class="mf">8</span><span class="err">%</span><span class="w">  </span><span class="err">↑</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">TI</span><span class="w">            </span><span class="mf">7</span><span class="err">%</span><span class="w">  </span><span class="err">↓</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">华为</span><span class="w">          </span><span class="mf">5</span><span class="err">%</span><span class="w">  </span><span class="err">↑</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">其他</span><span class="w">          </span><span class="mf">5</span><span class="err">%</span><span class="w">               </span><span class="err">│</span>
-<span class="err">└────────────────────────────────┘</span>
+<pre class="codehilite"><code>2022年底市场份额（中国市场）
+┌────────────────────────────────┐
+│ Mobileye      25% ↓            │
+│ NVIDIA        20% ↑            │
+│ 地平线         18% ↑↑           │
+│ 高通          12% →            │
+│ 黑芝麻         8%  ↑            │
+│ TI            7%  ↓            │
+│ 华为          5%  ↑            │
+│ 其他          5%               │
+└────────────────────────────────┘
 
-<span class="n">关键观察</span><span class="err">：</span>
-<span class="err">•</span><span class="w"> </span><span class="n">国产化替代加速</span><span class="err">，</span><span class="n">本土厂商份额超30%</span>
-<span class="err">•</span><span class="w"> </span><span class="n">NVIDIA凭借Orin快速增长</span>
-<span class="err">•</span><span class="w"> </span><span class="n">Mobileye份额下滑但仍是领导者</span>
-<span class="err">•</span><span class="w"> </span><span class="n">新玩家不断涌入</span><span class="err">，</span><span class="n">竞争加剧</span>
-</code></pre></div>
+关键观察：
+• 国产化替代加速，本土厂商份额超30%
+• NVIDIA凭借Orin快速增长
+• Mobileye份额下滑但仍是领导者
+• 新玩家不断涌入，竞争加剧
+</code></pre>
 
 <h3 id="364">3.6.4 下一阶段展望</h3>
 <p>2023年将迎来更大变革：</p>

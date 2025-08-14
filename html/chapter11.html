@@ -184,7 +184,7 @@
                 <h1 id="11">第11章：算法与芯片协同优化</h1>
 <h2 id="_1">章节概述</h2>
 <p>自动驾驶算法与芯片的协同优化是实现高效能、低功耗、实时性的关键。本章深入剖析从模型压缩到硬件加速的全栈优化技术，涵盖量化、稀疏化、编译器优化、算子融合等核心技术，以及BEV感知和端到端模型在实际部署中的挑战与解决方案。</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                    算法-芯片协同优化栈                         │
 ├─────────────────────────────────────────────────────────────┤
 │  模型层    │ 量化 │ 剪枝 │ 蒸馏 │ NAS │ 稀疏化             │
@@ -195,7 +195,7 @@
 ├───────────┼──────────────────────────────────────────────────┤
 │  硬件层    │ Tensor Core │ DLA │ DSP │ NPU │ 专用ASIC      │
 └─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="1-int8int4">1. 量化技术：INT8/INT4/混合精度</h2>
 <h3 id="11_1">1.1 量化技术演进历程</h3>
@@ -226,14 +226,14 @@
 <li>量化训练一体化，模型设计即考虑量化</li>
 </ul>
 <h4 id="111-int82019-2021">1.1.1 INT8量化：工业标准的确立（2019-2021）</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">FP32</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">INT8</span><span class="w"> </span><span class="err">量化流程：</span>
-<span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="err">原始模型</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">校准数据</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">量化参数</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">INT8模型</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">FP32</span><span class="p">)</span><span class="w">   </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="err">统计分布</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="n">Scale</span><span class="o">/</span><span class="n">ZP</span><span class="w"> </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="err">部署推理</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────┘</span>
-<span class="w">     </span><span class="mi">32</span><span class="err">位</span><span class="w">              </span><span class="err">分析</span><span class="w">              </span><span class="err">计算</span><span class="w">              </span><span class="mi">8</span><span class="err">位</span>
-<span class="w">   </span><span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="n">size</span><span class="w">       </span><span class="mi">1000</span><span class="w"> </span><span class="n">samples</span><span class="w">      </span><span class="n">per</span><span class="o">-</span><span class="n">channel</span><span class="w">       </span><span class="mi">25</span><span class="o">%</span><span class="w"> </span><span class="n">size</span>
-</code></pre></div>
+<pre class="codehilite"><code>FP32 → INT8 量化流程：
+┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
+│ 原始模型  │ --&gt; │ 校准数据  │ --&gt; │ 量化参数  │ --&gt; │ INT8模型  │
+│ (FP32)   │     │ 统计分布  │     │ Scale/ZP │     │ 部署推理  │
+└──────────┘     └──────────┘     └──────────┘     └──────────┘
+     32位              分析              计算              8位
+   100% size       1000 samples      per-channel       25% size
+</code></pre>
 
 <p><strong>关键技术突破：</strong></p>
 <ul>
@@ -307,7 +307,7 @@
 </table>
 <p><strong>量化校准数据集选择策略：</strong></p>
 <p>不同场景需要不同的校准数据分布：</p>
-<div class="codehilite"><pre><span></span><code>校准数据集构建原则：
+<pre class="codehilite"><code>校准数据集构建原则：
 ┌────────────────────────────────────────┐
 │ 场景类型    │ 数据量  │ 分布要求        │
 ├────────────┼────────┼────────────────┤
@@ -316,7 +316,7 @@
 │ 泊车场景    │ 1500   │ 各角度全覆盖     │
 │ 恶劣天气    │ 500    │ 雨雪雾各占1/3   │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>量化误差补偿技术：</strong></p>
 <ol>
@@ -330,17 +330,17 @@
 <p><strong>量化误差建模</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 误差补偿网络</span>
-<span class="k">class</span> <span class="nc">QuantErrorCompensation</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channels</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">error_predictor</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">channels</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<pre class="codehilite"><code class="language-python"># 误差补偿网络
+class QuantErrorCompensation(nn.Module):
+    def __init__(self, channels):
+        super().__init__()
+        self.error_predictor = nn.Conv2d(channels, channels, 1)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_quant</span><span class="p">,</span> <span class="n">x_fp32</span><span class="p">):</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="n">x_fp32</span> <span class="o">-</span> <span class="n">x_quant</span>
-        <span class="n">predicted_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_predictor</span><span class="p">(</span><span class="n">x_quant</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x_quant</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">predicted_error</span>  <span class="c1"># 软补偿</span>
-</code></pre></div>
+    def forward(self, x_quant, x_fp32):
+        error = x_fp32 - x_quant
+        predicted_error = self.error_predictor(x_quant)
+        return x_quant + 0.1 * predicted_error  # 软补偿
+</code></pre>
 
 <ol start="3">
 <li><strong>自适应量化阈值</strong>
@@ -351,7 +351,7 @@
 <h3 id="12-int4int22022-2024">1.2 INT4/INT2超低比特量化（2022-2024）</h3>
 <p>随着模型规模增大，INT4量化成为部署大模型的关键技术。</p>
 <h4 id="121-int4">1.2.1 INT4量化的技术挑战</h4>
-<div class="codehilite"><pre><span></span><code>量化误差分析：
+<pre class="codehilite"><code>量化误差分析：
 ┌────────────────────────────────────────────┐
 │ Bit Width │ 动态范围 │ 量化级数 │ 相对误差 │
 ├───────────┼─────────┼─────────┼──────────┤
@@ -360,7 +360,7 @@
 │   INT4    │  ±7     │   16    │   6.3%   │
 │   INT2    │  ±1     │   4     │   25%    │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键创新：</strong></p>
 <ol>
@@ -386,7 +386,7 @@
 <h3 id="13">1.3 混合精度策略</h3>
 <h4 id="131">1.3.1 层级混合精度</h4>
 <p>不同层采用不同量化位宽，关键层保持高精度：</p>
-<div class="codehilite"><pre><span></span><code>模型层级精度分配示例（以BEVFormer为例）：
+<pre class="codehilite"><code>模型层级精度分配示例（以BEVFormer为例）：
 ┌─────────────────────────────────────────────────┐
 │ 层类型          │ 推荐精度 │ 原因              │
 ├────────────────┼─────────┼──────────────────┤
@@ -396,27 +396,27 @@
 │ 检测头最后一层   │ FP16    │ 精确定位需求      │
 │ 分类头         │ INT4    │ 离散输出空间      │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="132">1.3.2 动态精度切换</h4>
 <p>根据运行时条件动态调整精度：</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 伪代码：动态精度策略</span>
-<span class="k">class</span> <span class="nc">DynamicPrecisionScheduler</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">precision_map</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;highway&#39;</span><span class="p">:</span> <span class="s1">&#39;INT8&#39;</span><span class="p">,</span>      <span class="c1"># 高速场景</span>
-            <span class="s1">&#39;parking&#39;</span><span class="p">:</span> <span class="s1">&#39;INT4&#39;</span><span class="p">,</span>      <span class="c1"># 泊车场景</span>
-            <span class="s1">&#39;emergency&#39;</span><span class="p">:</span> <span class="s1">&#39;FP16&#39;</span>     <span class="c1"># 紧急情况</span>
-        <span class="p">}</span>
+<pre class="codehilite"><code class="language-python"># 伪代码：动态精度策略
+class DynamicPrecisionScheduler:
+    def __init__(self):
+        self.precision_map = {
+            'highway': 'INT8',      # 高速场景
+            'parking': 'INT4',      # 泊车场景
+            'emergency': 'FP16'     # 紧急情况
+        }
 
-    <span class="k">def</span> <span class="nf">get_precision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">latency_budget</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">latency_budget</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="n">ms</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;INT4&#39;</span>
-        <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s1">&#39;emergency&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;FP16&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="s1">&#39;INT8&#39;</span><span class="p">)</span>
-</code></pre></div>
+    def get_precision(self, scenario, latency_budget):
+        if latency_budget &lt; 10ms:
+            return 'INT4'
+        elif scenario == 'emergency':
+            return 'FP16'
+        else:
+            return self.precision_map.get(scenario, 'INT8')
+</code></pre>
 
 <h3 id="14-qatvs-ptq">1.4 量化感知训练（QAT）vs 训练后量化（PTQ）</h3>
 <p><strong>对比分析：</strong></p>
@@ -458,39 +458,39 @@
 </tbody>
 </table>
 <p><strong>QAT实现细节：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">QATConv2d</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;量化感知训练的卷积层&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">)</span>
-        <span class="c1"># 量化参数（可学习）</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">out_channels</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zero_point</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_channels</span><span class="p">))</span>
+<pre class="codehilite"><code class="language-python">class QATConv2d(nn.Module):
+    &quot;&quot;&quot;量化感知训练的卷积层&quot;&quot;&quot;
+    def __init__(self, in_channels, out_channels, kernel_size):
+        super().__init__()
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size)
+        # 量化参数（可学习）
+        self.scale = nn.Parameter(torch.ones(out_channels))
+        self.zero_point = nn.Parameter(torch.zeros(out_channels))
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="c1"># 训练时：模拟量化</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
-            <span class="c1"># 量化权重</span>
-            <span class="n">w_quant</span> <span class="o">=</span> <span class="n">fake_quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_point</span><span class="p">)</span>
-            <span class="c1"># 使用量化权重进行卷积</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> 
-                          <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">padding</span><span class="p">)</span>
-        <span class="c1"># 推理时：真实量化</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">quantized_conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> 
-                                 <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_point</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
+    def forward(self, x):
+        # 训练时：模拟量化
+        if self.training:
+            # 量化权重
+            w_quant = fake_quantize(self.conv.weight, self.scale, self.zero_point)
+            # 使用量化权重进行卷积
+            out = F.conv2d(x, w_quant, self.conv.bias, 
+                          self.conv.stride, self.conv.padding)
+        # 推理时：真实量化
+        else:
+            out = quantized_conv2d(x, self.conv.weight, 
+                                 self.scale, self.zero_point)
+        return out
 
-<span class="k">def</span> <span class="nf">fake_quantize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">zero_point</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;伪量化函数，用于训练时模拟量化效果&quot;&quot;&quot;</span>
-    <span class="c1"># 量化</span>
-    <span class="n">x_int</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">zero_point</span><span class="p">)</span>
-    <span class="n">x_int</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">x_int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="n">bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># 反量化</span>
-    <span class="n">x_quant</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_int</span> <span class="o">-</span> <span class="n">zero_point</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span>
-    <span class="c1"># 直通估计器（STE）用于梯度回传</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_quant</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-</code></pre></div>
+def fake_quantize(x, scale, zero_point, bits=8):
+    &quot;&quot;&quot;伪量化函数，用于训练时模拟量化效果&quot;&quot;&quot;
+    # 量化
+    x_int = torch.round(x / scale + zero_point)
+    x_int = torch.clamp(x_int, 0, 2**bits - 1)
+    # 反量化
+    x_quant = (x_int - zero_point) * scale
+    # 直通估计器（STE）用于梯度回传
+    return x + (x_quant - x).detach()
+</code></pre>
 
 <p><strong>PTQ高级技术：</strong></p>
 <ol>
@@ -515,7 +515,7 @@
 </ol>
 <h3 id="15">1.5 硬件量化加速单元设计</h3>
 <h4 id="151-nvidia-tensor-core">1.5.1 NVIDIA Tensor Core演进</h4>
-<div class="codehilite"><pre><span></span><code>Tensor Core代际演进：
+<pre class="codehilite"><code>Tensor Core代际演进：
 ┌──────────────────────────────────────────────────┐
 │ 代际   │ 支持精度          │ 峰值性能提升        │
 ├───────┼──────────────────┼───────────────────┤
@@ -524,7 +524,7 @@
 │ H100  │ +FP8/INT4        │ 6x               │
 │ Orin  │ INT8/INT4        │ 车规优化          │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="152">1.5.2 国产芯片量化加速器</h4>
 <p><strong>地平线BPU（Brain Processing Unit）：</strong></p>
@@ -542,7 +542,7 @@
 <h2 id="2">2. 稀疏化与剪枝</h2>
 <h3 id="21-vs">2.1 结构化稀疏 vs 非结构化稀疏</h3>
 <h4 id="211">2.1.1 稀疏化模式对比</h4>
-<div class="codehilite"><pre><span></span><code>稀疏化模式示意：
+<pre class="codehilite"><code>稀疏化模式示意：
 原始权重矩阵（4×4）：
 ┌─┬─┬─┬─┐
 │W│W│W│W│  密集矩阵
@@ -565,21 +565,21 @@
 │0│W│0│W│               │0│0│W│W│
 └─┴─┴─┴─┘               └─┴─┴─┴─┘
 硬件加速：困难            硬件加速：高效
-</code></pre></div>
+</code></pre>
 
 <h3 id="22">2.2 剪枝策略与实现</h3>
 <h4 id="221">2.2.1 重要性评估准则</h4>
 <ol>
 <li><strong>基于梯度的重要性</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="n">importance</span> <span class="o">=</span> <span class="o">|</span><span class="n">weight</span><span class="o">|</span> <span class="o">*</span> <span class="o">|</span><span class="n">gradient</span><span class="o">|</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-python">importance = |weight| * |gradient|
+</code></pre>
 
 <ol start="2">
 <li><strong>基于Taylor展开</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="n">importance</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">gradient</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">weight</span><span class="err">²</span> <span class="o">*</span> <span class="n">hessian</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-python">importance = weight * gradient + 0.5 * weight² * hessian
+</code></pre>
 
 <ol start="3">
 <li><strong>基于信息论</strong>
@@ -587,7 +587,7 @@
    - KL散度最小化</li>
 </ol>
 <h4 id="222">2.2.2 渐进式剪枝流程</h4>
-<div class="codehilite"><pre><span></span><code>训练周期：100 epochs
+<pre class="codehilite"><code>训练周期：100 epochs
 ┌────────────────────────────────────────────────┐
 │ Epoch  │ 0-20 │ 21-40 │ 41-60 │ 61-80 │ 81-100│
 ├────────┼──────┼───────┼───────┼───────┼───────┤
@@ -595,21 +595,21 @@
 │精度保持│ 100% │  99%  │  97%  │  94%  │  91%  │
 └────────────────────────────────────────────────┘
          预热期  渐进剪枝  激进剪枝  微调期  部署
-</code></pre></div>
+</code></pre>
 
 <h3 id="23">2.3 硬件稀疏加速</h3>
 <h4 id="231-nvidiatensor-core24">2.3.1 NVIDIA稀疏Tensor Core（2:4稀疏）</h4>
-<div class="codehilite"><pre><span></span><code><span class="mi">2</span><span class="o">:</span><span class="mi">4</span><span class="err">稀疏模式（每</span><span class="mi">4</span><span class="err">个元素保留</span><span class="mi">2</span><span class="err">个）：</span>
-<span class="err">输入：</span><span class="o">[</span><span class="mf">1.2</span><span class="o">,</span><span class="w"> </span><span class="mf">0.3</span><span class="o">,</span><span class="w"> </span><span class="mf">0.8</span><span class="o">,</span><span class="w"> </span><span class="mf">0.1</span><span class="o">]</span><span class="w"> </span>
-<span class="err">掩码：</span><span class="o">[</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w">   </span><span class="mi">0</span><span class="o">,</span><span class="w">   </span><span class="mi">1</span><span class="o">,</span><span class="w">   </span><span class="mi">0</span><span class="w">  </span><span class="o">]</span>
-<span class="err">输出：</span><span class="o">[</span><span class="mf">1.2</span><span class="o">,</span><span class="w"> </span><span class="mf">0.8</span><span class="o">]</span><span class="w"> </span><span class="err">（压缩存储）</span>
+<pre class="codehilite"><code>2:4稀疏模式（每4个元素保留2个）：
+输入：[1.2, 0.3, 0.8, 0.1] 
+掩码：[ 1,   0,   1,   0  ]
+输出：[1.2, 0.8] （压缩存储）
 
-<span class="err">硬件实现：</span>
+硬件实现：
 
-<span class="o">-</span><span class="w"> </span><span class="mi">50</span><span class="o">%</span><span class="err">存储节省</span>
-<span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="err">倍计算加速</span>
-<span class="o">-</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">1</span><span class="o">%</span><span class="err">精度损失（经过微调）</span>
-</code></pre></div>
+- 50%存储节省
+- 2倍计算加速
+- &lt;1%精度损失（经过微调）
+</code></pre>
 
 <h4 id="232">2.3.2 地平线稀疏加速器</h4>
 <ul>
@@ -619,62 +619,62 @@
 </ul>
 <h3 id="24">2.4 模型剪枝实践案例</h3>
 <h4 id="241-yolov5">2.4.1 YOLOv5剪枝优化（用于目标检测）</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">剪枝前后对比</span><span class="err">：</span>
-<span class="err">┌──────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">指标</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">原始模型</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">剪枝50</span><span class="o">%</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">剪枝70</span><span class="o">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">├──────────┼─────────┼─────────┼──────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">参数量</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">7.5</span><span class="n">M</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">3.8</span><span class="n">M</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">2.3</span><span class="n">M</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">FLOPs</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">16.5</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">8.7</span><span class="n">G</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">5.2</span><span class="n">G</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">mAP</span><span class="mf">@0.5</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mf">95.2</span><span class="o">%</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">94.8</span><span class="o">%</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">93.1</span><span class="o">%</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">FPS</span><span class="p">(</span><span class="n">Orin</span><span class="p">)</span><span class="err">│</span><span class="w"> </span><span class="mi">78</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="mi">142</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="mi">195</span><span class="w">      </span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>剪枝前后对比：
+┌──────────────────────────────────────────────┐
+│ 指标      │ 原始模型 │ 剪枝50% │ 剪枝70%  │
+├──────────┼─────────┼─────────┼──────────┤
+│ 参数量    │ 7.5M    │ 3.8M    │ 2.3M     │
+│ FLOPs    │ 16.5G   │ 8.7G    │ 5.2G     │
+│ mAP@0.5  │ 95.2%   │ 94.8%   │ 93.1%    │
+│ FPS(Orin)│ 78      │ 142     │ 195      │
+└──────────────────────────────────────────────┘
+</code></pre>
 
 <p><strong>剪枝策略实施细节：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">YOLOPruner</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">target_sparsity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_sparsity</span> <span class="o">=</span> <span class="n">target_sparsity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">importance_scores</span> <span class="o">=</span> <span class="p">{}</span>
+<pre class="codehilite"><code class="language-python">class YOLOPruner:
+    def __init__(self, model, target_sparsity=0.5):
+        self.model = model
+        self.target_sparsity = target_sparsity
+        self.importance_scores = {}
 
-    <span class="k">def</span> <span class="nf">calculate_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算每层的重要性分数&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">):</span>
-                <span class="c1"># 基于L1范数的重要性</span>
-                <span class="n">importance</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">importance_scores</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">importance</span>
+    def calculate_importance(self):
+        &quot;&quot;&quot;计算每层的重要性分数&quot;&quot;&quot;
+        for name, module in self.model.named_modules():
+            if isinstance(module, nn.Conv2d):
+                # 基于L1范数的重要性
+                importance = torch.norm(module.weight, p=1, dim=(1,2,3))
+                self.importance_scores[name] = importance
 
-    <span class="k">def</span> <span class="nf">structured_prune</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;结构化剪枝：移除整个通道&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">importance_scores</span><span class="p">:</span>
-                <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">importance_scores</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-                <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_sparsity</span><span class="p">))</span>
+    def structured_prune(self):
+        &quot;&quot;&quot;结构化剪枝：移除整个通道&quot;&quot;&quot;
+        for name, module in self.model.named_modules():
+            if name in self.importance_scores:
+                scores = self.importance_scores[name]
+                k = int(len(scores) * (1 - self.target_sparsity))
 
-                <span class="c1"># 保留top-k个重要通道</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                # 保留top-k个重要通道
+                _, indices = torch.topk(scores, k)
 
-                <span class="c1"># 创建新的卷积层</span>
-                <span class="n">new_conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
-                    <span class="n">module</span><span class="o">.</span><span class="n">in_channels</span><span class="p">,</span>
-                    <span class="n">k</span><span class="p">,</span>
-                    <span class="n">module</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
-                    <span class="n">module</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-                    <span class="n">module</span><span class="o">.</span><span class="n">padding</span>
-                <span class="p">)</span>
+                # 创建新的卷积层
+                new_conv = nn.Conv2d(
+                    module.in_channels,
+                    k,
+                    module.kernel_size,
+                    module.stride,
+                    module.padding
+                )
 
-                <span class="c1"># 复制保留通道的权重</span>
-                <span class="n">new_conv</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">new_conv</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+                # 复制保留通道的权重
+                new_conv.weight.data = module.weight[indices]
+                if module.bias is not None:
+                    new_conv.bias.data = module.bias[indices]
 
-                <span class="c1"># 替换原模块</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">new_conv</span><span class="p">)</span>
-</code></pre></div>
+                # 替换原模块
+                setattr(self.model, name, new_conv)
+</code></pre>
 
 <h4 id="242-transformerbevformer">2.4.2 Transformer剪枝（用于BEVFormer）</h4>
-<div class="codehilite"><pre><span></span><code>注意力头剪枝策略：
+<pre class="codehilite"><code>注意力头剪枝策略：
 ┌────────────────────────────────────────────┐
 │ Layer │ 原始头数 │ 剪枝后 │ 保留策略      │
 ├───────┼─────────┼────────┼──────────────┤
@@ -685,45 +685,45 @@
 └────────────────────────────────────────────┘
 
 效果：参数量减少35%，速度提升40%，精度损失&lt;1.5%
-</code></pre></div>
+</code></pre>
 
 <h4 id="243">2.4.3 动态稀疏网络</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DynamicSparseNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;动态稀疏网络：运行时自适应激活子网络&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_model</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_model</span> <span class="o">=</span> <span class="n">base_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gates</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">()</span>  <span class="c1"># 门控单元</span>
+<pre class="codehilite"><code class="language-python">class DynamicSparseNetwork(nn.Module):
+    &quot;&quot;&quot;动态稀疏网络：运行时自适应激活子网络&quot;&quot;&quot;
+    def __init__(self, base_model):
+        super().__init__()
+        self.base_model = base_model
+        self.gates = nn.ModuleList()  # 门控单元
 
-        <span class="c1"># 为每层添加门控</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">base_model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
-            <span class="n">gate</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveAvgPool2d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">out_channels</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">out_channels</span> <span class="o">//</span> <span class="mi">8</span><span class="p">),</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">out_channels</span> <span class="o">//</span> <span class="mi">8</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">out_channels</span><span class="p">),</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span>
+        # 为每层添加门控
+        for layer in base_model.layers:
+            gate = nn.Sequential(
+                nn.AdaptiveAvgPool2d(1),
+                nn.Linear(layer.out_channels, layer.out_channels // 8),
+                nn.ReLU(),
+                nn.Linear(layer.out_channels // 8, layer.out_channels),
+                nn.Sigmoid()
+            )
+            self.gates.append(gate)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sparsity_budget</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">gate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="p">):</span>
-            <span class="c1"># 计算门控值</span>
-            <span class="n">gate_values</span> <span class="o">=</span> <span class="n">gate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    def forward(self, x, sparsity_budget=0.5):
+        for layer, gate in zip(self.base_model.layers, self.gates):
+            # 计算门控值
+            gate_values = gate(x)
 
-            <span class="c1"># 动态选择激活通道</span>
-            <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">gate_values</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sparsity_budget</span><span class="p">)</span>
-            <span class="n">_</span><span class="p">,</span> <span class="n">active_channels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">gate_values</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            # 动态选择激活通道
+            k = int(gate_values.size(1) * sparsity_budget)
+            _, active_channels = torch.topk(gate_values, k, dim=1)
 
-            <span class="c1"># 稀疏前向传播</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_forward</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">active_channels</span><span class="p">)</span>
+            # 稀疏前向传播
+            x = self.sparse_forward(layer, x, active_channels)
 
-        <span class="k">return</span> <span class="n">x</span>
-</code></pre></div>
+        return x
+</code></pre>
 
 <h2 id="3-tvmmlirsdk">3. 编译器优化：TVM、MLIR、专有SDK</h2>
 <h3 id="31">3.1 编译器技术栈架构</h3>
-<div class="codehilite"><pre><span></span><code>深度学习编译器架构：
+<pre class="codehilite"><code>深度学习编译器架构：
 ┌─────────────────────────────────────────────┐
 │          前端（模型导入）                      │
 │   PyTorch │ TensorFlow │ ONNX │ MXNet      │
@@ -740,29 +740,29 @@
 │          运行时                              │
 │   GPU  │  DSP  │  NPU  │  TPU  │  FPGA    │
 └─────────────────────────────────────────────┤
-</code></pre></div>
+</code></pre>
 
 <h3 id="32-tvm">3.2 TVM：开源生态的主力</h3>
 <h4 id="321-tvm">3.2.1 TVM优化技术</h4>
 <p><strong>Auto-scheduling（自动调度）：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># TVM自动调优示例</span>
-<span class="kn">import</span> <span class="nn">tvm</span>
-<span class="kn">from</span> <span class="nn">tvm</span> <span class="kn">import</span> <span class="n">auto_scheduler</span>
+<pre class="codehilite"><code class="language-python"># TVM自动调优示例
+import tvm
+from tvm import auto_scheduler
 
-<span class="nd">@auto_scheduler</span><span class="o">.</span><span class="n">register_workload</span>
-<span class="k">def</span> <span class="nf">conv2d_layer</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">CO</span><span class="p">,</span> <span class="n">CI</span><span class="p">,</span> <span class="n">KH</span><span class="p">,</span> <span class="n">KW</span><span class="p">):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">placeholder</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">CI</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
-    <span class="n">kernel</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">placeholder</span><span class="p">((</span><span class="n">CO</span><span class="p">,</span> <span class="n">CI</span><span class="p">,</span> <span class="n">KH</span><span class="p">,</span> <span class="n">KW</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span><span class="p">)</span>
-    <span class="c1"># 定义卷积计算...</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">data</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">conv</span><span class="p">]</span>
+@auto_scheduler.register_workload
+def conv2d_layer(N, H, W, CO, CI, KH, KW):
+    data = te.placeholder((N, CI, H, W), name=&quot;data&quot;)
+    kernel = te.placeholder((CO, CI, KH, KW), name=&quot;kernel&quot;)
+    # 定义卷积计算...
+    return [data, kernel, conv]
 
-<span class="c1"># 自动搜索最优配置</span>
-<span class="n">task</span> <span class="o">=</span> <span class="n">auto_scheduler</span><span class="o">.</span><span class="n">SearchTask</span><span class="p">(</span>
-    <span class="n">func</span><span class="o">=</span><span class="n">conv2d_layer</span><span class="p">,</span>
-    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
-    <span class="n">target</span><span class="o">=</span><span class="s2">&quot;cuda -arch=sm_86&quot;</span>  <span class="c1"># Orin架构</span>
-<span class="p">)</span>
-</code></pre></div>
+# 自动搜索最优配置
+task = auto_scheduler.SearchTask(
+    func=conv2d_layer,
+    args=(1, 224, 224, 64, 3, 7, 7),
+    target=&quot;cuda -arch=sm_86&quot;  # Orin架构
+)
+</code></pre>
 
 <p><strong>性能提升案例：</strong></p>
 <ul>
@@ -772,7 +772,7 @@
 </ul>
 <h3 id="33-mlir">3.3 MLIR：编译器基础设施革命</h3>
 <h4 id="331-ir">3.3.1 多级IR设计</h4>
-<div class="codehilite"><pre><span></span><code>MLIR方言层次：
+<pre class="codehilite"><code>MLIR方言层次：
 ┌────────────────────────────┐
 │ High-Level：TensorFlow/PyTorch方言 │
 ├────────────────────────────┤
@@ -780,7 +780,7 @@
 ├────────────────────────────┤
 │ Low-Level：LLVM/GPU方言          │
 └────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="332-lowering">3.3.2 渐进式lowering</h4>
 <p>每个阶段专注特定优化：</p>
@@ -835,7 +835,7 @@
 </table>
 <h3 id="35">3.5 编译优化实战</h3>
 <h4 id="351">3.5.1 算子融合示例</h4>
-<div class="codehilite"><pre><span></span><code>融合前：                    融合后：
+<pre class="codehilite"><code>融合前：                    融合后：
 Conv2D                     FusedConvBNReLU
   ↓                            ↓
 BatchNorm      ──→        (单个kernel)
@@ -847,59 +847,59 @@ Output
 内存访问：3次               内存访问：1次
 Kernel启动：3次             Kernel启动：1次
 性能提升：1.5-2倍
-</code></pre></div>
+</code></pre>
 
 <p><strong>高级融合模式：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">AdvancedFusionOptimizer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fusion_patterns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="c1"># 模式1：Conv-BN-ReLU</span>
-            <span class="p">[</span><span class="s1">&#39;Conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;BatchNorm2d&#39;</span><span class="p">,</span> <span class="s1">&#39;ReLU&#39;</span><span class="p">],</span>
-            <span class="c1"># 模式2：Linear-LayerNorm-Activation</span>
-            <span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;LayerNorm&#39;</span><span class="p">,</span> <span class="s1">&#39;GELU&#39;</span><span class="p">],</span>
-            <span class="c1"># 模式3：多头注意力组件</span>
-            <span class="p">[</span><span class="s1">&#39;MatMul&#39;</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">,</span> <span class="s1">&#39;Softmax&#39;</span><span class="p">,</span> <span class="s1">&#39;MatMul&#39;</span><span class="p">],</span>
-            <span class="c1"># 模式4：残差连接</span>
-            <span class="p">[</span><span class="s1">&#39;Conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;BatchNorm2d&#39;</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">,</span> <span class="s1">&#39;ReLU&#39;</span><span class="p">]</span>
-        <span class="p">]</span>
+<pre class="codehilite"><code class="language-python">class AdvancedFusionOptimizer:
+    def __init__(self, graph):
+        self.graph = graph
+        self.fusion_patterns = [
+            # 模式1：Conv-BN-ReLU
+            ['Conv2d', 'BatchNorm2d', 'ReLU'],
+            # 模式2：Linear-LayerNorm-Activation
+            ['Linear', 'LayerNorm', 'GELU'],
+            # 模式3：多头注意力组件
+            ['MatMul', 'Add', 'Softmax', 'MatMul'],
+            # 模式4：残差连接
+            ['Conv2d', 'BatchNorm2d', 'Add', 'ReLU']
+        ]
 
-    <span class="k">def</span> <span class="nf">detect_fusion_opportunities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;检测可融合的算子序列&quot;&quot;&quot;</span>
-        <span class="n">opportunities</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fusion_patterns</span><span class="p">:</span>
-            <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_pattern_in_graph</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
-            <span class="n">opportunities</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">opportunities</span>
+    def detect_fusion_opportunities(self):
+        &quot;&quot;&quot;检测可融合的算子序列&quot;&quot;&quot;
+        opportunities = []
+        for pattern in self.fusion_patterns:
+            matches = self.find_pattern_in_graph(pattern)
+            opportunities.extend(matches)
+        return opportunities
 
-    <span class="k">def</span> <span class="nf">generate_fused_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ops</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;生成融合后的CUDA kernel&quot;&quot;&quot;</span>
-        <span class="n">kernel_code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        __global__ void fused_kernel(</span>
-<span class="s2">            float* input, float* output, </span>
-<span class="s2">            float* weight, float* bias,</span>
-<span class="s2">            int N, int C, int H, int W</span>
-<span class="s2">        ) {</span>
-<span class="s2">            int idx = blockIdx.x * blockDim.x + threadIdx.x;</span>
-<span class="s2">            if (idx &gt;= N * C * H * W) return;</span>
+    def generate_fused_kernel(self, ops):
+        &quot;&quot;&quot;生成融合后的CUDA kernel&quot;&quot;&quot;
+        kernel_code = &quot;&quot;&quot;
+        __global__ void fused_kernel(
+            float* input, float* output, 
+            float* weight, float* bias,
+            int N, int C, int H, int W
+        ) {
+            int idx = blockIdx.x * blockDim.x + threadIdx.x;
+            if (idx &gt;= N * C * H * W) return;
 
-<span class="s2">            // Conv2D operation</span>
-<span class="s2">            float val = conv2d_op(input, weight, idx);</span>
+            // Conv2D operation
+            float val = conv2d_op(input, weight, idx);
 
-<span class="s2">            // BatchNorm operation (融合到一个计算)</span>
-<span class="s2">            val = (val - mean[c]) * inv_std[c] * gamma[c] + beta[c];</span>
+            // BatchNorm operation (融合到一个计算)
+            val = (val - mean[c]) * inv_std[c] * gamma[c] + beta[c];
 
-<span class="s2">            // ReLU activation (无额外内存访问)</span>
-<span class="s2">            val = fmaxf(val, 0.0f);</span>
+            // ReLU activation (无额外内存访问)
+            val = fmaxf(val, 0.0f);
 
-<span class="s2">            output[idx] = val;</span>
-<span class="s2">        }</span>
-<span class="s2">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">kernel_code</span>
-</code></pre></div>
+            output[idx] = val;
+        }
+        &quot;&quot;&quot;
+        return kernel_code
+</code></pre>
 
 <p><strong>跨层融合优化：</strong></p>
-<div class="codehilite"><pre><span></span><code>ResNet Block融合示例：
+<pre class="codehilite"><code>ResNet Block融合示例：
 ┌────────────────────────────────┐
 │        原始执行流程              │
 │  Conv1 → BN1 → ReLU1           │
@@ -921,72 +921,72 @@ Kernel启动：3次             Kernel启动：1次
 
 内存带宽节省：60%
 计算延迟降低：45%
-</code></pre></div>
+</code></pre>
 
 <h4 id="352">3.5.2 内存优化策略</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 内存池复用示例</span>
-<span class="n">memory_pool</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;pool_A&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="n">MB</span><span class="p">,</span>  <span class="c1"># 可复用内存块</span>
-    <span class="s1">&#39;pool_B&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="n">MB</span><span class="p">,</span>
-    <span class="s1">&#39;pool_C&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="n">MB</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-python"># 内存池复用示例
+memory_pool = {
+    'pool_A': 100MB,  # 可复用内存块
+    'pool_B': 50MB,
+    'pool_C': 25MB
+}
 
-<span class="c1"># 生命周期分析</span>
-<span class="n">layer1_output</span> <span class="err">→</span> <span class="n">pool_A</span> <span class="p">(</span><span class="n">使用</span><span class="p">)</span>
-<span class="n">layer2_output</span> <span class="err">→</span> <span class="n">pool_B</span> <span class="p">(</span><span class="n">使用</span><span class="p">)</span>  
-<span class="n">layer1_output</span> <span class="err">→</span> <span class="n">pool_A</span> <span class="p">(</span><span class="n">释放</span><span class="p">)</span>  <span class="c1"># layer1结果不再需要</span>
-<span class="n">layer3_output</span> <span class="err">→</span> <span class="n">pool_A</span> <span class="p">(</span><span class="n">复用</span><span class="p">)</span>  <span class="c1"># 复用pool_A空间</span>
-</code></pre></div>
+# 生命周期分析
+layer1_output → pool_A (使用)
+layer2_output → pool_B (使用)  
+layer1_output → pool_A (释放)  # layer1结果不再需要
+layer3_output → pool_A (复用)  # 复用pool_A空间
+</code></pre>
 
 <h2 id="4">4. 算子融合与内存优化</h2>
 <h3 id="41">4.1 算子融合策略</h3>
 <h4 id="411">4.1.1 垂直融合（纵向融合）</h4>
 <p>将串行执行的多个算子合并为单个算子：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">垂直融合示例：</span>
-<span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="n">Conv</span><span class="w">    </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">├──────────┤</span><span class="w">     </span><span class="err">│</span><span class="w">   </span><span class="n">Fused</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">BN</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w">   </span><span class="n">ConvBN</span><span class="w">     </span><span class="err">│</span>
-<span class="err">├──────────┤</span><span class="w">     </span><span class="err">│</span><span class="w">   </span><span class="n">ReLU</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">ReLU</span><span class="w">    </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────────┘</span>
+<pre class="codehilite"><code>垂直融合示例：
+┌──────────┐     ┌──────────────┐
+│  Conv    │     │              │
+├──────────┤     │   Fused      │
+│  BN      │ --&gt; │   ConvBN     │
+├──────────┤     │   ReLU       │
+│  ReLU    │     │              │
+└──────────┘     └──────────────┘
 
-<span class="err">优势：</span>
+优势：
 
-<span class="o">-</span><span class="w"> </span><span class="err">减少中间结果存储</span>
-<span class="o">-</span><span class="w"> </span><span class="err">降低内存带宽需求</span>
-<span class="o">-</span><span class="w"> </span><span class="err">减少</span><span class="n">kernel启动开销</span>
-</code></pre></div>
+- 减少中间结果存储
+- 降低内存带宽需求
+- 减少kernel启动开销
+</code></pre>
 
 <h4 id="412">4.1.2 水平融合（横向融合）</h4>
 <p>将并行的独立算子合并执行：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">水平融合示例（多头注意力）：</span>
-<span class="err">┌────┐</span><span class="w"> </span><span class="err">┌────┐</span><span class="w"> </span><span class="err">┌────┐</span><span class="w">     </span><span class="err">┌──────────────┐</span>
-<span class="err">│</span><span class="n">Head1</span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">Head2</span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">Head3</span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">MultiHead</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="n">Q</span><span class="err">·</span><span class="n">K</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">Q</span><span class="err">·</span><span class="n">K</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="n">Q</span><span class="err">·</span><span class="n">K</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="n">Attention</span><span class="w">    </span><span class="err">│</span>
-<span class="err">└────┘</span><span class="w"> </span><span class="err">└────┘</span><span class="w"> </span><span class="err">└────┘</span><span class="w">     </span><span class="err">└──────────────┘</span>
+<pre class="codehilite"><code>水平融合示例（多头注意力）：
+┌────┐ ┌────┐ ┌────┐     ┌──────────────┐
+│Head1│ │Head2│ │Head3│ --&gt; │ MultiHead    │
+│Q·K  │ │Q·K  │ │Q·K  │     │ Attention    │
+└────┘ └────┘ └────┘     └──────────────┘
 
-<span class="err">批处理</span><span class="n">GEMM</span><span class="err">，提升</span><span class="n">GPU利用率</span>
-</code></pre></div>
+批处理GEMM，提升GPU利用率
+</code></pre>
 
 <h4 id="413">4.1.3 混合融合策略</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 融合决策树</span>
-<span class="k">def</span> <span class="nf">should_fuse</span><span class="p">(</span><span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">,</span> <span class="n">hardware</span><span class="p">):</span>
-    <span class="c1"># 内存受限型算子优先融合</span>
-    <span class="k">if</span> <span class="n">is_memory_bound</span><span class="p">(</span><span class="n">op1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_memory_bound</span><span class="p">(</span><span class="n">op2</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
+<pre class="codehilite"><code class="language-python"># 融合决策树
+def should_fuse(op1, op2, hardware):
+    # 内存受限型算子优先融合
+    if is_memory_bound(op1) and is_memory_bound(op2):
+        return True
 
-    <span class="c1"># 计算受限型算子考虑硬件能力</span>
-    <span class="k">if</span> <span class="n">is_compute_bound</span><span class="p">(</span><span class="n">op1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_compute_bound</span><span class="p">(</span><span class="n">op2</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">hardware</span><span class="o">.</span><span class="n">compute_units</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    # 计算受限型算子考虑硬件能力
+    if is_compute_bound(op1) and is_compute_bound(op2):
+        return hardware.compute_units &gt; threshold
 
-    <span class="c1"># 混合型需要cost model评估</span>
-    <span class="k">return</span> <span class="n">cost_model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">baseline</span>
-</code></pre></div>
+    # 混合型需要cost model评估
+    return cost_model.evaluate(op1, op2) &lt; baseline
+</code></pre>
 
 <h3 id="42">4.2 内存优化技术</h3>
 <h4 id="421">4.2.1 静态内存规划</h4>
-<div class="codehilite"><pre><span></span><code>内存分配时间线：
+<pre class="codehilite"><code>内存分配时间线：
 时刻 T0    T1    T2    T3    T4    T5
 ┌─────┬─────┬─────┬─────┬─────┬─────┐
 │  A  │  A  │     │     │  E  │  E  │ 100MB
@@ -997,29 +997,29 @@ Kernel启动：3次             Kernel启动：1次
 └─────┴─────┴─────┴─────┴─────┴─────┘
 
 峰值内存：175MB → 优化后：100MB（复用）
-</code></pre></div>
+</code></pre>
 
 <h4 id="422">4.2.2 动态内存池</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DynamicMemoryPool</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total_size</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 可用内存块</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">allocated</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 已分配映射</span>
+<pre class="codehilite"><code class="language-python">class DynamicMemoryPool:
+    def __init__(self, total_size):
+        self.blocks = []  # 可用内存块
+        self.allocated = {}  # 已分配映射
 
-    <span class="k">def</span> <span class="nf">allocate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">lifetime</span><span class="p">):</span>
-        <span class="c1"># 最佳适配算法</span>
-        <span class="n">best_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_best_fit</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">best_block</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_block</span><span class="p">(</span><span class="n">best_block</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compact_and_retry</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    def allocate(self, size, lifetime):
+        # 最佳适配算法
+        best_block = self.find_best_fit(size)
+        if best_block:
+            return self.split_block(best_block, size)
+        else:
+            return self.compact_and_retry(size)
 
-    <span class="k">def</span> <span class="nf">free</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ptr</span><span class="p">):</span>
-        <span class="c1"># 合并相邻空闲块</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">merge_adjacent_blocks</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
-</code></pre></div>
+    def free(self, ptr):
+        # 合并相邻空闲块
+        self.merge_adjacent_blocks(ptr)
+</code></pre>
 
 <h4 id="423">4.2.3 零拷贝优化</h4>
-<div class="codehilite"><pre><span></span><code>传统流程：                 零拷贝流程：
+<pre class="codehilite"><code>传统流程：                 零拷贝流程：
 ┌──────┐                 ┌──────┐
 │ CPU  │ ─memcpy→       │ CPU  │
 │Memory│                 │Memory│
@@ -1031,11 +1031,11 @@ Kernel启动：3次             Kernel启动：1次
 └──────┘                 │ GPU  │
                          │直接访问│
                          └──────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="43">4.3 芯片特定内存架构优化</h3>
 <h4 id="431-nvidia-gpu">4.3.1 NVIDIA GPU内存层次</h4>
-<div class="codehilite"><pre><span></span><code>内存层次结构：
+<pre class="codehilite"><code>内存层次结构：
 ┌────────────────────────────────┐
 │  寄存器 (Register)              │ 256KB/SM
 │  延迟：1 cycle                  │
@@ -1052,7 +1052,7 @@ Kernel启动：3次             Kernel启动：1次
 │  全局内存 (HBM)                │ 32GB
 │  延迟：~500 cycles             │
 └────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>优化策略：</p>
 <ul>
@@ -1061,7 +1061,7 @@ Kernel启动：3次             Kernel启动：1次
 <li>小矩阵运算使用寄存器blocking</li>
 </ul>
 <h4 id="432-bpu">4.3.2 地平线BPU内存优化</h4>
-<div class="codehilite"><pre><span></span><code>BPU内存架构：
+<pre class="codehilite"><code>BPU内存架构：
 ┌─────────────────────────┐
 │   SRAM缓存阵列          │
 │  ┌───┬───┬───┬───┐    │
@@ -1081,11 +1081,11 @@ Kernel启动：3次             Kernel启动：1次
 - Tile-based计算减少DDR访问
 - 流水线预取隐藏延迟
 - 自适应数据复用策略
-</code></pre></div>
+</code></pre>
 
 <h3 id="44">4.4 实际优化案例</h3>
 <h4 id="441-transformer">4.4.1 Transformer模型内存优化</h4>
-<div class="codehilite"><pre><span></span><code>优化前后对比（BERT-Base）：
+<pre class="codehilite"><code>优化前后对比（BERT-Base）：
 ┌──────────────────────────────────────┐
 │ 优化技术        │ 内存占用 │ 速度提升 │
 ├────────────────┼─────────┼─────────┤
@@ -1095,35 +1095,35 @@ Kernel启动：3次             Kernel启动：1次
 │ +Flash Attention│ 2.5GB   │ 2.1x    │
 │ +量化(INT8)     │ 1.3GB   │ 3.5x    │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="442-resnet50">4.4.2 卷积网络优化（ResNet50）</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Winograd快速卷积（3x3卷积）</span>
-<span class="c1"># 理论计算量降低：2.25倍</span>
+<pre class="codehilite"><code class="language-python"># Winograd快速卷积（3x3卷积）
+# 理论计算量降低：2.25倍
 
-<span class="k">def</span> <span class="nf">winograd_conv3x3</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
-    <span class="c1"># 输入变换</span>
-    <span class="n">V</span> <span class="o">=</span> <span class="n">transform_input</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>  <span class="c1"># 4x4 tiles</span>
+def winograd_conv3x3(input, weight):
+    # 输入变换
+    V = transform_input(input)  # 4x4 tiles
 
-    <span class="c1"># 权重变换（可预计算）</span>
-    <span class="n">U</span> <span class="o">=</span> <span class="n">transform_weight</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+    # 权重变换（可预计算）
+    U = transform_weight(weight)
 
-    <span class="c1"># 逐点乘法（主要计算）</span>
-    <span class="n">M</span> <span class="o">=</span> <span class="n">V</span> <span class="o">*</span> <span class="n">U</span>  <span class="c1"># element-wise</span>
+    # 逐点乘法（主要计算）
+    M = V * U  # element-wise
 
-    <span class="c1"># 输出变换</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">transform_output</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    # 输出变换
+    output = transform_output(M)
 
-    <span class="k">return</span> <span class="n">output</span>
+    return output
 
-<span class="c1"># 内存访问模式优化</span>
-<span class="c1"># NCHW → NCHWc (c=8 for AVX-512)</span>
-</code></pre></div>
+# 内存访问模式优化
+# NCHW → NCHWc (c=8 for AVX-512)
+</code></pre>
 
 <h2 id="5-bev">5. BEV感知算法的硬件加速</h2>
 <h3 id="51-bev">5.1 BEV算法架构演进</h3>
 <h4 id="511-bev">5.1.1 主流BEV算法对比</h4>
-<div class="codehilite"><pre><span></span><code>BEV算法发展时间线：
+<pre class="codehilite"><code>BEV算法发展时间线：
 2020: LSS (Lift-Splat-Shoot)
       ↓
 2021: BEVDet / DETR3D
@@ -1135,25 +1135,25 @@ Kernel启动：3次             Kernel启动：1次
 2024: StreamPETR (流式处理)
       ↓
 2025: Occupancy Network (占据网络)
-</code></pre></div>
+</code></pre>
 
 <h4 id="512">5.1.2 计算复杂度分析</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">各模块计算量分布</span><span class="err">（</span><span class="n">BEVFormer为例</span><span class="err">）：</span>
-<span class="err">┌─────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">模块</span><span class="w">              </span><span class="err">│</span><span class="w"> </span><span class="n">FLOPs</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">占比</span><span class="w">   </span><span class="err">│</span>
-<span class="err">├──────────────────┼───────┼────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">Backbone</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">88</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">35</span><span class="o">%</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">View</span><span class="w"> </span><span class="n">Transform</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">52</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">21</span><span class="o">%</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">Temporal</span><span class="w"> </span><span class="n">Fusion</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">31</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">12</span><span class="o">%</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">Spatial</span><span class="w"> </span><span class="n">Attention</span><span class="err">│</span><span class="w"> </span><span class="mi">48</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">19</span><span class="o">%</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">Detection</span><span class="w"> </span><span class="n">Head</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">33</span><span class="n">G</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mi">13</span><span class="o">%</span><span class="w">   </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────┘</span>
-<span class="n">总计</span><span class="err">：</span><span class="mi">252</span><span class="w"> </span><span class="n">GFLOPs</span><span class="w"> </span><span class="p">(</span><span class="mi">@1920</span><span class="err">×</span><span class="mi">1080</span><span class="err">×</span><span class="mi">6</span><span class="n">相机</span><span class="p">)</span>
-</code></pre></div>
+<pre class="codehilite"><code>各模块计算量分布（BEVFormer为例）：
+┌─────────────────────────────────────┐
+│ 模块              │ FLOPs │ 占比   │
+├──────────────────┼───────┼────────┤
+│ Image Backbone   │ 88G   │ 35%   │
+│ View Transform   │ 52G   │ 21%   │
+│ Temporal Fusion  │ 31G   │ 12%   │
+│ Spatial Attention│ 48G   │ 19%   │
+│ Detection Head   │ 33G   │ 13%   │
+└─────────────────────────────────────┘
+总计：252 GFLOPs (@1920×1080×6相机)
+</code></pre>
 
 <h3 id="52">5.2 视角变换加速</h3>
 <h4 id="521-lss">5.2.1 LSS深度估计加速</h4>
-<div class="codehilite"><pre><span></span><code>深度概率体积构建：
+<pre class="codehilite"><code>深度概率体积构建：
 ┌────────────────────────────────┐
 │   相机图像 (H×W×3)              │
 │        ↓                       │
@@ -1171,33 +1171,33 @@ Kernel启动：3次             Kernel启动：1次
 1. 深度假设并行计算
 2. 稀疏voxel索引
 3. 原子操作优化
-</code></pre></div>
+</code></pre>
 
 <h4 id="522-transformer">5.2.2 Transformer视角变换</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Deformable Attention加速</span>
-<span class="k">class</span> <span class="nc">DeformableAttentionAccel</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sample_locations_kernel</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        __global__ void sample_3d_points(</span>
-<span class="s2">            float* image_feats,    // 输入特征</span>
-<span class="s2">            float* ref_points,     // 参考点</span>
-<span class="s2">            float* offsets,        // 可学习偏移</span>
-<span class="s2">            float* output          // 输出</span>
-<span class="s2">        ) {</span>
-<span class="s2">            int idx = blockIdx.x * blockDim.x + threadIdx.x;</span>
-<span class="s2">            // 3D→2D投影</span>
-<span class="s2">            float2 proj = project_3d_to_2d(ref_points[idx]);</span>
-<span class="s2">            // 可变形采样</span>
-<span class="s2">            float2 sample_loc = proj + offsets[idx];</span>
-<span class="s2">            // 双线性插值</span>
-<span class="s2">            output[idx] = bilinear_sample(image_feats, sample_loc);</span>
-<span class="s2">        }</span>
-<span class="s2">        &quot;&quot;&quot;</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-python"># Deformable Attention加速
+class DeformableAttentionAccel:
+    def __init__(self):
+        self.sample_locations_kernel = &quot;&quot;&quot;
+        __global__ void sample_3d_points(
+            float* image_feats,    // 输入特征
+            float* ref_points,     // 参考点
+            float* offsets,        // 可学习偏移
+            float* output          // 输出
+        ) {
+            int idx = blockIdx.x * blockDim.x + threadIdx.x;
+            // 3D→2D投影
+            float2 proj = project_3d_to_2d(ref_points[idx]);
+            // 可变形采样
+            float2 sample_loc = proj + offsets[idx];
+            // 双线性插值
+            output[idx] = bilinear_sample(image_feats, sample_loc);
+        }
+        &quot;&quot;&quot;
+</code></pre>
 
 <h3 id="53">5.3 时序融合优化</h3>
 <h4 id="531">5.3.1 历史特征对齐</h4>
-<div class="codehilite"><pre><span></span><code>时序对齐流程：
+<pre class="codehilite"><code>时序对齐流程：
 T-1帧BEV ─────┐
               ↓ 运动补偿
          ┌─────────┐
@@ -1211,30 +1211,30 @@ T帧BEV ────→ Fusion → 输出BEV
 - 运动场预计算
 - 稀疏光流加速
 - 缓存历史特征
-</code></pre></div>
+</code></pre>
 
 <h4 id="532">5.3.2 内存效率优化</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">TemporalBufferManager</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">history_len</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">history_len</span> <span class="o">=</span> <span class="n">history_len</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ring_buffer</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 环形缓冲区</span>
+<pre class="codehilite"><code class="language-python">class TemporalBufferManager:
+    def __init__(self, history_len=4):
+        self.history_len = history_len
+        self.ring_buffer = []  # 环形缓冲区
 
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_bev</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ring_buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history_len</span><span class="p">:</span>
-            <span class="c1"># 复用最老的内存</span>
-            <span class="n">oldest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring_buffer</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">recycle_memory</span><span class="p">(</span><span class="n">oldest</span><span class="p">)</span>
+    def update(self, current_bev):
+        if len(self.ring_buffer) &gt;= self.history_len:
+            # 复用最老的内存
+            oldest = self.ring_buffer.pop(0)
+            self.recycle_memory(oldest)
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ring_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_bev</span><span class="p">)</span>
+        self.ring_buffer.append(current_bev)
 
-    <span class="k">def</span> <span class="nf">get_temporal_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># 返回对齐后的时序特征</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">align_features</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ring_buffer</span><span class="p">)</span>
-</code></pre></div>
+    def get_temporal_features(self):
+        # 返回对齐后的时序特征
+        return self.align_features(self.ring_buffer)
+</code></pre>
 
 <h3 id="54">5.4 多模态融合加速</h3>
 <h4 id="541-">5.4.1 相机-激光雷达融合</h4>
-<div class="codehilite"><pre><span></span><code>BEVFusion架构：
+<pre class="codehilite"><code>BEVFusion架构：
 ┌─────────────┐    ┌─────────────┐
 │Camera Branch│    │LiDAR Branch │
 │   ResNet    │    │PointPillars│
@@ -1259,31 +1259,31 @@ T帧BEV ────→ Fusion → 输出BEV
 - Early Fusion: 原始数据级，计算量大
 - Mid Fusion: 特征级，平衡选择
 - Late Fusion: 决策级，精度受限
-</code></pre></div>
+</code></pre>
 
 <h4 id="542">5.4.2 异构计算调度</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># CPU-GPU-NPU协同调度</span>
-<span class="k">class</span> <span class="nc">HeterogeneousScheduler</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_graph</span><span class="p">):</span>
-        <span class="n">cpu_tasks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 预处理、后处理</span>
-        <span class="n">gpu_tasks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 主干网络</span>
-        <span class="n">npu_tasks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 特定算子</span>
+<pre class="codehilite"><code class="language-python"># CPU-GPU-NPU协同调度
+class HeterogeneousScheduler:
+    def schedule(self, task_graph):
+        cpu_tasks = []  # 预处理、后处理
+        gpu_tasks = []  # 主干网络
+        npu_tasks = []  # 特定算子
 
-        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">task_graph</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;preprocessing&#39;</span><span class="p">:</span>
-                <span class="n">cpu_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;backbone&#39;</span><span class="p">:</span>
-                <span class="n">gpu_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;nms&#39;</span> <span class="ow">or</span> <span class="n">task</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;sparse_conv&#39;</span><span class="p">:</span>
-                <span class="n">npu_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        for task in task_graph:
+            if task.type == 'preprocessing':
+                cpu_tasks.append(task)
+            elif task.type == 'backbone':
+                gpu_tasks.append(task)
+            elif task.type == 'nms' or task.type == 'sparse_conv':
+                npu_tasks.append(task)
 
-        <span class="c1"># 并行执行</span>
-        <span class="k">return</span> <span class="n">parallel_execute</span><span class="p">(</span><span class="n">cpu_tasks</span><span class="p">,</span> <span class="n">gpu_tasks</span><span class="p">,</span> <span class="n">npu_tasks</span><span class="p">)</span>
-</code></pre></div>
+        # 并行执行
+        return parallel_execute(cpu_tasks, gpu_tasks, npu_tasks)
+</code></pre>
 
 <h3 id="55">5.5 硬件专用优化</h3>
 <h4 id="551-nvidia-bev">5.5.1 NVIDIA BEV加速库</h4>
-<div class="codehilite"><pre><span></span><code>TensorRT BEV插件：
+<pre class="codehilite"><code>TensorRT BEV插件：
 ┌──────────────────────────────────┐
 │ 插件名称          │ 加速倍数      │
 ├──────────────────┼──────────────┤
@@ -1292,42 +1292,42 @@ T帧BEV ────→ Fusion → 输出BEV
 │ VoxelPlugin      │ 4.1x        │
 │ MultiscalePlugin │ 2.5x        │
 └──────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="552-bev">5.5.2 地平线BEV专用指令</h4>
-<div class="codehilite"><pre><span></span><code>BPU BEV扩展指令集：
+<pre class="codehilite"><code>BPU BEV扩展指令集：
 
-<span class="k">-</span> VOXEL_PROJ：3D→2D投影加速
-<span class="k">-</span> DEPTH_ARGMAX：深度最大值索引
-<span class="k">-</span> BILINEAR_GRID：网格采样优化
-<span class="k">-</span> SPARSE_CONV3D：稀疏3D卷积
+- VOXEL_PROJ：3D→2D投影加速
+- DEPTH_ARGMAX：深度最大值索引
+- BILINEAR_GRID：网格采样优化
+- SPARSE_CONV3D：稀疏3D卷积
 
 性能提升：
 标准实现：15ms/帧
 BPU优化：6ms/帧
-</code></pre></div>
+</code></pre>
 
 <h2 id="6">6. 端到端模型的部署挑战</h2>
 <h3 id="61">6.1 端到端自动驾驶架构演进</h3>
 <h4 id="611">6.1.1 从模块化到端到端</h4>
-<div class="codehilite"><pre><span></span><code>传统模块化架构：<span class="w">                </span>端到端架构：
-┌──────────┐<span class="w">                  </span>┌──────────────┐
-│<span class="w">  </span>感知<span class="w">     </span>│<span class="w">                  </span>│<span class="w">              </span>│
-├──────────┤<span class="w">                  </span>│<span class="w">   </span>统一网络<span class="w">    </span>│
-│<span class="w">  </span>预测<span class="w">     </span>│<span class="w">      </span>→<span class="w">           </span>│<span class="w">  </span><span class="ss">(</span><span class="k">End</span><span class="o">-</span><span class="nv">to</span><span class="o">-</span><span class="k">End</span><span class="ss">)</span><span class="w"> </span>│
-├──────────┤<span class="w">                  </span>│<span class="w">              </span>│
-│<span class="w">  </span>规划<span class="w">     </span>│<span class="w">                  </span>└──────────────┘
-├──────────┤<span class="w">                        </span>↓
-│<span class="w">  </span>控制<span class="w">     </span>│<span class="w">                  </span>直接输出控制信号
-└──────────┘<span class="w">                  </span>
+<pre class="codehilite"><code>传统模块化架构：                端到端架构：
+┌──────────┐                  ┌──────────────┐
+│  感知     │                  │              │
+├──────────┤                  │   统一网络    │
+│  预测     │      →           │  (End-to-End) │
+├──────────┤                  │              │
+│  规划     │                  └──────────────┘
+├──────────┤                        ↓
+│  控制     │                  直接输出控制信号
+└──────────┘                  
 
-优势：<span class="w">                         </span>挑战：
-✓<span class="w"> </span>可解释性强<span class="w">                   </span>×<span class="w"> </span>黑盒不可解释
-✓<span class="w"> </span>模块独立优化<span class="w">                 </span>×<span class="w"> </span>需要海量数据
-✓<span class="w"> </span>故障可定位<span class="w">                   </span>×<span class="w"> </span>难以调试
-✗<span class="w"> </span>级联误差<span class="w">                     </span>✓<span class="w"> </span>全局最优
-✗<span class="w"> </span>接口损失信息<span class="w">                 </span>✓<span class="w"> </span>端到端优化
-</code></pre></div>
+优势：                         挑战：
+✓ 可解释性强                   × 黑盒不可解释
+✓ 模块独立优化                 × 需要海量数据
+✓ 故障可定位                   × 难以调试
+✗ 级联误差                     ✓ 全局最优
+✗ 接口损失信息                 ✓ 端到端优化
+</code></pre>
 
 <h4 id="612">6.1.2 主流端到端方案对比</h4>
 <p>| 方案 | 输入模态 | 网络架构 | 输出 | 算力需求 |</p>
@@ -1374,7 +1374,7 @@ BPU优化：6ms/帧
 </table>
 <h3 id="62">6.2 大模型部署优化</h3>
 <h4 id="621">6.2.1 模型压缩技术栈</h4>
-<div class="codehilite"><pre><span></span><code>端到端模型压缩流程：
+<pre class="codehilite"><code>端到端模型压缩流程：
 ┌────────────────────────────────────────┐
 │  原始模型 (10B参数，40GB)                │
 └────────────────────────────────────────┘
@@ -1394,42 +1394,42 @@ BPU优化：6ms/帧
 ┌────────────────────────────────────────┐
 │  部署优化 → 实时推理 (&lt;50ms)             │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="622">6.2.2 分布式推理架构</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DistributedInference</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">num_devices</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">,</span> <span class="s1">&#39;cuda:1&#39;</span><span class="p">,</span> <span class="s1">&#39;cuda:2&#39;</span><span class="p">,</span> <span class="s1">&#39;cuda:3&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_shards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shard_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<pre class="codehilite"><code class="language-python">class DistributedInference:
+    def __init__(self, model, num_devices=4):
+        self.devices = ['cuda:0', 'cuda:1', 'cuda:2', 'cuda:3']
+        self.model_shards = self.shard_model(model)
 
-    <span class="k">def</span> <span class="nf">shard_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-        <span class="c1"># 模型并行切分</span>
-        <span class="n">layers_per_device</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">)</span>
-        <span class="n">shards</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">device</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">):</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">layers_per_device</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">layers_per_device</span>
-            <span class="n">shard</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-            <span class="n">shards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shard</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">shards</span>
+    def shard_model(self, model):
+        # 模型并行切分
+        layers_per_device = len(model.layers) // len(self.devices)
+        shards = []
+        for i, device in enumerate(self.devices):
+            start = i * layers_per_device
+            end = start + layers_per_device
+            shard = model.layers[start:end].to(device)
+            shards.append(shard)
+        return shards
 
-    <span class="k">def</span> <span class="nf">pipeline_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_batch</span><span class="p">):</span>
-        <span class="c1"># 流水线并行</span>
-        <span class="n">micro_batches</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">input_batch</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+    def pipeline_forward(self, input_batch):
+        # 流水线并行
+        micro_batches = torch.chunk(input_batch, 4)
+        outputs = []
 
-        <span class="k">for</span> <span class="n">micro_batch</span> <span class="ow">in</span> <span class="n">micro_batches</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">micro_batch</span>
-            <span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_shards</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">shard</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-            <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        for micro_batch in micro_batches:
+            x = micro_batch
+            for shard in self.model_shards:
+                x = shard(x)
+            outputs.append(x)
 
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
-</code></pre></div>
+        return torch.cat(outputs)
+</code></pre>
 
 <h3 id="63">6.3 实时性保障机制</h3>
 <h4 id="631">6.3.1 延迟分解与优化</h4>
-<div class="codehilite"><pre><span></span><code>端到端推理延迟分解（目标&lt;100ms）：
+<pre class="codehilite"><code>端到端推理延迟分解（目标&lt;100ms）：
 ┌──────────────────────────────────────┐
 │ 阶段           │ 延迟   │ 优化方法   │
 ├───────────────┼────────┼───────────┤
@@ -1442,38 +1442,38 @@ BPU优化：6ms/帧
 ├───────────────┼────────┼───────────┤
 │ 总计          │ 80ms  │            │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="632">6.3.2 动态计算图优化</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DynamicComputeOptimizer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scenario_configs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;highway&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;skip_layers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>  <span class="c1"># 跳过部分层</span>
-                <span class="s1">&#39;resolution&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">960</span><span class="p">,</span> <span class="mi">540</span><span class="p">),</span>    <span class="c1"># 降低分辨率</span>
-                <span class="s1">&#39;fps&#39;</span><span class="p">:</span> <span class="mi">20</span>                    <span class="c1"># 降低帧率</span>
-            <span class="p">},</span>
-            <span class="s1">&#39;urban&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;skip_layers&#39;</span><span class="p">:</span> <span class="p">[],</span>
-                <span class="s1">&#39;resolution&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1920</span><span class="p">,</span> <span class="mi">1080</span><span class="p">),</span>
-                <span class="s1">&#39;fps&#39;</span><span class="p">:</span> <span class="mi">30</span>
-            <span class="p">},</span>
-            <span class="s1">&#39;parking&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;skip_layers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-                <span class="s1">&#39;resolution&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
-                <span class="s1">&#39;fps&#39;</span><span class="p">:</span> <span class="mi">10</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<pre class="codehilite"><code class="language-python">class DynamicComputeOptimizer:
+    def __init__(self):
+        self.scenario_configs = {
+            'highway': {
+                'skip_layers': [3, 7, 11],  # 跳过部分层
+                'resolution': (960, 540),    # 降低分辨率
+                'fps': 20                    # 降低帧率
+            },
+            'urban': {
+                'skip_layers': [],
+                'resolution': (1920, 1080),
+                'fps': 30
+            },
+            'parking': {
+                'skip_layers': [5, 10, 15, 20],
+                'resolution': (640, 480),
+                'fps': 10
+            }
+        }
 
-    <span class="k">def</span> <span class="nf">optimize_for_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">scenario</span><span class="p">):</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_configs</span><span class="p">[</span><span class="n">scenario</span><span class="p">]</span>
-        <span class="c1"># 动态调整模型结构</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_config</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-</code></pre></div>
+    def optimize_for_scenario(self, model, scenario):
+        config = self.scenario_configs[scenario]
+        # 动态调整模型结构
+        return self.apply_config(model, config)
+</code></pre>
 
 <h3 id="64">6.4 内存与带宽优化</h3>
 <h4 id="641-kv-cache">6.4.1 KV-Cache优化</h4>
-<div class="codehilite"><pre><span></span><code>Transformer KV-Cache管理：
+<pre class="codehilite"><code>Transformer KV-Cache管理：
 ┌──────────────────────────────────────┐
 │ 标准实现：每帧重新计算                 │
 │ 内存：O(L×N×D)，计算：O(L×N²×D)       │
@@ -1486,43 +1486,43 @@ BPU优化：6ms/帧
 └──────────────────────────────────────┘
 
 L:层数, N:序列长度, D:维度, T:时间步, W:窗口
-</code></pre></div>
+</code></pre>
 
 <h4 id="642-flash-attention">6.4.2 Flash Attention实现</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Flash Attention核心思想：分块计算减少HBM访问</span>
-<span class="k">def</span> <span class="nf">flash_attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Q, K, V: [batch, heads, seq_len, dim]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">seq_len</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">num_blocks</span> <span class="o">=</span> <span class="p">(</span><span class="n">seq_len</span> <span class="o">+</span> <span class="n">block_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">block_size</span>
+<pre class="codehilite"><code class="language-python"># Flash Attention核心思想：分块计算减少HBM访问
+def flash_attention(Q, K, V, block_size=256):
+    &quot;&quot;&quot;
+    Q, K, V: [batch, heads, seq_len, dim]
+    &quot;&quot;&quot;
+    seq_len = Q.shape[2]
+    num_blocks = (seq_len + block_size - 1) // block_size
 
-    <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    output = torch.zeros_like(Q)
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blocks</span><span class="p">):</span>
-        <span class="n">q_block</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="o">*</span><span class="n">block_size</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block_size</span><span class="p">]</span>
+    for i in range(num_blocks):
+        q_block = Q[:, :, i*block_size:(i+1)*block_size]
 
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blocks</span><span class="p">):</span>
-            <span class="n">k_block</span> <span class="o">=</span> <span class="n">K</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">j</span><span class="o">*</span><span class="n">block_size</span><span class="p">:(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block_size</span><span class="p">]</span>
-            <span class="n">v_block</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">j</span><span class="o">*</span><span class="n">block_size</span><span class="p">:(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block_size</span><span class="p">]</span>
+        for j in range(num_blocks):
+            k_block = K[:, :, j*block_size:(j+1)*block_size]
+            v_block = V[:, :, j*block_size:(j+1)*block_size]
 
-            <span class="c1"># 在SRAM中计算</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">q_block</span><span class="p">,</span> <span class="n">k_block</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-            <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            # 在SRAM中计算
+            scores = torch.matmul(q_block, k_block.transpose(-2, -1))
+            scores = scores / math.sqrt(Q.shape[-1])
 
-            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>  <span class="c1"># 因果mask</span>
-                <span class="n">scores</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">))</span>
+            if i &gt; j:  # 因果mask
+                scores.fill_(-float('inf'))
 
-            <span class="n">attn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">output</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="o">*</span><span class="n">block_size</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block_size</span><span class="p">]</span> <span class="o">+=</span> \
-                <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">attn</span><span class="p">,</span> <span class="n">v_block</span><span class="p">)</span>
+            attn = torch.softmax(scores, dim=-1)
+            output[:, :, i*block_size:(i+1)*block_size] += \
+                torch.matmul(attn, v_block)
 
-    <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
+    return output
+</code></pre>
 
 <h3 id="65">6.5 硬件适配策略</h3>
 <h4 id="651">6.5.1 多芯片负载均衡</h4>
-<div class="codehilite"><pre><span></span><code>多芯片部署架构：
+<pre class="codehilite"><code>多芯片部署架构：
 ┌─────────────────────────────────────┐
 │          主控芯片 (Orin-X)           │
 │  ┌─────────────────────────────┐   │
@@ -1542,51 +1542,51 @@ L:层数, N:序列长度, D:维度, T:时间步, W:窗口
 - 动态任务迁移
 - 负载预测调度
 - 热点检测与分散
-</code></pre></div>
+</code></pre>
 
 <h4 id="652">6.5.2 芯片特定优化案例</h4>
 <p><strong>Tesla FSD芯片优化：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 利用双NPU架构</span>
-<span class="k">class</span> <span class="nc">TeslaFSDOptimizer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">npu_a</span> <span class="o">=</span> <span class="n">NPU</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 主网络前半部分</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">npu_b</span> <span class="o">=</span> <span class="n">NPU</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 主网络后半部分</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sram_buffer</span> <span class="o">=</span> <span class="n">SharedMemory</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;256MB&#39;</span><span class="p">)</span>
+<pre class="codehilite"><code class="language-python"># 利用双NPU架构
+class TeslaFSDOptimizer:
+    def __init__(self):
+        self.npu_a = NPU(0)  # 主网络前半部分
+        self.npu_b = NPU(1)  # 主网络后半部分
+        self.sram_buffer = SharedMemory(size='256MB')
 
-    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
-        <span class="c1"># NPU A处理</span>
-        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npu_a</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    def inference(self, input):
+        # NPU A处理
+        features = self.npu_a.compute(input)
 
-        <span class="c1"># 通过片上SRAM传递</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sram_buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        # 通过片上SRAM传递
+        self.sram_buffer.write(features)
 
-        <span class="c1"># NPU B处理</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npu_b</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sram_buffer</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        # NPU B处理
+        output = self.npu_b.compute(self.sram_buffer.read())
 
-        <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
+        return output
+</code></pre>
 
 <p><strong>地平线J6优化：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># BPU矩阵引擎优化</span>
-<span class="k">class</span> <span class="nc">HorizonJ6Optimizer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bpu_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">BPU</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<pre class="codehilite"><code class="language-python"># BPU矩阵引擎优化
+class HorizonJ6Optimizer:
+    def __init__(self):
+        self.bpu_clusters = [BPU(i) for i in range(4)]
 
-    <span class="k">def</span> <span class="nf">optimize_transformer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-        <span class="c1"># 将attention heads分配到不同BPU</span>
-        <span class="n">heads_per_bpu</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">//</span> <span class="mi">4</span>
+    def optimize_transformer(self, model):
+        # 将attention heads分配到不同BPU
+        heads_per_bpu = model.num_heads // 4
 
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">bpu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bpu_clusters</span><span class="p">):</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">heads_per_bpu</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">heads_per_bpu</span>
-            <span class="n">bpu</span><span class="o">.</span><span class="n">assign_heads</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+        for i, bpu in enumerate(self.bpu_clusters):
+            start = i * heads_per_bpu
+            end = start + heads_per_bpu
+            bpu.assign_heads(model.heads[start:end])
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel_compute</span>
-</code></pre></div>
+        return self.parallel_compute
+</code></pre>
 
 <h3 id="66">6.6 部署验证与安全</h3>
 <h4 id="661">6.6.1 模型等价性验证</h4>
-<div class="codehilite"><pre><span></span><code>验证流程：
+<pre class="codehilite"><code>验证流程：
 ┌──────────────┐     ┌──────────────┐
 │  浮点模型     │     │  量化模型     │
 │  (Golden)    │     │  (Deploy)    │
@@ -1605,36 +1605,36 @@ L:层数, N:序列长度, D:维度, T:时间步, W:窗口
 │  延迟满足: ✓                      │
 │  安全验证: ASIL-B                 │
 └──────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="662">6.6.2 故障安全机制</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SafetyMonitor</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">confidence_threshold</span> <span class="o">=</span> <span class="mf">0.85</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fallback_model</span> <span class="o">=</span> <span class="n">LightweightModel</span><span class="p">()</span>
+<pre class="codehilite"><code class="language-python">class SafetyMonitor:
+    def __init__(self):
+        self.confidence_threshold = 0.85
+        self.fallback_model = LightweightModel()
 
-    <span class="k">def</span> <span class="nf">safe_inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
-        <span class="c1"># 主模型推理</span>
-        <span class="n">output</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    def safe_inference(self, input):
+        # 主模型推理
+        output, confidence = self.main_model(input)
 
-        <span class="c1"># 置信度检查</span>
-        <span class="k">if</span> <span class="n">confidence</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">confidence_threshold</span><span class="p">:</span>
-            <span class="c1"># 回退到轻量模型</span>
-            <span class="n">fallback_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fallback_model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        # 置信度检查
+        if confidence &lt; self.confidence_threshold:
+            # 回退到轻量模型
+            fallback_output = self.fallback_model(input)
 
-            <span class="c1"># 一致性检查</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_consistency</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">fallback_output</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">output</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># 触发安全模式</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_mode_action</span><span class="p">()</span>
+            # 一致性检查
+            if self.check_consistency(output, fallback_output):
+                return output
+            else:
+                # 触发安全模式
+                return self.safe_mode_action()
 
-        <span class="k">return</span> <span class="n">output</span>
-</code></pre></div>
+        return output
+</code></pre>
 
 <h3 id="67">6.7 未来趋势展望</h3>
 <h4 id="671">6.7.1 世界模型与生成式架构</h4>
-<div class="codehilite"><pre><span></span><code>下一代端到端架构预测：
+<pre class="codehilite"><code>下一代端到端架构预测：
 ┌─────────────────────────────────────┐
 │         世界模型 (2025-2027)         │
 ├─────────────────────────────────────┤
@@ -1650,10 +1650,10 @@ L:层数, N:序列长度, D:维度, T:时间步, W:窗口
 │ • &gt;100GB/s内存带宽                  │
 │ • 专用生成加速器                     │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="672">6.7.2 神经形态计算展望</h4>
-<div class="codehilite"><pre><span></span><code>事件驱动架构优势：
+<pre class="codehilite"><code>事件驱动架构优势：
 传统架构：              神经形态架构：
 持续计算                事件触发计算
 功耗：100W             功耗：&lt;10W
@@ -1665,7 +1665,7 @@ L:层数, N:序列长度, D:维度, T:时间步, W:窗口
 - 超低功耗边缘部署
 - 实时异步处理
 - 生物启发学习
-</code></pre></div>
+</code></pre>
 
 <h2 id="_3">总结</h2>
 <p>算法与芯片的协同优化是实现高效自动驾驶系统的关键。从量化、稀疏化到编译器优化，从BEV感知到端到端模型，每一个环节都需要软硬件的深度配合。随着模型规模的增长和算法复杂度的提升，这种协同优化将变得更加重要。</p>

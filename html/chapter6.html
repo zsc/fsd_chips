@@ -192,7 +192,7 @@
 <li><strong>场景定制优化</strong>：针对中国复杂路况的专门优化</li>
 <li><strong>成本极致控制</strong>：通过架构创新实现更高性价比</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │              中国自动驾驶芯片厂商格局（2023-2024）            │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -212,7 +212,7 @@
 │   └── 黑芝麻 A1000L (16 TOPS)                              │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="62-6">6.2 地平线征程6：算力新标杆</h2>
 <h3 id="621-bpu">6.2.1 架构革新：第三代BPU贝叶斯架构</h3>
@@ -224,7 +224,7 @@
 <li><strong>第三代BPU（贝叶斯架构）</strong>：征程6采用，原生支持大模型，算力560 TOPS</li>
 </ul>
 <p>贝叶斯架构的命名并非偶然，它体现了地平线对概率计算和不确定性推理的重视。在自动驾驶场景中，处理不确定性是核心挑战，贝叶斯架构通过硬件层面的概率计算支持，大幅提升了模型的鲁棒性和泛化能力。</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                 征程6 (J6) 芯片架构                           │
 ├─────────────────────────────────────────────────────────────┤
 │                                                               │
@@ -253,7 +253,7 @@
 │  └─────────────────────────────────────────────────────┘    │
 │                                                               │
 └─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="622-bpu">6.2.2 BPU贝叶斯架构详解</h3>
 <p>第三代BPU架构引入了多项创新技术：</p>
@@ -294,11 +294,11 @@
 <p><strong>数据流架构优化</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="err">输入数据流</span><span class="o">:</span>
-<span class="w">  </span><span class="n">Camera</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">ISP</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">特征提取</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">特征金字塔</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">检测头</span>
-<span class="w">     </span><span class="err">↓</span><span class="w">                </span><span class="err">↓</span><span class="w">            </span><span class="err">↓</span><span class="w">           </span><span class="err">↓</span>
-<span class="w">  </span><span class="err">硬件加速</span><span class="o">:</span><span class="w"> </span><span class="err">去噪降噪</span><span class="w">  </span><span class="err">稀疏</span><span class="n">CNN</span><span class="w">    </span><span class="n">FPN融合</span><span class="w">    </span><span class="n">NMS加速</span>
-</code></pre></div>
+<pre class="codehilite"><code>输入数据流:
+  Camera → ISP → 特征提取 → 特征金字塔 → 检测头
+     ↓                ↓            ↓           ↓
+  硬件加速: 去噪降噪  稀疏CNN    FPN融合    NMS加速
+</code></pre>
 
 <h3 id="623">6.2.3 产品矩阵与应用定位</h3>
 <p>| 型号 | 算力 | CPU | 内存 | 功耗 | 应用场景 |</p>
@@ -395,37 +395,37 @@
 <h2 id="63">6.3 黑芝麻武当系列：跨域融合创新</h2>
 <h3 id="631">6.3.1 武当架构哲学</h3>
 <p>黑芝麻智能的武当（Wudang）系列芯片采用独特的"跨域融合"设计理念，将智能驾驶、智能座舱、中央网关三大域的计算需求整合到统一架构中。</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌──────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">              </span><span class="n">武当C1290</span><span class="w"> </span><span class="n">跨域融合架构</span><span class="w">                        </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">                                                            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────────────┐</span><span class="w">  </span><span class="err">┌──────────────────┐</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">智驾计算域</span><span class="w">      </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">座舱计算域</span><span class="w">      </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌────────────┐</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌────────────┐</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">NeuralIQ</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">GPU</span><span class="w"> </span><span class="n">Mali</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">NPU</span><span class="err">×</span><span class="mi">4</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">G78MP24</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">400</span><span class="w"> </span><span class="n">TOPS</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">24</span><span class="w"> </span><span class="n">Cores</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└────────────┘</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└────────────┘</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌────────────┐</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌────────────┐</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">ISP</span><span class="w"> </span><span class="n">Pipeline</span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">DSP</span><span class="err">×</span><span class="mi">2</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">16</span><span class="n">路4K</span><span class="mi">@30</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">Audio</span><span class="o">/</span><span class="n">Voice</span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└────────────┘</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└────────────┘</span><span class="w">  </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────────┘</span><span class="w">  </span><span class="err">└──────────────────┘</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w">                      </span><span class="err">│</span><span class="w">                         </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────────────────────────────────────┐</span><span class="w">             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">           </span><span class="n">统一内存架构</span><span class="w"> </span><span class="p">(</span><span class="n">UMA</span><span class="p">)</span><span class="w">              </span><span class="err">│</span><span class="w">             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">        </span><span class="mi">64</span><span class="n">GB</span><span class="w"> </span><span class="n">LPDDR5</span><span class="w"> </span><span class="p">@</span><span class="w"> </span><span class="mi">8533</span><span class="w"> </span><span class="n">MT</span><span class="o">/</span><span class="n">s</span><span class="w">           </span><span class="err">│</span><span class="w">             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">         </span><span class="n">带宽</span><span class="o">:</span><span class="w"> </span><span class="mi">273</span><span class="w"> </span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="w">                    </span><span class="err">│</span><span class="w">             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────────────────────────────────┘</span><span class="w">             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">           </span><span class="err">│</span><span class="w">                      </span><span class="err">│</span><span class="w">                         </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────────────┐</span><span class="w">  </span><span class="err">┌──────────────────┐</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">中央处理集群</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">网关与安全</span><span class="w">      </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">ARM</span><span class="w"> </span><span class="n">A78AE</span><span class="err">×</span><span class="mi">8</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">HSM</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Crypto</span><span class="w">    </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">+</span><span class="n">R52</span><span class="err">×</span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="n">锁步</span><span class="p">)</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">CAN</span><span class="o">-</span><span class="n">FD</span><span class="err">×</span><span class="mi">8</span><span class="w">       </span><span class="err">│</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────────┘</span><span class="w">  </span><span class="err">└──────────────────┘</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                            </span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────┐
+│              武当C1290 跨域融合架构                        │
+├──────────────────────────────────────────────────────────┤
+│                                                            │
+│  ┌──────────────────┐  ┌──────────────────┐              │
+│  │   智驾计算域      │  │   座舱计算域      │              │
+│  │  ┌────────────┐  │  │  ┌────────────┐  │              │
+│  │  │ NeuralIQ   │  │  │  │  GPU Mali  │  │              │
+│  │  │  NPU×4     │  │  │  │   G78MP24  │  │              │
+│  │  │ 400 TOPS   │  │  │  │  24 Cores  │  │              │
+│  │  └────────────┘  │  │  └────────────┘  │              │
+│  │  ┌────────────┐  │  │  ┌────────────┐  │              │
+│  │  │ ISP Pipeline│  │  │  │   DSP×2    │  │              │
+│  │  │  16路4K@30  │  │  │  │ Audio/Voice│  │              │
+│  │  └────────────┘  │  │  └────────────┘  │              │
+│  └──────────────────┘  └──────────────────┘              │
+│           │                      │                         │
+│  ┌──────────────────────────────────────────┐             │
+│  │           统一内存架构 (UMA)              │             │
+│  │        64GB LPDDR5 @ 8533 MT/s           │             │
+│  │         带宽: 273 GB/s                    │             │
+│  └──────────────────────────────────────────┘             │
+│           │                      │                         │
+│  ┌──────────────────┐  ┌──────────────────┐              │
+│  │  中央处理集群     │  │   网关与安全      │              │
+│  │  ARM A78AE×8     │  │   HSM + Crypto    │              │
+│  │  +R52×4 (锁步)   │  │   CAN-FD×8       │              │
+│  └──────────────────┘  └──────────────────┘              │
+│                                                            │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="632-neuraliq-isp">6.3.2 NeuralIQ ISP创新</h3>
 <p>黑芝麻独创的NeuralIQ ISP将传统ISP与AI处理深度融合，这是其核心技术差异化所在：</p>
@@ -460,19 +460,19 @@
    - 色调映射：保持局部对比度的同时压缩动态范围</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="err">传统</span><span class="n">ISP</span><span class="o">:</span><span class="w">  </span><span class="n">RAW</span><span class="o">(</span><span class="mi">14</span><span class="n">bit</span><span class="o">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">去噪</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">去马赛克</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">色彩校正</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">YUV</span><span class="o">(</span><span class="mi">8</span><span class="n">bit</span><span class="o">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">CNN</span>
-<span class="w">                         </span><span class="err">↓信息损失</span><span class="mi">50</span><span class="o">%</span><span class="w">        </span><span class="err">↓压缩损失</span>
+<pre class="codehilite"><code>传统ISP:  RAW(14bit) → 去噪 → 去马赛克 → 色彩校正 → YUV(8bit) → CNN
+                         ↓信息损失50%        ↓压缩损失
 
-<span class="n">NeuralIQ</span><span class="o">:</span><span class="w"> </span><span class="n">RAW</span><span class="o">(</span><span class="mi">14</span><span class="n">bit</span><span class="o">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="o">[</span><span class="err">场景</span><span class="n">AI分析</span><span class="o">]</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">自适应</span><span class="n">ISP</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">RAW域CNN</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">智能融合</span>
-<span class="w">                         </span><span class="err">↑场景感知</span><span class="w">          </span><span class="err">↑保留原始信息</span><span class="w">    </span><span class="err">↑多帧融合</span>
+NeuralIQ: RAW(14bit) → [场景AI分析] → 自适应ISP → RAW域CNN → 智能融合
+                         ↑场景感知          ↑保留原始信息    ↑多帧融合
 
-<span class="err">性能提升</span><span class="o">:</span>
+性能提升:
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="err">夜间检测距离</span><span class="o">:</span><span class="w"> </span><span class="o">+</span><span class="mi">40</span><span class="o">%</span><span class="w"> </span><span class="o">(</span><span class="mi">150</span><span class="n">m</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="mi">210</span><span class="n">m</span><span class="o">)</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="err">恶劣天气准确率</span><span class="o">:</span><span class="w"> </span><span class="o">+</span><span class="mi">35</span><span class="o">%</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="err">动态范围</span><span class="o">:</span><span class="w"> </span><span class="mi">120</span><span class="n">dB</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="mi">140</span><span class="n">dB</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="err">处理延迟</span><span class="o">:</span><span class="w"> </span><span class="err">减少</span><span class="mi">30</span><span class="o">%</span><span class="w"> </span><span class="o">(</span><span class="mi">20</span><span class="n">ms</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="mi">14</span><span class="n">ms</span><span class="o">)</span>
-</code></pre></div>
+  - 夜间检测距离: +40% (150m → 210m)
+  - 恶劣天气准确率: +35%
+  - 动态范围: 120dB → 140dB
+  - 处理延迟: 减少30% (20ms → 14ms)
+</code></pre>
 
 <ol start="4">
 <li><strong>硬件加速架构</strong>
@@ -553,7 +553,7 @@
 <h2 id="64-x9">6.4 芯驰科技X9系列：全场景覆盖</h2>
 <h3 id="641">6.4.1 产品定位策略</h3>
 <p>芯驰科技（SemiDrive）采用"全场景覆盖"策略，X9系列包含四个子系列，分别针对不同的应用需求：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │                    X9系列产品矩阵                           │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -578,42 +578,42 @@
 │   └── 特点: 极致性价比                                       │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="642-x9hp">6.4.2 X9HP架构深度剖析</h3>
 <p>X9HP作为旗舰产品，采用16nm FinFET工艺，集成了芯驰自研的"NeuPro" AI加速器：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌─────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">                    </span><span class="n">X9HP</span><span class="w"> </span><span class="n">芯片架构</span><span class="w">                             </span><span class="err">│</span>
-<span class="err">├─────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">                                                               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                  </span><span class="n">异构计算集群</span><span class="w">                           </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                                                         </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">ARM</span><span class="w"> </span><span class="n">A76</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">ARM</span><span class="w"> </span><span class="n">A76</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">NeuPro</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">NeuPro</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Quad</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Quad</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">NPU</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">NPU</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Core</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Core</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="n">TOPS</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="n">TOPS</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                                                         </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">ISP</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">DSP</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">GPU</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">VPU</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">双路</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">HIFI5</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">IMG</span><span class="o">-</span><span class="n">BXM</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">H</span><span class="mf">.265</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">8</span><span class="n">K</span><span class="mi">@30</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">×</span><span class="mi">2</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">4</span><span class="n">核</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">编解码</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                     </span><span class="n">NoC互联架构</span><span class="w">                         </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">         </span><span class="mi">2</span><span class="n">D</span><span class="w"> </span><span class="n">Mesh拓扑</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mf">1.6</span><span class="w"> </span><span class="n">Tbps总带宽</span><span class="w">                   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────────────────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                    </span><span class="n">安全岛</span><span class="w"> </span><span class="p">(</span><span class="n">Safety</span><span class="w"> </span><span class="n">Island</span><span class="p">)</span><span class="w">               </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">ARM</span><span class="w"> </span><span class="n">R5F</span><span class="err">×</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">锁步</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ECC保护</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">硬件看门狗</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">BIST</span><span class="w">      </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────────────────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                               </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
+│                    X9HP 芯片架构                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                               │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                  异构计算集群                           │  │
+│  │                                                         │  │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐ │  │
+│  │  │ ARM A76 │  │ ARM A76 │  │ NeuPro  │  │ NeuPro  │ │  │
+│  │  │  Quad   │  │  Quad   │  │ AI NPU  │  │ AI NPU  │ │  │
+│  │  │  Core   │  │  Core   │  │ 60 TOPS │  │ 60 TOPS │ │  │
+│  │  └─────────┘  └─────────┘  └─────────┘  └─────────┘ │  │
+│  │                                                         │  │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐ │  │
+│  │  │   ISP   │  │   DSP   │  │  GPU    │  │  VPU    │ │  │
+│  │  │  双路   │  │  HIFI5  │  │ IMG-BXM │  │  H.265  │ │  │
+│  │  │  8K@30  │  │  ×2     │  │  4核    │  │  编解码  │ │  │
+│  │  └─────────┘  └─────────┘  └─────────┘  └─────────┘ │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                               │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                     NoC互联架构                         │  │
+│  │         2D Mesh拓扑 | 1.6 Tbps总带宽                   │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                               │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                    安全岛 (Safety Island)               │  │
+│  │   ARM R5F×2 (锁步) | ECC保护 | 硬件看门狗 | BIST      │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                               │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="643-neupro-ai">6.4.3 NeuPro AI加速器特性</h3>
 <ol>
@@ -647,7 +647,7 @@
 <h2 id="65-sd5223">6.5 寒武纪SD5223：云边协同架构</h2>
 <h3 id="651">6.5.1 从云端到边缘的技术迁移</h3>
 <p>寒武纪作为国内最早的AI芯片独角兽，将其在云端训练芯片的技术积累迁移到自动驾驶领域，推出SD5223智能驾驶芯片。</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────┐
 │            寒武纪 MLU 架构演进                              │
 ├──────────────────────────────────────────────────────────┤
 │                                                            │
@@ -669,7 +669,7 @@
 │  └────────────────────────────────────────┘               │
 │                                                            │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="652-mlu">6.5.2 MLU架构在车载场景的优化</h3>
 <ol>
@@ -694,7 +694,7 @@
 </ol>
 <h3 id="653">6.5.3 云边协同训练推理一体化</h3>
 <p>SD5223的独特之处在于支持边缘侧的增量学习：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────┐
 │              云边协同工作流程                              │
 ├──────────────────────────────────────────────────────────┤
 │                                                            │
@@ -725,7 +725,7 @@
 │   └────────────────────────────────────────┘              │
 │                                                            │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="654">6.5.4 软件栈与开发工具</h3>
 <p><strong>Cambricon Neuware Auto工具链</strong>：</p>
@@ -822,7 +822,7 @@
 </tbody>
 </table>
 <h3 id="662">6.6.2 与国际巨头的差距分析</h3>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │            国产vs国际芯片关键指标对比（2024）                │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -845,7 +845,7 @@
 │  黑芝麻:          20    │                                     │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="663">6.6.3 技术路线差异化</h3>
 <ol>
@@ -876,7 +876,7 @@
 </ol>
 <h2 id="67">6.7 供应链本土化与生态建设</h2>
 <h3 id="671">6.7.1 国产化供应链现状</h3>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │                 自动驾驶芯片供应链国产化率                    │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -901,7 +901,7 @@
 │  先进封装: 部分依赖境外                                       │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="672">6.7.2 生态建设进展</h3>
 <ol>
@@ -970,7 +970,7 @@
 </table>
 <h2 id="68">6.8 市场竞争与商业模式</h2>
 <h3 id="681">6.8.1 市场份额演变</h3>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │       中国自动驾驶芯片市场份额变化 (2022-2024)              │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -1002,7 +1002,7 @@
 │  • TI基本退出中国市场                                        │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="682">6.8.2 定价策略对比</h3>
 <p>| 芯片型号 | 单价(USD) | 打包方案价格 | 价格竞争力 | 备注 |</p>
@@ -1083,7 +1083,7 @@
 </ol>
 <h2 id="69">6.9 技术挑战与发展瓶颈</h2>
 <h3 id="691">6.9.1 核心技术短板</h3>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │              国产芯片技术短板雷达图                          │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -1105,7 +1105,7 @@
 │  说明：百分比表示相对国际先进水平的成熟度                      │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="692">6.9.2 关键挑战分析</h3>
 <ol>
@@ -1176,7 +1176,7 @@
 </li>
 </ol>
 <h3 id="6102">6.10.2 市场机遇</h3>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │           中国自动驾驶芯片市场预测 (2024-2030)              │
 ├────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -1194,7 +1194,7 @@
 │  2030年国产化率目标：75%                                     │
 │                                                              │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="6103">6.10.3 产业影响</h3>
 <p><strong>对汽车产业的影响</strong>：</p>

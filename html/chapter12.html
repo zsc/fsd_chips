@@ -186,7 +186,7 @@
 <p>本章深入探讨自动驾驶芯片与整车电子电气（E/E）架构的协同演进，以及与三电系统（电机、电控、电池）的深度集成。从2019年的分布式ECU架构，到2022年的域控制器架构，再到2025年的中央计算平台，自动驾驶芯片不仅改变了智能驾驶系统本身，更推动了整车架构的根本性变革。</p>
 <h2 id="121">12.1 电子电气架构演进：从分布式到中央计算</h2>
 <p>整车电子电气架构的演进不仅是技术进步的必然结果，更是自动驾驶发展的核心推动力。从分布式ECU到中央计算平台，每一次架构变革都伴随着算力提升、成本优化和功能集成的突破。</p>
-<div class="codehilite"><pre><span></span><code>架构演进时间线与特征对比
+<pre class="codehilite"><code>架构演进时间线与特征对比
 ┌─────────────────────────────────────────────────────────────────────┐
 │ 时期      │ 2019-2021        │ 2021-2023         │ 2023-2025        │
 ├─────────────────────────────────────────────────────────────────────┤
@@ -198,12 +198,12 @@
 │ OTA能力   │ 单模块升级        │ 域级升级          │ 整车级升级        │
 │ 成本结构   │ 硬件主导          │ 软硬件均衡         │ 软件主导          │
 └─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1211-ecu2019-2021">12.1.1 分布式ECU时代（2019-2021）</h3>
 <h4 id="_2">架构特征与局限性</h4>
 <p>分布式ECU架构是汽车工业百年发展的产物，每个功能对应独立的ECU模块。以2019年的典型豪华车为例，全车ECU数量达到70-150个，涵盖动力、底盘、车身、信息娱乐等各个系统。</p>
-<div class="codehilite"><pre><span></span><code>典型分布式ECU架构（2019年豪华车型）
+<pre class="codehilite"><code>典型分布式ECU架构（2019年豪华车型）
 ┌────────────────────────────────────────────────────────────┐
 │                         整车ECU分布                         │
 ├────────────────────────────────────────────────────────────┤
@@ -231,7 +231,7 @@
 │   ├── 仪表ECU - 瑞萨R-Car, 4核ARM                          │
 │   └── T-Box - 4G通信模组 + MCU                             │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_3">通信架构与带宽瓶颈</h4>
 <p>分布式架构主要依赖CAN总线（最高1Mbps）和LIN总线（最高20kbps）进行通信。随着ADAS功能增强，传感器数据量激增，传统总线面临严重带宽瓶颈：</p>
@@ -251,7 +251,7 @@
 <h3 id="1212-2021-2023">12.1.2 域控制器架构（2021-2023）</h3>
 <h4 id="_5">域划分策略</h4>
 <p>域控制器架构将功能相近的ECU整合到统一的域控制器中，业界主流采用五域划分：</p>
-<div class="codehilite"><pre><span></span><code>五域架构拓扑图
+<pre class="codehilite"><code>五域架构拓扑图
                           ┌──────────────┐
                           │  中央网关     │
                           │  (Gateway)   │
@@ -270,7 +270,7 @@
    - 3×300MHz  - 3×300MHz - 4×1GHz - 8×2.1GHz - 12×2.2GHz
    - ASIL-D    - ASIL-D  - ASIL-B  - QM/ASIL-B - ASIL-D
    - CAN-FD    - FlexRay - CAN/LIN - Ethernet - Ethernet
-</code></pre></div>
+</code></pre>
 
 <h4 id="_6">典型域控制器芯片方案</h4>
 <p><strong>智驾域控制器（2022年量产方案）</strong>：</p>
@@ -307,7 +307,7 @@
 <h3 id="1213-2023-2025">12.1.3 中央计算平台（2023-2025）</h3>
 <h4 id="_7">架构特征</h4>
 <p>中央计算平台将所有计算密集型任务集中到1-3个高性能计算单元，实现真正的"软件定义汽车"：</p>
-<div class="codehilite"><pre><span></span><code>中央计算平台架构（2025年目标）
+<pre class="codehilite"><code>中央计算平台架构（2025年目标）
 ┌─────────────────────────────────────────────────────────────┐
 │                    中央计算单元 (CCU)                         │
 │  ┌─────────────────────────────────────────────────────┐    │
@@ -334,7 +334,7 @@
            │                 │                 │
       Zone ECU 1        Zone ECU 2        Zone ECU 3
       (前区控制)         (侧区控制)         (后区控制)
-</code></pre></div>
+</code></pre>
 
 <h4 id="zone-ecu">区域控制器（Zone ECU）</h4>
 <p>中央计算配合区域控制器，形成"中央大脑+区域网关"架构：</p>
@@ -370,7 +370,7 @@
 </ol>
 <h3 id="1214">12.1.4 架构演进的技术驱动力</h3>
 <h4 id="_9">算力需求爆发式增长</h4>
-<div class="codehilite"><pre><span></span><code>自动驾驶算力需求增长曲线
+<pre class="codehilite"><code>自动驾驶算力需求增长曲线
 算力(TOPS)
 10000 ┤                                              ╱─ L4/L5
       │                                          ╱─── (2025)
@@ -383,7 +383,7 @@
     1 ┤ ───── L1   (2019)
       └─────┴─────┴─────┴─────┴─────┴─────┴───&gt; 年份
        2019  2020  2021  2022  2023  2024  2025
-</code></pre></div>
+</code></pre>
 
 <h4 id="_10">成本优化压力</h4>
 <ul>
@@ -408,7 +408,7 @@
 <h3 id="1221">12.2.1 动力域控制器集成</h3>
 <h4 id="_13">传统三电架构</h4>
 <p>传统电动汽车采用分离式三电控制架构：</p>
-<div class="codehilite"><pre><span></span><code>传统三电系统架构（2019-2021）
+<pre class="codehilite"><code>传统三电系统架构（2019-2021）
 ┌─────────────────────────────────────────────────────────┐
 │                     高压系统 (400V/800V)                  │
 ├─────────────────────────────────────────────────────────┤
@@ -426,7 +426,7 @@
 │  隔离：光耦隔离器                                        │
 │  安全：ASIL-C/D                                         │
 └─────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>这种架构存在的问题：</p>
 <ul>
@@ -436,7 +436,7 @@
 </ul>
 <h4 id="_14">集成式动力域控制器</h4>
 <p>新一代动力域控制器将VCU、MCU、OBC、DC/DC等功能集成：</p>
-<div class="codehilite"><pre><span></span><code>集成动力域控制器架构（2023-2025）
+<pre class="codehilite"><code>集成动力域控制器架构（2023-2025）
 ┌──────────────────────────────────────────────────────────┐
 │              动力域控制器 (Power Domain Controller)        │
 ├──────────────────────────────────────────────────────────┤
@@ -462,14 +462,14 @@
 │  - 车载以太网 (100BASE-T1) × 2                            │
 │  - FlexRay (10Mbps) × 1                                  │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_15">与智驾系统的协同机制</h4>
 <ol>
 <li><strong>预测性能量管理</strong></li>
 </ol>
 <p>智驾系统通过高精地图和路径规划，预测未来能耗需求：</p>
-<div class="codehilite"><pre><span></span><code>能量管理预测模型
+<pre class="codehilite"><code>能量管理预测模型
 ┌─────────────────────────────────────────────────┐
 │  智驾域控制器                                      │
 │  ├── 高精地图：坡度、曲率、限速                     │
@@ -491,10 +491,10 @@
 │  ├── 电机效率优化                                │
 │  └── 回收强度自适应                              │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>2. 动态扭矩分配</strong>（四驱车型）</p>
-<div class="codehilite"><pre><span></span><code>智能扭矩分配系统
+<pre class="codehilite"><code>智能扭矩分配系统
 前轴电机 (150kW)          后轴电机 (200kW)
     │                          │
     └──────────┬───────────────┘
@@ -515,12 +515,12 @@
 - 急加速：四驱 (50:50)
 - 低附着路面：实时调整 (0-100%)
 - 能量回收：前轴优先 (70:30)
-</code></pre></div>
+</code></pre>
 
 <h3 id="1222-vcumcubms">12.2.2 VCU/MCU/BMS融合趋势</h3>
 <h4 id="_16">软件层面融合</h4>
 <p>采用统一的软件平台和模型化开发：</p>
-<div class="codehilite"><pre><span></span><code>AUTOSAR AP based三电软件架构
+<pre class="codehilite"><code>AUTOSAR AP based三电软件架构
 ┌────────────────────────────────────────────────┐
 │              应用层 (SWC)                       │
 ├────────────────────────────────────────────────┤
@@ -542,38 +542,38 @@
 │  - 硬件抽象层 (HAL)                             │
 │  - 设备驱动 (Device Drivers)                    │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_17">硬件层面集成</h4>
 <p><strong>多芯片封装（Multi-Die Package）</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">7</span><span class="n">合1动力域控制器芯片</span><span class="err">（</span><span class="mf">2024</span><span class="n">年量产</span><span class="err">）</span>
-<span class="err">┌─────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">            </span><span class="kr">Sys</span><span class="n">tem</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">Package</span><span class="w"> </span><span class="p">(</span><span class="n">SiP</span><span class="p">)</span><span class="w">               </span><span class="err">│</span>
-<span class="err">├─────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">主控Die</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">电源Die</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">驱动Die</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">TC4xx</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">PMIC</span><span class="w">      </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">GaN</span><span class="w"> </span><span class="n">Gate</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mf">6</span><span class="o">-</span><span class="n">core</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Multi</span><span class="o">-</span><span class="n">rail</span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Driver</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">  </span><span class="err">┌───────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">安全Die</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">通信Die</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">存储Die</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">HSM</span><span class="w">       </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">PHY</span><span class="w">       </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Flash</span><span class="w">     </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Crypto</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">CAN</span><span class="o">/</span><span class="n">ETH</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">SRAM</span><span class="w">      </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">基板</span><span class="err">：</span><span class="n">LTCC</span><span class="w"> </span><span class="p">(</span><span class="n">低温共烧陶瓷</span><span class="p">)</span><span class="w">                        </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">封装</span><span class="err">：</span><span class="n">FCBGhronous</span><span class="p">)</span><span class="w">                              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">散热</span><span class="err">：</span><span class="n">Vapor</span><span class="w"> </span><span class="n">Chamber集成</span><span class="w">                          </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>7合1动力域控制器芯片（2024年量产）
+┌─────────────────────────────────────────────────┐
+│            System in Package (SiP)               │
+├─────────────────────────────────────────────────┤
+│  ┌───────────┐  ┌───────────┐  ┌───────────┐   │
+│  │  主控Die   │  │  电源Die   │  │  驱动Die   │   │
+│  │  TC4xx    │  │  PMIC      │  │  GaN Gate  │   │
+│  │  6-core   │  │  Multi-rail│  │  Driver    │   │
+│  └───────────┘  └───────────┘  └───────────┘   │
+│                                                  │
+│  ┌───────────┐  ┌───────────┐  ┌───────────┐   │
+│  │  安全Die   │  │  通信Die   │  │  存储Die   │   │
+│  │  HSM       │  │  PHY       │  │  Flash     │   │
+│  │  Crypto   │  │  CAN/ETH   │  │  SRAM      │   │
+│  └───────────┘  └───────────┘  └───────────┘   │
+│                                                  │
+│  基板：LTCC (低温共烧陶瓷)                        │
+│  封装：FCBGhronous)                              │
+│  散热：Vapor Chamber集成                          │
+└─────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="1223">12.2.3 能量管理与智能调度</h3>
 <h4 id="_18">多维度能量优化</h4>
 <ol>
 <li><strong>热管理协同</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>整车热管理系统
+<pre class="codehilite"><code>整车热管理系统
                     ┌──────────────┐
                     │   智驾芯片    │
                     │  60-100W     │
@@ -595,13 +595,13 @@
 - 散热模式：高速行驶主动散热 (&lt;45°C)
 - 余热利用：电机余热加热电池/座舱
 - 智能分配：根据优先级动态调整冷却资源
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>充电策略优化</strong></li>
 </ol>
 <p>结合用户习惯和电网负荷的智能充电：</p>
-<div class="codehilite"><pre><span></span><code>智能充电控制流程
+<pre class="codehilite"><code>智能充电控制流程
 ┌────────────────────────────────────────┐
 │  输入数据                               │
 │  - 用户设定：出发时间、目标SOC          │
@@ -625,7 +625,7 @@
 │ AC充电 │  │ DC充电  │  │ 反向  │
 │ 7-22kW │  │50-350kW│  │ 供电  │
 └────────┘  └────────┘  └────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_19">端云协同能量管理</h4>
 <p><strong>云端大数据分析</strong>：</p>
@@ -644,7 +644,7 @@
 </ul>
 <h3 id="1224">12.2.4 功能安全协同设计</h3>
 <h4 id="_20">多层级安全架构</h4>
-<div class="codehilite"><pre><span></span><code>三电系统功能安全设计
+<pre class="codehilite"><code>三电系统功能安全设计
 ┌─────────────────────────────────────────────┐
 │            系统级安全 (ASIL-D)               │
 ├─────────────────────────────────────────────┤
@@ -679,7 +679,7 @@
 │  │  - 紧急制动辅助                   │       │
 │  └─────────────────────────────────┘       │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_21">智驾与三电安全协同</h4>
 <p><strong>场景1：紧急避障时的动力保障</strong></p>
@@ -701,29 +701,29 @@
 <h3 id="1231-igbt">12.3.1 IGBT技术演进</h3>
 <p>绝缘栅双极型晶体管（IGBT）作为电动汽车逆变器的主流功率器件，经历了七代技术演进，在电压等级、开关频率、功率损耗等关键指标上不断突破。</p>
 <h4 id="igbt">IGBT技术代际演进</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">IGBT技术发展路线图</span>
-<span class="err">┌──────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">代际</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="n">时期</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="n">工艺特征</span><span class="w">        </span><span class="err">│</span><span class="w">  </span><span class="n">性能指标</span><span class="w">              </span><span class="err">│</span><span class="w">  </span><span class="n">应用</span><span class="w">  </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">第4代</span><span class="err">│</span><span class="mi">2010-2015</span><span class="err">│</span><span class="w"> </span><span class="n">平面栅</span><span class="o">+</span><span class="n">场截止</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">Vce</span><span class="p">(</span><span class="n">sat</span><span class="p">)</span><span class="o">=</span><span class="mf">2.0</span><span class="n">V</span><span class="w"> </span><span class="mi">@125</span><span class="err">°</span><span class="n">C</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">HEV</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="mf">1.2</span><span class="n">kV</span><span class="o">/</span><span class="mi">450</span><span class="n">A</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">Eoff</span><span class="o">=</span><span class="mi">40</span><span class="n">mJ</span><span class="o">/</span><span class="n">A</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="n">早期EV</span><span class="w"> </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">第5代</span><span class="err">│</span><span class="mi">2015-2019</span><span class="err">│</span><span class="w"> </span><span class="n">沟槽栅</span><span class="o">+</span><span class="n">场截止</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">Vce</span><span class="p">(</span><span class="n">sat</span><span class="p">)</span><span class="o">=</span><span class="mf">1.75</span><span class="n">V</span><span class="w"> </span><span class="mi">@125</span><span class="err">°</span><span class="n">C</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">EV主流</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="mi">650</span><span class="n">V</span><span class="o">/</span><span class="mi">820</span><span class="n">A</span><span class="w">       </span><span class="err">│</span><span class="w"> </span><span class="n">Eoff</span><span class="o">=</span><span class="mi">30</span><span class="n">mJ</span><span class="o">/</span><span class="n">A</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="mi">50-150</span><span class="n">kW</span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">第6代</span><span class="err">│</span><span class="mi">2019-2022</span><span class="err">│</span><span class="w"> </span><span class="n">精细沟槽栅</span><span class="w">       </span><span class="err">│</span><span class="w"> </span><span class="n">Vce</span><span class="p">(</span><span class="n">sat</span><span class="p">)</span><span class="o">=</span><span class="mf">1.65</span><span class="n">V</span><span class="w"> </span><span class="mi">@150</span><span class="err">°</span><span class="n">C</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">高性能EV</span><span class="err">│</span>
-<span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="mi">750</span><span class="n">V</span><span class="o">/</span><span class="mi">950</span><span class="n">A</span><span class="w">       </span><span class="err">│</span><span class="w"> </span><span class="n">Eoff</span><span class="o">=</span><span class="mi">24</span><span class="n">mJ</span><span class="o">/</span><span class="n">A</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="mi">150-250</span><span class="n">kW</span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">第7代</span><span class="err">│</span><span class="mi">2022</span><span class="o">-</span><span class="n">至今</span><span class="err">│</span><span class="w"> </span><span class="n">微沟槽</span><span class="o">+</span><span class="n">薄片化</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">Vce</span><span class="p">(</span><span class="n">sat</span><span class="p">)</span><span class="o">=</span><span class="mf">1.55</span><span class="n">V</span><span class="w"> </span><span class="mi">@175</span><span class="err">°</span><span class="n">C</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">800</span><span class="n">V平台</span><span class="err">│</span>
-<span class="err">│</span><span class="w">      </span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="mf">1.2</span><span class="n">kV</span><span class="o">/</span><span class="mi">1000</span><span class="n">A</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="n">Eoff</span><span class="o">=</span><span class="mi">18</span><span class="n">mJ</span><span class="o">/</span><span class="n">A</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="mi">250-400</span><span class="n">kW</span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>IGBT技术发展路线图
+┌──────────────────────────────────────────────────────────────┐
+│ 代际 │  时期   │  工艺特征        │  性能指标              │  应用  │
+├──────────────────────────────────────────────────────────────┤
+│ 第4代│2010-2015│ 平面栅+场截止    │ Vce(sat)=2.0V @125°C  │ HEV   │
+│      │         │ 1.2kV/450A      │ Eoff=40mJ/A           │ 早期EV │
+├──────────────────────────────────────────────────────────────┤
+│ 第5代│2015-2019│ 沟槽栅+场截止    │ Vce(sat)=1.75V @125°C │ EV主流 │
+│      │         │ 650V/820A       │ Eoff=30mJ/A           │ 50-150kW│
+├──────────────────────────────────────────────────────────────┤
+│ 第6代│2019-2022│ 精细沟槽栅       │ Vce(sat)=1.65V @150°C │ 高性能EV│
+│      │         │ 750V/950A       │ Eoff=24mJ/A           │ 150-250kW│
+├──────────────────────────────────────────────────────────────┤
+│ 第7代│2022-至今│ 微沟槽+薄片化    │ Vce(sat)=1.55V @175°C │ 800V平台│
+│      │         │ 1.2kV/1000A     │ Eoff=18mJ/A           │ 250-400kW│
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
 
 <h4 id="_22">关键技术突破</h4>
 <ol>
 <li><strong>芯片结构优化</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>IGBT芯片截面结构演进
+<pre class="codehilite"><code>IGBT芯片截面结构演进
 第5代 (2015)                    第7代 (2023)
 ┌─────────────┐                ┌─────────────┐
 │   Emitter   │                │   Emitter   │
@@ -739,7 +739,7 @@
 │Gate│ N+ │Gate│               │G│N+│G│N+│G│ ← 微沟槽密度↑
 └────┴────┴────┘               └─┴──┴─┴──┴─┘
    间距: 4μm                      间距: 2μm
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>模块封装创新</strong></li>
@@ -752,31 +752,31 @@
 <li><strong>集成设计</strong>：将驱动器、传感器集成到模块内部</li>
 </ul>
 <h4 id="_23">主要供应商技术对比</h4>
-<div class="codehilite"><pre><span></span><code><span class="mf">2024</span><span class="n">年主流IGBT模块供应商</span>
-<span class="err">┌────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">厂商</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">代表产品</span><span class="w">        </span><span class="err">│</span><span class="w"> </span><span class="n">技术特点</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="n">市场份额</span><span class="w">  </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">英飞凌</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">HybridPACK</span><span class="w"> </span><span class="n">DSC</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">双面散热</span><span class="o">+</span><span class="mf">.</span><span class="n">XT互连</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="mf">35</span><span class="err">%</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">德国</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">750</span><span class="n">V</span><span class="o">/</span><span class="mf">950</span><span class="n">A</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">Tj</span><span class="p">,</span><span class="n">max</span><span class="o">=</span><span class="mf">175</span><span class="err">°</span><span class="n">C</span><span class="w">      </span><span class="err">│</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">三菱电机</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">J1</span><span class="o">-</span><span class="n">Series</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">第7代CSTBT</span><span class="w">        </span><span class="err">│</span><span class="w"> </span><span class="mf">20</span><span class="err">%</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">日本</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">1200</span><span class="n">V</span><span class="o">/</span><span class="mf">1000</span><span class="n">A</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">低损耗</span><span class="o">+</span><span class="n">高可靠性</span><span class="w">     </span><span class="err">│</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">富士电机</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">XSeries</span><span class="w">        </span><span class="err">│</span><span class="w"> </span><span class="n">X沟槽结构</span><span class="w">          </span><span class="err">│</span><span class="w"> </span><span class="mf">15</span><span class="err">%</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">日本</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">650</span><span class="n">V</span><span class="o">/</span><span class="mf">800</span><span class="n">A</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">低EMI设计</span><span class="w">          </span><span class="err">│</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">比亚迪半导体</span><span class="err">│</span><span class="w"> </span><span class="n">BF1181</span><span class="w">        </span><span class="err">│</span><span class="w"> </span><span class="n">自研微沟槽</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="mf">10</span><span class="err">%</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">中国</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">1200</span><span class="n">V</span><span class="o">/</span><span class="mf">840</span><span class="n">A</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="n">高性价比</span><span class="w">           </span><span class="err">│</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">斯达半导</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">P4</span><span class="w">             </span><span class="err">│</span><span class="w"> </span><span class="n">国产第6代技术</span><span class="w">       </span><span class="err">│</span><span class="w"> </span><span class="mf">8</span><span class="err">%</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">中国</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="mf">750</span><span class="n">V</span><span class="o">/</span><span class="mf">800</span><span class="n">A</span><span class="w">      </span><span class="err">│</span><span class="w"> </span><span class="n">车规级认证</span><span class="w">         </span><span class="err">│</span><span class="w">          </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>2024年主流IGBT模块供应商
+┌────────────────────────────────────────────────────────────┐
+│ 厂商      │ 代表产品        │ 技术特点           │ 市场份额  │
+├────────────────────────────────────────────────────────────┤
+│ 英飞凌    │ HybridPACK DSC │ 双面散热+.XT互连   │ 35%      │
+│ (德国)    │ 750V/950A      │ Tj,max=175°C      │          │
+├────────────────────────────────────────────────────────────┤
+│ 三菱电机   │ J1-Series      │ 第7代CSTBT        │ 20%      │
+│ (日本)    │ 1200V/1000A    │ 低损耗+高可靠性     │          │
+├────────────────────────────────────────────────────────────┤
+│ 富士电机   │ XSeries        │ X沟槽结构          │ 15%      │
+│ (日本)    │ 650V/800A      │ 低EMI设计          │          │
+├────────────────────────────────────────────────────────────┤
+│ 比亚迪半导体│ BF1181        │ 自研微沟槽         │ 10%      │
+│ (中国)    │ 1200V/840A     │ 高性价比           │          │
+├────────────────────────────────────────────────────────────┤
+│ 斯达半导   │ P4             │ 国产第6代技术       │ 8%       │
+│ (中国)    │ 750V/800A      │ 车规级认证         │          │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="1232-sic">12.3.2 SiC碳化硅革命</h3>
 <p>碳化硅（SiC）作为第三代宽禁带半导体材料，正在引领电动汽车功率器件的技术革命。相比硅基IGBT，SiC功率器件在高压、高频、高温应用中展现出显著优势。</p>
 <h4 id="sic-vs-si">SiC vs Si材料特性对比</h4>
-<div class="codehilite"><pre><span></span><code>材料特性对比
+<pre class="codehilite"><code>材料特性对比
 ┌─────────────────────────────────────────────────────┐
 │ 特性参数        │ Si (硅)  │ SiC (碳化硅) │ 优势比  │
 ├─────────────────────────────────────────────────────┤
@@ -794,10 +794,10 @@
 - 系统效率提升 3-5%
 - 散热系统体积减少 50%
 - 逆变器功率密度提升 3倍
-</code></pre></div>
+</code></pre>
 
 <h4 id="sic">SiC功率模块技术架构</h4>
-<div class="codehilite"><pre><span></span><code>典型800V SiC逆变器模块
+<pre class="codehilite"><code>典型800V SiC逆变器模块
 ┌──────────────────────────────────────────────────────┐
 │              SiC三相逆变器模块 (1200V/400A)           │
 ├──────────────────────────────────────────────────────┤
@@ -821,11 +821,11 @@
 │  - 结温：Tj,max=200°C                                │
 │  - 效率：峰值&gt;99%，WLTP循环&gt;98%                      │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="sic_1">SiC产业链现状</h4>
 <p><strong>1. 衬底制造</strong>（占成本40-50%）</p>
-<div class="codehilite"><pre><span></span><code>全球SiC衬底供应格局 (2024)
+<pre class="codehilite"><code>全球SiC衬底供应格局 (2024)
 ┌────────────────────────────────────────────┐
 │ 厂商         │ 产能占比 │ 技术水平         │
 ├────────────────────────────────────────────┤
@@ -844,7 +844,7 @@
 │ 天科合达    │ 8%      │ 4-6英寸          │
 │ (中国)      │         │ 成本优势         │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>外延生长</strong></li>
@@ -865,7 +865,7 @@
 </ul>
 <h4 id="_24">应用案例分析</h4>
 <p><strong>特斯拉Model 3/Y SiC逆变器</strong></p>
-<div class="codehilite"><pre><span></span><code>特斯拉SiC逆变器演进
+<pre class="codehilite"><code>特斯拉SiC逆变器演进
 ┌─────────────────────────────────────────────────┐
 │ 代际  │ Model S/X (2012) │ Model 3/Y (2017)   │
 ├─────────────────────────────────────────────────┤
@@ -878,12 +878,12 @@
 │ 成本  │ $350             │ $450 (2017)        │
 │       │                  │ $280 (2024)        │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1233-gan">12.3.3 GaN氮化镓应用前景</h3>
 <p>氮化镓（GaN）作为另一种第三代半导体材料，在车载充电器（OBC）和DC/DC转换器等中低功率应用中展现出巨大潜力。</p>
 <h4 id="gan">GaN技术优势</h4>
-<div class="codehilite"><pre><span></span><code>GaN vs Si vs SiC特性对比
+<pre class="codehilite"><code>GaN vs Si vs SiC特性对比
 ┌──────────────────────────────────────────────────┐
 │ 应用场景    │ Si        │ SiC       │ GaN       │
 ├──────────────────────────────────────────────────┤
@@ -893,13 +893,13 @@
 │ 功率密度    │ 基准      │ 3×        │ 5×        │
 │ 成本($/A)   │ 1         │ 3-5       │ 2-3       │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_25">车载应用场景</h4>
 <ol>
 <li><strong>车载充电器（OBC）</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>GaN基11kW OBC架构
+<pre class="codehilite"><code>GaN基11kW OBC架构
 ┌────────────────────────────────────────────────┐
 │           AC输入 (三相380V)                     │
 │                   │                             │
@@ -925,12 +925,12 @@
 │  - 体积: 5L (Si方案: 15L)                       │
 │  - 重量: 4kg (Si方案: 12kg)                     │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>48V轻混系统DC/DC</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>GaN基双向DC/DC (48V/12V)
+<pre class="codehilite"><code>GaN基双向DC/DC (48V/12V)
 ┌──────────────────────────────────────┐
 │      48V电池侧    ←→    12V系统侧      │
 │         │                    │        │
@@ -943,7 +943,7 @@
 │                                       │
 │  规格：3kW双向，效率&gt;98%，1MHz开关     │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="gan_1">GaN技术挑战与解决方案</h4>
 <ol>
@@ -963,7 +963,7 @@
 <h3 id="1234">12.3.4 功率器件与计算芯片协调</h3>
 <p>功率器件与智驾计算芯片的协同设计，是实现整车级能效优化和性能提升的关键。这种协调涉及电磁兼容、热管理、实时控制等多个维度。</p>
 <h4 id="emc">电磁兼容（EMC）协同设计</h4>
-<div class="codehilite"><pre><span></span><code>功率器件对计算芯片的EMI影响及对策
+<pre class="codehilite"><code>功率器件对计算芯片的EMI影响及对策
 ┌───────────────────────────────────────────────────┐
 │         EMI传播路径与抑制措施                       │
 ├───────────────────────────────────────────────────┤
@@ -984,13 +984,13 @@
 │  3. PCB设计：6层板，独立地平面                     │
 │  4. 滤波设计：多级LC滤波，截止频率分级设置          │
 └───────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_26">实时控制协同</h4>
 <ol>
 <li><strong>控制环路架构</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>分层控制架构
+<pre class="codehilite"><code>分层控制架构
 ┌─────────────────────────────────────────────┐
 │  L3: 智驾芯片 (路径规划+能量管理)              │
 │      - 更新周期: 100ms                        │
@@ -1008,40 +1008,40 @@
 │      - 更新周期: 20μs (50kHz)                │
 │      - PWM生成、保护逻辑                       │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>预测控制算法</strong></li>
 </ol>
 <p>智驾芯片基于AI模型预测，优化功率器件工作点：</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 伪代码：功率器件工作点优化</span>
-<span class="k">class</span> <span class="nc">PowerOptimizer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">predict_power_demand</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># 基于路况预测未来5秒功率需求</span>
-        <span class="n">road_gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_road_gradient</span><span class="p">()</span>
-        <span class="n">traffic_flow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_traffic</span><span class="p">()</span>
-        <span class="n">power_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-            <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="n">speed</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">traffic</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">power_profile</span>
+<pre class="codehilite"><code class="language-python"># 伪代码：功率器件工作点优化
+class PowerOptimizer:
+    def predict_power_demand(self):
+        # 基于路况预测未来5秒功率需求
+        road_gradient = self.get_road_gradient()
+        traffic_flow = self.predict_traffic()
+        power_profile = self.ml_model.predict(
+            features=[speed, acceleration, gradient, traffic]
+        )
+        return power_profile
 
-    <span class="k">def</span> <span class="nf">optimize_operating_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power_profile</span><span class="p">):</span>
-        <span class="c1"># 优化SiC逆变器开关频率和死区时间</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">power_profile</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">power</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="n">kW</span><span class="p">:</span>  <span class="c1"># 轻载</span>
-                <span class="n">fsw</span> <span class="o">=</span> <span class="mi">15</span><span class="n">kHz</span>    <span class="c1"># 降低开关频率</span>
-                <span class="n">dead_time</span> <span class="o">=</span> <span class="mi">500</span><span class="n">ns</span>
-            <span class="k">elif</span> <span class="n">power</span> <span class="o">&lt;</span> <span class="mi">150</span><span class="n">kW</span><span class="p">:</span>  <span class="c1"># 中载</span>
-                <span class="n">fsw</span> <span class="o">=</span> <span class="mi">25</span><span class="n">kHz</span>
-                <span class="n">dead_time</span> <span class="o">=</span> <span class="mi">400</span><span class="n">ns</span>
-            <span class="k">else</span><span class="p">:</span>  <span class="c1"># 重载</span>
-                <span class="n">fsw</span> <span class="o">=</span> <span class="mi">35</span><span class="n">kHz</span>    <span class="c1"># 提高频率改善动态响应</span>
-                <span class="n">dead_time</span> <span class="o">=</span> <span class="mi">350</span><span class="n">ns</span>
-        <span class="k">return</span> <span class="n">control_params</span>
-</code></pre></div>
+    def optimize_operating_point(self, power_profile):
+        # 优化SiC逆变器开关频率和死区时间
+        for t in power_profile:
+            if power &lt; 50kW:  # 轻载
+                fsw = 15kHz    # 降低开关频率
+                dead_time = 500ns
+            elif power &lt; 150kW:  # 中载
+                fsw = 25kHz
+                dead_time = 400ns
+            else:  # 重载
+                fsw = 35kHz    # 提高频率改善动态响应
+                dead_time = 350ns
+        return control_params
+</code></pre>
 
 <h4 id="_27">热管理协同</h4>
-<div class="codehilite"><pre><span></span><code>整车热管理系统集成
+<pre class="codehilite"><code>整车热管理系统集成
 ┌──────────────────────────────────────────────────┐
 │            热管理中央控制器                        │
 ├──────────────────────────────────────────────────┤
@@ -1063,10 +1063,10 @@
 │  2. 优先级调度：安全&gt;动力&gt;舒适&gt;能效                │
 │  3. 余热回收：功率器件余热用于电池加热              │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_28">故障协同处理</h4>
-<div class="codehilite"><pre><span></span><code>功率器件故障时的系统级响应
+<pre class="codehilite"><code>功率器件故障时的系统级响应
 ┌────────────────────────────────────────┐
 │  故障检测 (功率模块)                     │
 │  - 过流检测 (&lt;10μs)                     │
@@ -1095,14 +1095,14 @@
 - 二级：退出L3，降至L2
 - 三级：退出自动驾驶
 - 灾难级：紧急制动+警告
-</code></pre></div>
+</code></pre>
 
 <h2 id="124-ota">12.4 整车OTA与软件定义汽车</h2>
 <p>软件定义汽车（Software Defined Vehicle, SDV）代表了汽车产业的根本性变革。通过OTA技术，车辆能够持续升级、功能不断增强，从静态产品转变为动态服务平台。这一转变的核心是建立完善的软硬件架构和安全可靠的更新机制。</p>
 <h3 id="1241-hal">12.4.1 硬件抽象层（HAL）设计</h3>
 <p>硬件抽象层是实现软硬件解耦的关键，它为上层软件提供统一的接口，屏蔽底层硬件差异，使得软件能够跨平台移植和独立演进。</p>
 <h4 id="hal">HAL架构分层</h4>
-<div class="codehilite"><pre><span></span><code>整车HAL架构设计
+<pre class="codehilite"><code>整车HAL架构设计
 ┌──────────────────────────────────────────────────────┐
 │                  应用层 (Applications)                │
 │  ┌────────┬────────┬────────┬────────┬────────┐    │
@@ -1138,46 +1138,46 @@
 │  │ SoC  │ MCU  │传感器│执行器│通信  │              │
 │  └──────┴──────┴──────┴──────┴──────┘              │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_29">关键设计原则</h4>
 <ol>
 <li><strong>接口标准化</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1">// HAL接口定义示例</span>
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// 设备识别</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">device_id</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">device_name</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">vendor_id</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">product_id</span><span class="p">;</span>
+<pre class="codehilite"><code class="language-c">// HAL接口定义示例
+typedef struct {
+    // 设备识别
+    uint32_t device_id;
+    char device_name[32];
+    uint16_t vendor_id;
+    uint16_t product_id;
 
-<span class="w">    </span><span class="c1">// 标准操作接口</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">init</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">open</span><span class="p">)(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">read</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">write</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ioctl</span><span class="p">)(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">arg</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">close</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">deinit</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    // 标准操作接口
+    int (*init)(void* config);
+    int (*open)(uint32_t flags);
+    int (*read)(void* buffer, size_t size);
+    int (*write)(const void* data, size_t size);
+    int (*ioctl)(uint32_t cmd, void* arg);
+    int (*close)(void);
+    int (*deinit)(void);
 
-<span class="w">    </span><span class="c1">// 回调机制</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">register_callback</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">cb</span><span class="p">)(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">));</span>
+    // 回调机制
+    int (*register_callback)(void (*cb)(uint32_t event, void* data));
 
-<span class="w">    </span><span class="c1">// 电源管理</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">suspend</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">resume</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    // 电源管理
+    int (*suspend)(void);
+    int (*resume)(void);
 
-<span class="w">    </span><span class="c1">// 诊断接口</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">self_test</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">get_status</span><span class="p">)(</span><span class="n">hal_status_t</span><span class="o">*</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="n">hal_device_t</span><span class="p">;</span>
-</code></pre></div>
+    // 诊断接口
+    int (*self_test)(void);
+    int (*get_status)(hal_status_t* status);
+} hal_device_t;
+</code></pre>
 
 <ol start="2">
 <li><strong>版本兼容性管理</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>HAL版本兼容性矩阵
+<pre class="codehilite"><code>HAL版本兼容性矩阵
 ┌────────────────────────────────────────────────┐
 │ HAL版本 │ 支持的硬件     │ API变更          │
 ├────────────────────────────────────────────────┤
@@ -1193,40 +1193,40 @@
 - 主版本号变更：可能不兼容
 - 次版本号变更：向后兼容
 - 修订号变更：bug修复
-</code></pre></div>
+</code></pre>
 
 <h4 id="hal_1">传感器HAL实例</h4>
-<div class="codehilite"><pre><span></span><code><span class="err">摄像头</span><span class="n">HAL实现</span>
-<span class="err">┌──────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">          </span><span class="n">Camera</span><span class="w"> </span><span class="n">HAL</span><span class="w"> </span><span class="n">Architecture</span><span class="w">              </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="err">应用接口层：</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">open_camera</span><span class="p">(</span><span class="n">camera_id</span><span class="p">)</span><span class="w">                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">configure_stream</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span><span class="w"> </span><span class="n">fps</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="p">)</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">capture_frame</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="p">)</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">set_parameter</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">HAL实现层</span><span class="err">：</span><span class="w">                                   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────────────────────────────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">统一</span><span class="n">Camera</span><span class="w"> </span><span class="n">HAL实现</span><span class="w">                     </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">数据格式转换</span><span class="w"> </span><span class="p">(</span><span class="n">YUV</span><span class="o">/</span><span class="n">RGB</span><span class="o">/</span><span class="n">RAW</span><span class="p">)</span><span class="w">          </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">时间戳同步</span><span class="w">                          </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="err">缓冲区管理</span><span class="w">                          </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ISP参数映射</span><span class="w">                         </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────────────────────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">硬件适配层：</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────┬─────────┬─────────┬────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="n">Sony</span><span class="w"> </span><span class="n">ISP</span><span class="w"> </span><span class="err">│</span><span class="n">TI</span><span class="w"> </span><span class="n">ISP</span><span class="w">  </span><span class="err">│</span><span class="n">OV</span><span class="w"> </span><span class="n">ISP</span><span class="w">   </span><span class="err">│</span><span class="n">AR</span><span class="w"> </span><span class="n">ISP</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="n">IMX490</span><span class="w">   </span><span class="err">│</span><span class="n">FPD</span><span class="o">-</span><span class="n">Link</span><span class="err">│</span><span class="n">OX08B</span><span class="w">    </span><span class="err">│</span><span class="n">AR0820</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─────────┴─────────┴─────────┴────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>摄像头HAL实现
+┌──────────────────────────────────────────────┐
+│          Camera HAL Architecture              │
+├──────────────────────────────────────────────┤
+│  应用接口层：                                  │
+│  - open_camera(camera_id)                    │
+│  - configure_stream(resolution, fps, format) │
+│  - capture_frame(buffer, timeout)            │
+│  - set_parameter(param, value)               │
+│                                              │
+│  HAL实现层：                                   │
+│  ┌──────────────────────────────────────┐   │
+│  │ 统一Camera HAL实现                     │   │
+│  │ - 数据格式转换 (YUV/RGB/RAW)          │   │
+│  │ - 时间戳同步                          │   │
+│  │ - 缓冲区管理                          │   │
+│  │ - ISP参数映射                         │   │
+│  └──────────────────────────────────────┘   │
+│                                              │
+│  硬件适配层：                                  │
+│  ┌─────────┬─────────┬─────────┬────────┐  │
+│  │Sony ISP │TI ISP  │OV ISP   │AR ISP  │  │
+│  │IMX490   │FPD-Link│OX08B    │AR0820  │  │
+│  └─────────┴─────────┴─────────┴────────┘  │
+└──────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="1242-ota">12.4.2 OTA架构与安全机制</h3>
 <p>OTA系统不仅要保证更新的可靠性，更要确保整个过程的安全性，防止恶意攻击和系统故障。</p>
 <h4 id="ota">OTA系统架构</h4>
-<div class="codehilite"><pre><span></span><code>端到端OTA架构
+<pre class="codehilite"><code>端到端OTA架构
 ┌──────────────────────────────────────────────────────┐
 │                    云端 (OTA Server)                  │
 ├──────────────────────────────────────────────────────┤
@@ -1274,13 +1274,13 @@
 │  │智驾域│座舱域│底盘域│动力域│网关   │              │
 │  └──────┴──────┴──────┴──────┴──────┘              │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_30">安全机制设计</h4>
 <ol>
 <li><strong>多层安全防护</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>OTA安全防护体系
+<pre class="codehilite"><code>OTA安全防护体系
 ┌─────────────────────────────────────────────┐
 │ 层级   │ 安全措施          │ 防护目标       │
 ├─────────────────────────────────────────────┤
@@ -1300,44 +1300,44 @@
 │        │ eFuse防回滚       │ 物理防护       │
 │        │ 安全存储          │ 数据保护       │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>签名验证流程</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="n">多级签名验证链</span>
-<span class="n">┌──────────────────────────────────────┐</span>
-<span class="n">│         OEM根证书 (离线保存)           │</span>
-<span class="n">│         RSA-4096 / ECC-P384          │</span>
-<span class="n">└────────────────┬─────────────────────┘</span>
-<span class="n">                 │ 签发</span>
-<span class="n">        ┌────────▼────────┐</span>
-<span class="n">        │   中间证书CA     │</span>
-<span class="n">        │   RSA-3072      │</span>
-<span class="n">        └────────┬────────┘</span>
-<span class="n">                 │ 签发</span>
-<span class="n">    ┌────────────┼────────────┐</span>
-<span class="n">    │            │            │</span>
-<span class="n">┌───▼───┐  ┌────▼────┐  ┌───▼───┐</span>
-<span class="n">│软件包  │  │配置签名  │  │固件签名│</span>
-<span class="n">│签名证书│  │证书      │  │证书    │</span>
-<span class="n">└───┬───┘  └────┬────┘  └───┬───┘</span>
-<span class="n">    │           │            │</span>
-<span class="n">┌───▼───┐  ┌────▼────┐  ┌───▼───┐</span>
-<span class="n">│APP.pkg│  │config.xml│  │fw.bin │</span>
-<span class="n">└───────┘  └─────────┘  └───────┘</span>
+<pre class="codehilite"><code>多级签名验证链
+┌──────────────────────────────────────┐
+│         OEM根证书 (离线保存)           │
+│         RSA-4096 / ECC-P384          │
+└────────────────┬─────────────────────┘
+                 │ 签发
+        ┌────────▼────────┐
+        │   中间证书CA     │
+        │   RSA-3072      │
+        └────────┬────────┘
+                 │ 签发
+    ┌────────────┼────────────┐
+    │            │            │
+┌───▼───┐  ┌────▼────┐  ┌───▼───┐
+│软件包  │  │配置签名  │  │固件签名│
+│签名证书│  │证书      │  │证书    │
+└───┬───┘  └────┬────┘  └───┬───┘
+    │           │            │
+┌───▼───┐  ┌────▼────┐  ┌───▼───┐
+│APP.pkg│  │config.xml│  │fw.bin │
+└───────┘  └─────────┘  └───────┘
 
-<span class="n">验证过程：</span>
+验证过程：
 
-<span class="n">1. 验证证书链完整性</span>
-<span class="n">2. 检查证书有效期</span>
-<span class="n">3. 验证软件包签名</span>
-<span class="n">4. 校验哈希值</span>
-<span class="n">5. 检查版本号防回滚</span>
-</code></pre></div>
+1. 验证证书链完整性
+2. 检查证书有效期
+3. 验证软件包签名
+4. 校验哈希值
+5. 检查版本号防回滚
+</code></pre>
 
 <h4 id="_31">差分更新技术</h4>
-<div class="codehilite"><pre><span></span><code>差分算法对比
+<pre class="codehilite"><code>差分算法对比
 ┌──────────────────────────────────────────────┐
 │ 算法    │ 压缩率 │ 计算复杂度 │ 内存需求     │
 ├──────────────────────────────────────────────┤
@@ -1352,12 +1352,12 @@
 - 全量包：100MB
 - 差分包：8-15MB（85%压缩率）
 - 更新时间：2分钟（全量15分钟）
-</code></pre></div>
+</code></pre>
 
 <h3 id="1243">12.4.3 软硬件解耦策略</h3>
 <p>软硬件解耦是实现软件定义汽车的基础，通过标准化接口和模块化设计，实现软件的独立迭代和硬件的灵活替换。</p>
 <h4 id="_32">解耦架构设计</h4>
-<div class="codehilite"><pre><span></span><code>软硬件解耦架构
+<pre class="codehilite"><code>软硬件解耦架构
 ┌──────────────────────────────────────────────┐
 │              软件域 (Software Domain)          │
 ├──────────────────────────────────────────────┤
@@ -1390,101 +1390,101 @@
 │  │ - 通信接口                            │   │
 │  └──────────────────────────────────────┘   │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_33">接口标准化</h4>
 <ol>
 <li><strong>AUTOSAR自适应平台</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nv">AUTOSAR</span><span class="w"> </span><span class="nv">AP</span>服务接口
+<pre class="codehilite"><code>AUTOSAR AP服务接口
 ┌─────────────────────────────────────────┐
-│<span class="w"> </span><span class="nv">Service</span><span class="w"> </span><span class="nv">Interface</span><span class="w"> </span><span class="nv">Specification</span><span class="w">         </span>│
+│ Service Interface Specification         │
 ├─────────────────────────────────────────┤
-│<span class="w"> </span><span class="nv">ara</span>::<span class="nv">com</span><span class="w"> </span><span class="ss">(</span>通信管理<span class="ss">)</span><span class="w">                     </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>服务发现<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>方法调用<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>事件订阅<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>字段访问<span class="w">                              </span>│
+│ ara::com (通信管理)                     │
+│ - 服务发现                              │
+│ - 方法调用                              │
+│ - 事件订阅                              │
+│ - 字段访问                              │
 ├─────────────────────────────────────────┤
-│<span class="w"> </span><span class="nv">ara</span>::<span class="k">exec</span><span class="w"> </span><span class="ss">(</span>执行管理<span class="ss">)</span><span class="w">                    </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>应用生命周期<span class="w">                          </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>状态管理<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>资源分配<span class="w">                              </span>│
+│ ara::exec (执行管理)                    │
+│ - 应用生命周期                          │
+│ - 状态管理                              │
+│ - 资源分配                              │
 ├─────────────────────────────────────────┤
-│<span class="w"> </span><span class="nv">ara</span>::<span class="nv">diag</span><span class="w"> </span><span class="ss">(</span>诊断服务<span class="ss">)</span><span class="w">                    </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">UDS</span>服务<span class="w">                               </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">DTC</span>管理<span class="w">                               </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>日志记录<span class="w">                              </span>│
+│ ara::diag (诊断服务)                    │
+│ - UDS服务                               │
+│ - DTC管理                               │
+│ - 日志记录                              │
 ├─────────────────────────────────────────┤
-│<span class="w"> </span><span class="nv">ara</span>::<span class="nv">per</span><span class="w"> </span><span class="ss">(</span>持久化存储<span class="ss">)</span><span class="w">                   </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>键值存储<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>文件存储<span class="w">                              </span>│
-│<span class="w"> </span><span class="o">-</span><span class="w"> </span>数据库接口<span class="w">                            </span>│
+│ ara::per (持久化存储)                   │
+│ - 键值存储                              │
+│ - 文件存储                              │
+│ - 数据库接口                            │
 └─────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>服务化架构（SOA）</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">车载SOA服务定义</span>
-<span class="nt">Service</span><span class="o">:</span><span class="w"> </span><span class="nt">VehicleSpeed</span>
-<span class="err">├──</span><span class="w"> </span><span class="nt">Interface</span><span class="w"> </span><span class="nt">Definition</span><span class="w"> </span><span class="o">(</span><span class="nt">IDL</span><span class="o">)</span>
-<span class="err">│</span><span class="w">   </span><span class="nt">service</span><span class="w"> </span><span class="nt">VehicleSpeed</span><span class="w"> </span><span class="p">{</span>
-<span class="err">│</span><span class="w">       </span><span class="err">method</span><span class="w"> </span><span class="err">getSpeed()</span><span class="w"> </span><span class="err">returns</span><span class="w"> </span><span class="err">(float)</span><span class="p">;</span>
-<span class="err">│</span><span class="w">       </span><span class="err">event</span><span class="w"> </span><span class="err">onSpeedChange(float</span><span class="w"> </span><span class="err">newSpeed)</span><span class="p">;</span>
-<span class="err">│</span><span class="w">       </span><span class="err">field</span><span class="w"> </span><span class="n">currentSpeed</span><span class="p">:</span><span class="w"> </span><span class="k">float</span><span class="p">;</span>
-<span class="err">│</span><span class="w">   </span><span class="p">}</span>
-<span class="err">├──</span><span class="w"> </span><span class="nt">Service</span><span class="w"> </span><span class="nt">Registry</span>
-<span class="err">│</span><span class="w">   </span><span class="nt">-</span><span class="w"> </span><span class="nt">Service</span><span class="w"> </span><span class="nt">ID</span><span class="o">:</span><span class="w"> </span><span class="nt">0x1234</span>
-<span class="err">│</span><span class="w">   </span><span class="nt">-</span><span class="w"> </span><span class="nt">Version</span><span class="o">:</span><span class="w"> </span><span class="nt">1</span><span class="p">.</span><span class="nc">2</span><span class="p">.</span><span class="nc">0</span>
-<span class="err">│</span><span class="w">   </span><span class="nt">-</span><span class="w"> </span><span class="nt">Provider</span><span class="o">:</span><span class="w"> </span><span class="nt">VDC</span>
-<span class="err">│</span><span class="w">   </span><span class="nt">-</span><span class="w"> </span><span class="nt">QoS</span><span class="o">:</span><span class="w"> </span><span class="nt">RT_CRITICAL</span>
-<span class="err">└──</span><span class="w"> </span><span class="nt">Client</span><span class="w"> </span><span class="nt">Binding</span>
+<pre class="codehilite"><code>车载SOA服务定义
+Service: VehicleSpeed
+├── Interface Definition (IDL)
+│   service VehicleSpeed {
+│       method getSpeed() returns (float);
+│       event onSpeedChange(float newSpeed);
+│       field currentSpeed: float;
+│   }
+├── Service Registry
+│   - Service ID: 0x1234
+│   - Version: 1.2.0
+│   - Provider: VDC
+│   - QoS: RT_CRITICAL
+└── Client Binding
 
-<span class="w">    </span><span class="nt">-</span><span class="w"> </span><span class="nt">C</span><span class="o">++</span><span class="w"> </span><span class="nt">Client</span><span class="w"> </span><span class="nt">API</span>
-<span class="w">    </span><span class="nt">-</span><span class="w"> </span><span class="nt">Python</span><span class="w"> </span><span class="nt">Binding</span><span class="w">  </span>
-<span class="w">    </span><span class="nt">-</span><span class="w"> </span><span class="nt">REST</span><span class="w"> </span><span class="nt">API</span>
-</code></pre></div>
+    - C++ Client API
+    - Python Binding  
+    - REST API
+</code></pre>
 
 <h4 id="_34">容器化部署</h4>
-<div class="codehilite"><pre><span></span><code>车载容器化架构
+<pre class="codehilite"><code>车载容器化架构
 ┌──────────────────────────────────────────┐
-│<span class="w">          </span><span class="nv">Kubernetes</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Automotive</span><span class="w">       </span>│
+│          Kubernetes for Automotive       │
 ├──────────────────────────────────────────┤
-│<span class="w">  </span><span class="nv">Master</span><span class="w"> </span><span class="nv">Node</span><span class="w"> </span><span class="ss">(</span>中央计算单元<span class="ss">)</span><span class="w">               </span>│
-│<span class="w">  </span>┌────────────────────────────────────┐<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="nv">Control</span><span class="w"> </span><span class="nv">Plane</span><span class="w">                      </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">API</span><span class="w"> </span><span class="nv">Server</span><span class="w">                       </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Scheduler</span><span class="w"> </span><span class="ss">(</span>实时调度扩展<span class="ss">)</span><span class="w">          </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Controller</span><span class="w"> </span><span class="nv">Manager</span><span class="w">               </span>│<span class="w">  </span>│
-│<span class="w">  </span>└────────────────────────────────────┘<span class="w">  </span>│
-│<span class="w">                                          </span>│
-│<span class="w">  </span><span class="nv">Worker</span><span class="w"> </span><span class="nv">Nodes</span><span class="w"> </span><span class="ss">(</span>域控制器<span class="ss">)</span><span class="w">                  </span>│
-│<span class="w">  </span>┌────────────────────────────────────┐<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="nv">Node</span><span class="w"> </span><span class="mi">1</span>:<span class="w"> </span>智驾域<span class="w">                     </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>┌──────┬──────┬──────┐<span class="w">           </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>│感知<span class="w">  </span>│规划<span class="w">   </span>│控制<span class="w">   </span>│<span class="w"> </span><span class="nv">Pods</span><span class="w">      </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>└──────┴──────┴──────┘<span class="w">           </span>│<span class="w">  </span>│
-│<span class="w">  </span>└────────────────────────────────────┘<span class="w">  </span>│
-│<span class="w">  </span>┌────────────────────────────────────┐<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span><span class="nv">Node</span><span class="w"> </span><span class="mi">2</span>:<span class="w"> </span>座舱域<span class="w">                     </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>┌──────┬──────┬──────┐<span class="w">           </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>│<span class="nv">HMI</span><span class="w">  </span>│语音<span class="w">   </span>│导航<span class="w">   </span>│<span class="w"> </span><span class="nv">Pods</span><span class="w">      </span>│<span class="w">  </span>│
-│<span class="w">  </span>│<span class="w"> </span>└──────┴──────┴──────┘<span class="w">           </span>│<span class="w">  </span>│
-│<span class="w">  </span>└────────────────────────────────────┘<span class="w">  </span>│
-│<span class="w">                                          </span>│
-│<span class="w">  </span>特性增强：<span class="w">                               </span>│
-│<span class="w">  </span><span class="o">-</span><span class="w"> </span>确定性调度<span class="w"> </span><span class="ss">(</span><span class="nv">RT</span><span class="o">-</span><span class="nv">Kubernetes</span><span class="ss">)</span><span class="w">            </span>│
-│<span class="w">  </span><span class="o">-</span><span class="w"> </span>资源预留和隔离<span class="w">                        </span>│
-│<span class="w">  </span><span class="o">-</span><span class="w"> </span>快速启动优化<span class="w"> </span><span class="ss">(</span><span class="o">&lt;</span><span class="mi">100</span><span class="nv">ms</span><span class="ss">)</span><span class="w">                 </span>│
-│<span class="w">  </span><span class="o">-</span><span class="w"> </span>本地镜像缓存<span class="w">                          </span>│
+│  Master Node (中央计算单元)               │
+│  ┌────────────────────────────────────┐  │
+│  │ Control Plane                      │  │
+│  │ - API Server                       │  │
+│  │ - Scheduler (实时调度扩展)          │  │
+│  │ - Controller Manager               │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  Worker Nodes (域控制器)                  │
+│  ┌────────────────────────────────────┐  │
+│  │ Node 1: 智驾域                     │  │
+│  │ ┌──────┬──────┬──────┐           │  │
+│  │ │感知  │规划   │控制   │ Pods      │  │
+│  │ └──────┴──────┴──────┘           │  │
+│  └────────────────────────────────────┘  │
+│  ┌────────────────────────────────────┐  │
+│  │ Node 2: 座舱域                     │  │
+│  │ ┌──────┬──────┬──────┐           │  │
+│  │ │HMI  │语音   │导航   │ Pods      │  │
+│  │ └──────┴──────┴──────┘           │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  特性增强：                               │
+│  - 确定性调度 (RT-Kubernetes)            │
+│  - 资源预留和隔离                        │
+│  - 快速启动优化 (&lt;100ms)                 │
+│  - 本地镜像缓存                          │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1244">12.4.4 版本管理与回滚机制</h3>
 <p>可靠的版本管理和快速回滚能力是OTA系统的安全保障，确保在更新失败时能够快速恢复到稳定状态。</p>
 <h4 id="_35">版本管理策略</h4>
-<div class="codehilite"><pre><span></span><code>整车软件版本管理体系
+<pre class="codehilite"><code>整车软件版本管理体系
 ┌───────────────────────────────────────────┐
 │          版本号规范 (语义化版本)             │
 │          Major.Minor.Patch-Build          │
@@ -1513,60 +1513,60 @@
 │ │动力域 │1.0.x  │1.0.x  │1.1.x  │        │
 │ └──────┴───────┴───────┴───────┘        │
 └───────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="ab">A/B分区更新</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">A</span><span class="o">/</span><span class="n">B双分区架构</span>
-<span class="err">┌──────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">              </span><span class="err">存储布局</span><span class="w"> </span><span class="p">(</span><span class="n">eMMC</span><span class="o">/</span><span class="n">UFS</span><span class="p">)</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├──────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Bootloader</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="n">MB</span><span class="p">)</span><span class="w">                  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">Primary</span><span class="w"> </span><span class="n">Bootloader</span><span class="w">              </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">Secondary</span><span class="w"> </span><span class="n">Bootloader</span><span class="w">            </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">Recovery</span><span class="w"> </span><span class="n">Mode</span><span class="w">                   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Partition</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="p">(</span><span class="n">Active</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">32</span><span class="n">GB</span><span class="w">       </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">┌──────────────────────────────┐</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="n">GB</span><span class="p">)</span><span class="w">                 </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="n">Kernel</span><span class="w">                  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">System</span><span class="w"> </span><span class="n">Services</span><span class="w">            </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">├──────────────────────────────┤</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">Application</span><span class="w"> </span><span class="p">(</span><span class="mi">16</span><span class="n">GB</span><span class="p">)</span><span class="w">           </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Function</span><span class="w"> </span><span class="n">Apps</span><span class="w">              </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ML</span><span class="w"> </span><span class="n">Models</span><span class="w">                  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">├──────────────────────────────┤</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">Data</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="n">GB</span><span class="p">)</span><span class="w">                   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Maps</span><span class="w">                       </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">Data</span><span class="w">                  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">└──────────────────────────────┘</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Partition</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">(</span><span class="n">Inactive</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">32</span><span class="n">GB</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="p">[</span><span class="err">镜像结构同</span><span class="n">Partition</span><span class="w"> </span><span class="n">A</span><span class="p">]</span><span class="w">            </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────────────────────────────────────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Shared</span><span class="w"> </span><span class="n">Data</span><span class="w"> </span><span class="p">(</span><span class="mi">64</span><span class="n">GB</span><span class="p">)</span><span class="w">                </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">Settings</span><span class="w">                   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">Logs</span><span class="w">                           </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">Cache</span><span class="w">                          </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────────────────────────────────────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└──────────────────────────────────────────┘</span>
+<pre class="codehilite"><code>A/B双分区架构
+┌──────────────────────────────────────────┐
+│              存储布局 (eMMC/UFS)          │
+├──────────────────────────────────────────┤
+│  ┌────────────────────────────────────┐  │
+│  │  Bootloader (4MB)                  │  │
+│  │  - Primary Bootloader              │  │
+│  │  - Secondary Bootloader            │  │
+│  │  - Recovery Mode                   │  │
+│  └────────────────────────────────────┘  │
+│  ┌────────────────────────────────────┐  │
+│  │  Partition A (Active) - 32GB       │  │
+│  │  ┌──────────────────────────────┐  │  │
+│  │  │ System (8GB)                 │  │  │
+│  │  │ - OS Kernel                  │  │  │
+│  │  │ - System Services            │  │  │
+│  │  ├──────────────────────────────┤  │  │
+│  │  │ Application (16GB)           │  │  │
+│  │  │ - Function Apps              │  │  │
+│  │  │ - ML Models                  │  │  │
+│  │  ├──────────────────────────────┤  │  │
+│  │  │ Data (8GB)                   │  │  │
+│  │  │ - Maps                       │  │  │
+│  │  │ - User Data                  │  │  │
+│  │  └──────────────────────────────┘  │  │
+│  └────────────────────────────────────┘  │
+│  ┌────────────────────────────────────┐  │
+│  │  Partition B (Inactive) - 32GB     │  │
+│  │  [镜像结构同Partition A]            │  │
+│  └────────────────────────────────────┘  │
+│  ┌────────────────────────────────────┐  │
+│  │  Shared Data (64GB)                │  │
+│  │  - User Settings                   │  │
+│  │  - Logs                           │  │
+│  │  - Cache                          │  │
+│  └────────────────────────────────────┘  │
+└──────────────────────────────────────────┘
 
-<span class="err">更新流程：</span>
+更新流程：
 
-<span class="mf">1.</span><span class="w"> </span><span class="err">当前运行在</span><span class="n">Partition</span><span class="w"> </span><span class="n">A</span>
-<span class="mf">2.</span><span class="w"> </span><span class="err">下载更新到</span><span class="n">Partition</span><span class="w"> </span><span class="n">B</span>
-<span class="mf">3.</span><span class="w"> </span><span class="err">验证</span><span class="n">B分区完整性</span>
-<span class="mf">4.</span><span class="w"> </span><span class="err">设置</span><span class="n">B为启动分区</span>
-<span class="mf">5.</span><span class="w"> </span><span class="err">重启进入</span><span class="n">B分区</span>
-<span class="mf">6.</span><span class="w"> </span><span class="err">确认更新成功</span>
-<span class="mf">7.</span><span class="w"> </span><span class="n">A分区标记为备份</span>
-</code></pre></div>
+1. 当前运行在Partition A
+2. 下载更新到Partition B
+3. 验证B分区完整性
+4. 设置B为启动分区
+5. 重启进入B分区
+6. 确认更新成功
+7. A分区标记为备份
+</code></pre>
 
 <h4 id="_36">回滚机制</h4>
-<div class="codehilite"><pre><span></span><code>多级回滚策略
+<pre class="codehilite"><code>多级回滚策略
 ┌─────────────────────────────────────────┐
 │ 回滚触发条件                             │
 ├─────────────────────────────────────────┤
@@ -1606,10 +1606,10 @@
 3. 清理失败更新
 4. 上报回滚事件
 5. 锁定问题版本
-</code></pre></div>
+</code></pre>
 
 <h4 id="_37">灰度发布策略</h4>
-<div class="codehilite"><pre><span></span><code>灰度发布流程
+<pre class="codehilite"><code>灰度发布流程
 ┌──────────────────────────────────────┐
 │         灰度发布阶段                   │
 ├──────────────────────────────────────┤
@@ -1649,7 +1649,7 @@
 - 自动暂停阈值：成功率&lt;95%
 - 自动回滚阈值：成功率&lt;90%
 - 人工介入阈值：异常率&gt;1%
-</code></pre></div>
+</code></pre>
 
 <h2 id="125">12.5 未来展望与挑战</h2>
 <h3 id="1251">12.5.1 技术发展趋势</h3>

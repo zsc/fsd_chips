@@ -186,7 +186,7 @@
 <p>自动驾驶芯片的算力竞赛背后，是半导体制造工艺的持续革新。从2019年TDA4的28nm工艺，到2024年最新一代芯片采用的3nm工艺，制程节点的演进不仅带来了性能和能效的巨大提升，也深刻影响了产业格局。本章将深入剖析制程工艺演进、代工厂竞争格局、先进封装技术革新以及供应链本土化等关键议题。</p>
 <h2 id="1">1. 制程节点演进：从成熟工艺到尖端制程</h2>
 <h3 id="11">1.1 工艺节点演进时间线</h3>
-<div class="codehilite"><pre><span></span><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="codehilite"><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     制程节点  |  2019   2020   2021   2022   2023   2024   2025
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     28nm     |  TDA4   征程2  ────────────────────→ (成熟工艺)
@@ -196,7 +196,7 @@
     5nm      |                       FSD HW4  Thor ───→ (前沿)
     3nm      |                              开发中 ───→ (2025)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-</code></pre></div>
+</code></pre>
 
 <h3 id="12">1.2 各制程节点技术特征</h3>
 <h4 id="28nm">28nm：成熟工艺的坚守</h4>
@@ -230,7 +230,7 @@
 <li><strong>晶体管密度</strong>：~100M/mm²</li>
 <li><strong>技术突破深度解析</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>平面FET → FinFET转变的关键参数
+<pre class="codehilite"><code>平面FET → FinFET转变的关键参数
 ┌─────────────┐        ┌─────────────┐
 │   Gate      │        │     Gate    │
 │ ─────────   │   →    │  ┌─────┐   │
@@ -243,7 +243,7 @@
 - 短沟道效应抑制：DIBL &lt; 50mV/V
 - 亚阈值斜率：SS &lt; 70mV/dec
 - Ion/Ioff比：提升&gt;1000倍
-</code></pre></div>
+</code></pre>
 
 <ul>
 <li><strong>FinFET工艺参数</strong>：</li>
@@ -274,25 +274,25 @@
 <li>光罩成本：单套&gt;1000万美元</li>
 <li><strong>7nm工艺技术栈</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="mf">7</span><span class="n">nm工艺集成技术</span><span class="err">：</span>
-<span class="err">┌──────────────────────────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="n">前段工艺</span><span class="err">（</span><span class="n">FEOL</span><span class="err">）</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">FinFET</span><span class="err">：</span><span class="n">Fin高度42nm</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">钴接触</span><span class="err">：</span><span class="n">降低接触电阻20%</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">SDB</span><span class="err">（</span><span class="n">单扩散断</span><span class="err">）</span><span class="n">技术</span><span class="w">        </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="n">极紫外光刻</span><span class="err">（</span><span class="n">EUV</span><span class="err">）</span><span class="w">          </span><span class="err">│</span>
-<span class="err">├──────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="n">中段工艺</span><span class="err">（</span><span class="n">MOL</span><span class="err">）</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">钴局部互连</span><span class="w">                </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">自对准通孔</span><span class="w">                </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="n">零错位接触</span><span class="w">                </span><span class="err">│</span>
-<span class="err">├──────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="n">后段工艺</span><span class="err">（</span><span class="n">BEOL</span><span class="err">）</span><span class="w">              </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">铜双大马士革</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">超低K介电材料</span><span class="err">（</span><span class="n">k</span><span class="o">&lt;</span><span class="mf">2.5</span><span class="err">）</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="mf">12</span><span class="o">-</span><span class="mf">15</span><span class="n">层金属互连</span><span class="w">           </span><span class="err">│</span>
-<span class="err">└──────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>7nm工艺集成技术：
+┌──────────────────────────────┐
+│  前段工艺（FEOL）              │
+│  ├─ FinFET：Fin高度42nm       │
+│  ├─ 钴接触：降低接触电阻20%    │
+│  ├─ SDB（单扩散断）技术        │
+│  └─ 极紫外光刻（EUV）          │
+├──────────────────────────────┤
+│  中段工艺（MOL）               │
+│  ├─ 钴局部互连                │
+│  ├─ 自对准通孔                │
+│  └─ 零错位接触                │
+├──────────────────────────────┤
+│  后段工艺（BEOL）              │
+│  ├─ 铜双大马士革               │
+│  ├─ 超低K介电材料（k&lt;2.5）     │
+│  └─ 12-15层金属互连           │
+└──────────────────────────────┘
+</code></pre>
 
 <ul>
 <li><strong>设计挑战深度分析</strong>：</li>
@@ -323,24 +323,24 @@
 <li>曝光机要求：ASML NXE:3400C，每台1.5亿欧元</li>
 <li><strong>5nm技术创新</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="mf">5</span><span class="n">nm关键技术突破</span><span class="err">：</span>
-<span class="err">┌────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="mf">1.</span><span class="w"> </span><span class="n">极紫外光刻优化</span><span class="w">                   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">高NA</span><span class="w"> </span><span class="n">EUV预研</span><span class="err">（</span><span class="n">NA</span><span class="o">=</span><span class="mf">0.55</span><span class="err">）</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">随机缺陷控制</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="o">/</span><span class="n">cm²</span><span class="w">        </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">└─</span><span class="w"> </span><span class="n">边缘放置误差</span><span class="err">（</span><span class="n">EPE</span><span class="err">）</span><span class="o">&lt;</span><span class="mf">1</span><span class="n">nm</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="mf">2.</span><span class="w"> </span><span class="n">材料创新</span><span class="w">                       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">钴填充技术</span><span class="err">（</span><span class="n">Co</span><span class="w"> </span><span class="n">fill</span><span class="err">）</span><span class="w">        </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">钌互连探索</span><span class="err">（</span><span class="n">Ru</span><span class="w"> </span><span class="nb">int</span><span class="n">erconnect</span><span class="err">）│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">└─</span><span class="w"> </span><span class="mf">2</span><span class="n">D材料研究</span><span class="err">（</span><span class="n">MoS₂</span><span class="err">、</span><span class="n">WS₂</span><span class="err">）</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="mf">3.</span><span class="w"> </span><span class="n">设计</span><span class="o">-</span><span class="n">工艺协同优化</span><span class="err">（</span><span class="n">DTCO</span><span class="err">）</span><span class="w">        </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">标准单元高度</span><span class="err">：</span><span class="mf">6</span><span class="n">T</span><span class="err">→</span><span class="mf">5</span><span class="n">T</span><span class="w">         </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">├─</span><span class="w"> </span><span class="n">SRAM优化</span><span class="err">：</span><span class="n">HD</span><span class="o">/</span><span class="n">HC</span><span class="o">/</span><span class="n">UHD三种</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">     </span><span class="err">└─</span><span class="w"> </span><span class="n">埋入式电源轨</span><span class="err">（</span><span class="n">BPR</span><span class="err">）</span><span class="w">          </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>5nm关键技术突破：
+┌────────────────────────────────────┐
+│  1. 极紫外光刻优化                   │
+│     ├─ 高NA EUV预研（NA=0.55）      │
+│     ├─ 随机缺陷控制&lt;0.1/cm²        │
+│     └─ 边缘放置误差（EPE）&lt;1nm     │
+│                                    │
+│  2. 材料创新                       │
+│     ├─ 钴填充技术（Co fill）        │
+│     ├─ 钌互连探索（Ru interconnect）│
+│     └─ 2D材料研究（MoS₂、WS₂）     │
+│                                    │
+│  3. 设计-工艺协同优化（DTCO）        │
+│     ├─ 标准单元高度：6T→5T         │
+│     ├─ SRAM优化：HD/HC/UHD三种     │
+│     └─ 埋入式电源轨（BPR）          │
+└────────────────────────────────────┘
+</code></pre>
 
 <ul>
 <li><strong>Tesla FSD HW4深度分析</strong>：</li>
@@ -352,17 +352,17 @@
 <li>成本分析：单芯片制造成本约400美元</li>
 <li><strong>实际收益分析</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="mf">5</span><span class="n">nm</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="mf">7</span><span class="n">nm实测对比</span><span class="err">（</span><span class="n">同架构</span><span class="err">）：</span>
-<span class="err">┌─────────────────────────────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="n">指标</span><span class="w">        </span><span class="mf">7</span><span class="n">nm</span><span class="w">    </span><span class="mf">5</span><span class="n">nm</span><span class="w">   </span><span class="n">提升幅度</span><span class="w"> </span><span class="err">│</span>
-<span class="err">├─────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="n">频率上限</span><span class="w">    </span><span class="mf">3.0</span><span class="n">GHz</span><span class="w">  </span><span class="mf">3.4</span><span class="n">GHz</span><span class="w">  </span><span class="o">+</span><span class="mf">13</span><span class="err">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">功耗</span><span class="err">@</span><span class="n">同频</span><span class="w">   </span><span class="mf">100</span><span class="n">W</span><span class="w">    </span><span class="mf">85</span><span class="n">W</span><span class="w">     </span><span class="o">-</span><span class="mf">15</span><span class="err">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">面积</span><span class="err">@</span><span class="n">同规模</span><span class="w"> </span><span class="mf">100</span><span class="n">mm²</span><span class="w">  </span><span class="mf">70</span><span class="n">mm²</span><span class="w">   </span><span class="o">-</span><span class="mf">30</span><span class="err">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">SRAM密度</span><span class="w">   </span><span class="mf">0.027</span><span class="w">   </span><span class="mf">0.021</span><span class="w">   </span><span class="o">+</span><span class="mf">28</span><span class="err">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="n">逻辑密度</span><span class="w">   </span><span class="mf">91</span><span class="n">M</span><span class="w">     </span><span class="mf">173</span><span class="n">M</span><span class="w">    </span><span class="o">+</span><span class="mf">90</span><span class="err">%</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>5nm vs 7nm实测对比（同架构）：
+┌─────────────────────────────────┐
+│ 指标        7nm    5nm   提升幅度 │
+├─────────────────────────────────┤
+│ 频率上限    3.0GHz  3.4GHz  +13%  │
+│ 功耗@同频   100W    85W     -15%  │
+│ 面积@同规模 100mm²  70mm²   -30%  │
+│ SRAM密度   0.027   0.021   +28%  │
+│ 逻辑密度   91M     173M    +90%  │
+└─────────────────────────────────┘
+</code></pre>
 
 <ul>
 <li><strong>功耗墙挑战</strong>：</li>
@@ -392,7 +392,7 @@
 <li>SRAM缩放停滞，采用新型bitcell设计</li>
 </ul>
 <p><strong>Samsung GAA-FET（MBCFET）</strong>：</p>
-<div class="codehilite"><pre><span></span><code>GAA架构演进：
+<pre class="codehilite"><code>GAA架构演进：
 FinFET (7nm)    →    GAA-FET (3nm)
 ┌──┐                 ┌────────────┐
 │  │←Gate            │  ══════    │←Nanosheet
@@ -406,7 +406,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 - 栅控能力提升30%
 - 漏电流降低50%
 - 驱动电流提升15%
-</code></pre></div>
+</code></pre>
 
 <p><strong>Intel RibbonFET + PowerVia</strong>：</p>
 <ul>
@@ -453,18 +453,18 @@ FinFET (7nm)    →    GAA-FET (3nm)
 <p><strong>成本压力</strong>：</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="mf">3</span><span class="n">nm芯片开发成本结构</span><span class="err">：</span>
-<span class="err">├─</span><span class="w"> </span><span class="n">NRE费用</span><span class="err">：</span><span class="mf">5</span><span class="o">-</span><span class="mf">10</span><span class="n">亿美元</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">设计团队</span><span class="err">：</span><span class="mf">2</span><span class="n">亿美元</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">IP授权</span><span class="err">：</span><span class="mf">1.5</span><span class="n">亿美元</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">光罩制作</span><span class="err">：</span><span class="mf">1</span><span class="n">亿美元</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">验证测试</span><span class="err">：</span><span class="mf">2</span><span class="n">亿美元</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="n">软件工具</span><span class="err">：</span><span class="mf">1.5</span><span class="n">亿美元</span>
-<span class="err">└─</span><span class="w"> </span><span class="n">需要出货量</span><span class="o">&gt;</span><span class="mf">1000</span><span class="n">万片才能摊平成本</span>
-</code></pre></div>
+<pre class="codehilite"><code>3nm芯片开发成本结构：
+├─ NRE费用：5-10亿美元
+│  ├─ 设计团队：2亿美元
+│  ├─ IP授权：1.5亿美元
+│  ├─ 光罩制作：1亿美元
+│  ├─ 验证测试：2亿美元
+│  └─ 软件工具：1.5亿美元
+└─ 需要出货量&gt;1000万片才能摊平成本
+</code></pre>
 
 <h3 id="14">1.4 制程选择策略分析</h3>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────┐
 │              自动驾驶芯片制程选择决策树                    │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
@@ -479,7 +479,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 │  上市时间 ─┬─ &lt;18个月 → 成熟工艺（快速迭代）            │
 │           └─ &gt;24个月 → 先进工艺（长期竞争力）          │
 └─────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="2">2. 代工厂选择策略：全球竞争格局</h2>
 <h3 id="21">2.1 主要代工厂技术能力对比</h3>
@@ -561,7 +561,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 <p><strong>车规工艺认证体系</strong>：</p>
 </li>
 </ul>
-<div class="codehilite"><pre><span></span><code>TSMC汽车工艺平台全景：
+<pre class="codehilite"><code>TSMC汽车工艺平台全景：
 ┌────────────────────────────────────────┐
 │  平台等级        工艺节点    认证标准     │
 ├────────────────────────────────────────┤
@@ -577,7 +577,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 │  N5A工艺        5nm专用     ASIL-D      │
 │  自动驾驶专用    2025年量产              │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ul>
 <li><strong>关键技术创新</strong>：
@@ -600,13 +600,13 @@ FinFET (7nm)    →    GAA-FET (3nm)
 <ul>
 <li><strong>市场份额细分（2024年）</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>制程节点市场份额：
+<pre class="codehilite"><code>制程节点市场份额：
 ├─ 3nm：100%垄断
 ├─ 5nm：92%（Samsung 8%）
 ├─ 7nm：85%（Samsung 10%，SMIC 5%）
 ├─ 16/14nm：45%（Samsung 25%，GF 15%，SMIC 15%）
 └─ 28nm及以上：28%（高度分散）
-</code></pre></div>
+</code></pre>
 
 <ul>
 <li><strong>核心客户依赖度分析</strong>：</li>
@@ -666,7 +666,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 <li>7nm：DUV多重曝光实现，产能受限</li>
 </ul>
 <h4 id="_8">供应链安全价值</h4>
-<div class="codehilite"><pre><span></span><code>本土化供应优势：
+<pre class="codehilite"><code>本土化供应优势：
 ┌──────────────────────────┐
 │  降低地缘政治风险         │
 │  ├─ 无需出口许可         │
@@ -678,7 +678,7 @@ FinFET (7nm)    →    GAA-FET (3nm)
 │  ├─ 物流成本低          │
 │  └─ 本地化服务          │
 └──────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="25">2.5 代工厂选择决策框架</h3>
 <h4 id="_9">多维度评估模型</h4>
@@ -710,17 +710,17 @@ FinFET (7nm)    →    GAA-FET (3nm)
 </ol>
 <h2 id="3">3. 先进封装技术：超越摩尔定律</h2>
 <h3 id="31">3.1 封装技术演进路线</h3>
-<div class="codehilite"><pre><span></span><code>封装技术发展路径：
+<pre class="codehilite"><code>封装技术发展路径：
 
 Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
    (1970s)      (1990s)    (2010s) (2015s) (2020s)
      ↓            ↓          ↓       ↓        ↓
    低成本      高密度     HBM集成  逻辑堆叠  异构集成
-</code></pre></div>
+</code></pre>
 
 <h3 id="32-cowoschip-on-wafer-on-substrate">3.2 CoWoS（Chip on Wafer on Substrate）</h3>
 <h4 id="_10">技术原理</h4>
-<div class="codehilite"><pre><span></span><code>CoWoS封装结构示意：
+<pre class="codehilite"><code>CoWoS封装结构示意：
 ┌─────────────────────────────────┐
 │          Logic Die              │ ← 7nm/5nm逻辑芯片
 ├─────────────────────────────────┤
@@ -730,7 +730,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 ├────┴────┴────┴────┴────────────┤
 │     Package Substrate           │ ← 封装基板
 └─────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_11">应用案例</h4>
 <ul>
@@ -753,7 +753,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 <li>散热性能提升20%</li>
 </ul>
 <h4 id="_14">自动驾驶应用</h4>
-<div class="codehilite"><pre><span></span><code>InFO_PoP在智驾SoC中的应用：
+<pre class="codehilite"><code>InFO_PoP在智驾SoC中的应用：
 ┌──────────────────┐
 │   LPDDR5 Memory  │ ← 顶层内存
 ├──────────────────┤
@@ -763,20 +763,20 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 ├──────────────────┤
 │   RDL Layers     │ ← 重布线层
 └──────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="34-chiplet">3.4 Chiplet：范式转变</h3>
 <h4 id="_15">设计理念革新</h4>
 <ul>
 <li><strong>从单片到分解</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>传统SoC          →        Chiplet系统
+<pre class="codehilite"><code>传统SoC          →        Chiplet系统
 ┌────────────┐           ┌───┬───┬───┐
 │            │           │CPU│GPU│NPU│
 │  单片集成   │     →     ├───┼───┼───┤
 │            │           │I/O│MEM│PHY│
 └────────────┘           └───┴───┴───┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_16">标准化进展</h4>
 <ul>
@@ -786,7 +786,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 <li>带宽：28-224 GB/s/mm</li>
 </ul>
 <h4 id="chiplet">自动驾驶芯片Chiplet架构示例</h4>
-<div class="codehilite"><pre><span></span><code>下一代智驾计算平台（2025年预期）：
+<pre class="codehilite"><code>下一代智驾计算平台（2025年预期）：
 ┌─────────────────────────────────────────────┐
 │                                             │
 │  ┌─────────┐ ┌─────────┐ ┌─────────┐      │
@@ -802,7 +802,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 │  └─────────┘ └─────────┘ └─────────┘      │
 │                                             │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="chiplet_1">Chiplet优势分析</h4>
 <ol>
@@ -828,7 +828,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 <h2 id="4">4. 供应链安全与本土化制造</h2>
 <h3 id="41">4.1 全球供应链现状与风险</h3>
 <h4 id="_17">供应链集中度分析</h4>
-<div class="codehilite"><pre><span></span><code>自动驾驶芯片供应链关键环节集中度：
+<pre class="codehilite"><code>自动驾驶芯片供应链关键环节集中度：
 ┌────────────────────────────────────────────┐
 │ 环节          集中度   主要玩家              │
 ├────────────────────────────────────────────┤
@@ -839,7 +839,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 │ 设备          80%     ASML/应材/LAM/东京电子  │
 │ 材料          70%     信越/SUMCO/JSR/TOK     │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_18">地缘政治风险映射</h4>
 <ol>
@@ -864,7 +864,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 </ol>
 <h3 id="42">4.2 中国本土化制造能力建设</h3>
 <h4 id="_19">本土供应链现状评估</h4>
-<div class="codehilite"><pre><span></span><code>国产化率分析（2024年）：
+<pre class="codehilite"><code>国产化率分析（2024年）：
 
 成熟工艺（28nm及以上）              先进工艺（14nm及以下）
 ┌─────────────────┐              ┌─────────────────┐
@@ -875,7 +875,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 │ 设备：   20%    │              │ 设备：   &lt;5%    │
 │ 材料：   25%    │              │ 材料：   10%    │
 └─────────────────┘              └─────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_20">关键本土化项目</h4>
 <ol>
@@ -897,7 +897,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 <ol start="2">
 <li><strong>设备国产化突破</strong>：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>关键设备国产化进展：
+<pre class="codehilite"><code>关键设备国产化进展：
 ├─ 光刻机
 │  └─ 上海微电子：28nm ArF量产
 ├─ 刻蚀机  
@@ -906,7 +906,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 │  └─ 北方华创：28nm PVD/CVD
 └─ 测试设备
    └─ 长川科技：数字测试系统
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>材料本土化</strong>：
@@ -917,7 +917,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 </ol>
 <h3 id="43">4.3 供应链韧性策略</h3>
 <h4 id="_21">多元化供应策略</h4>
-<div class="codehilite"><pre><span></span><code>供应链风险缓解矩阵：
+<pre class="codehilite"><code>供应链风险缓解矩阵：
 ┌───────────────────────────────────────────┐
 │           单一供应商风险                    │
 │    高 ┌─────────────┬─────────────┐      │
@@ -930,7 +930,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 │    低     低              高              │
 │           替代难度                        │
 └───────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_22">战略库存管理</h4>
 <ol>
@@ -959,12 +959,12 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 <ul>
 <li><strong>差异化技术路线</strong>：</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>传统路线              替代路线
+<pre class="codehilite"><code>传统路线              替代路线
 摩尔定律延续    →    超越摩尔（More than Moore）
 ├─更小节点           ├─先进封装
 ├─EUV光刻           ├─Chiplet
 └─硅基材料           └─新材料（GaN/SiC）
-</code></pre></div>
+</code></pre>
 
 <h4 id="2027-2030">长期策略（2027-2030）</h4>
 <ul>
@@ -975,7 +975,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 </ul>
 <h3 id="45">4.5 产业链协同机制</h3>
 <h4 id="_23">垂直整合趋势</h4>
-<div class="codehilite"><pre><span></span><code>汽车厂商供应链策略演变：
+<pre class="codehilite"><code>汽车厂商供应链策略演变：
 
 2019年：外购为主                2025年：垂直整合
 ┌─────────┐                    ┌─────────────┐
@@ -989,7 +989,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 ┌────┴────┐                    ├─────────────┤
 │芯片厂商  │                    │  战略合作    │
 └─────────┘                    └─────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_24">产业联盟与生态建设</h4>
 <ol>
@@ -1008,7 +1008,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 </ol>
 <h3 id="46">4.6 供应链安全评估框架</h3>
 <h4 id="_25">四维度评估模型</h4>
-<div class="codehilite"><pre><span></span><code>供应链安全评估雷达图：
+<pre class="codehilite"><code>供应链安全评估雷达图：
         可获得性
            5
           ╱│╲
@@ -1032,7 +1032,7 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 3分-部分依赖，有替代方案
 2分-高度依赖，替代困难
 1分-完全依赖，无替代方案
-</code></pre></div>
+</code></pre>
 
 <h4 id="_26">风险量化指标</h4>
 <ol>
@@ -1051,22 +1051,22 @@ Wire Bonding → Flip Chip → 2.5D → 3D → Chiplet
 </ol>
 <h3 id="47">4.7 未来展望：区域化供应链</h3>
 <h4 id="_27">三极格局形成</h4>
-<div class="codehilite"><pre><span></span><code><span class="mf">2030</span><span class="n">年全球半导体供应链格局预测</span><span class="err">：</span>
-<span class="err">┌─────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">                                         </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="n">美洲集群</span><span class="w">          </span><span class="n">欧洲集群</span><span class="w">   </span><span class="n">亚太集群</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">┌─────┐</span><span class="w">         </span><span class="err">┌─────┐</span><span class="w">   </span><span class="err">┌─────┐</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="n">美国</span><span class="w">  </span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="n">德国</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="n">中国</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="n">墨西哥</span><span class="err">│</span><span class="w"> </span><span class="err">←───→</span><span class="w">  </span><span class="err">│</span><span class="n">法国</span><span class="w">  </span><span class="err">│←→│</span><span class="n">日韩</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="n">加拿大</span><span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="n">荷兰</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="n">东南亚</span><span class="err">│</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">└─────┘</span><span class="w">         </span><span class="err">└─────┘</span><span class="w">   </span><span class="err">└─────┘</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                         </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="n">特点</span><span class="err">：</span><span class="w">            </span><span class="n">特点</span><span class="err">：</span><span class="w">      </span><span class="n">特点</span><span class="err">：</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">·</span><span class="n">设计创新</span><span class="w">        </span><span class="err">·</span><span class="n">设备材料</span><span class="w">   </span><span class="err">·</span><span class="n">制造封测</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">·</span><span class="n">先进制程</span><span class="w">        </span><span class="err">·</span><span class="n">车规专长</span><span class="w">   </span><span class="err">·</span><span class="n">成本优势</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="err">·</span><span class="n">软件生态</span><span class="w">        </span><span class="err">·</span><span class="n">绿色制造</span><span class="w">   </span><span class="err">·</span><span class="n">市场规模</span><span class="w"> </span><span class="err">│</span>
-<span class="err">└─────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>2030年全球半导体供应链格局预测：
+┌─────────────────────────────────────────┐
+│                                         │
+│   美洲集群          欧洲集群   亚太集群  │
+│   ┌─────┐         ┌─────┐   ┌─────┐  │
+│   │美国  │         │德国  │   │中国  │  │
+│   │墨西哥│ ←───→  │法国  │←→│日韩  │  │
+│   │加拿大│         │荷兰  │   │东南亚│  │
+│   └─────┘         └─────┘   └─────┘  │
+│                                         │
+│   特点：            特点：      特点：    │
+│   ·设计创新        ·设备材料   ·制造封测 │
+│   ·先进制程        ·车规专长   ·成本优势 │
+│   ·软件生态        ·绿色制造   ·市场规模 │
+└─────────────────────────────────────────┘
+</code></pre>
 
 <h4 id="_28">技术标准分化风险</h4>
 <ul>

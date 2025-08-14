@@ -200,35 +200,35 @@
 2016年底，特斯拉组建芯片团队，挖角了AMD首席架构师Jim Keller和苹果芯片工程师Pete Bannon。项目代号"Tesla FSD Computer"，目标是设计一款专门为全自动驾驶优化的AI芯片。</p>
 <h3 id="412">4.1.2 芯片架构设计</h3>
 <p>Hardware 3.0采用三星14nm FinFET工艺，单芯片面积260mm²，集成60亿晶体管。其架构设计充分体现了"专用优于通用"的理念：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌────────────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">                    </span><span class="n">FSD</span><span class="w"> </span><span class="n">Computer</span><span class="w"> </span><span class="n">单芯片架构</span><span class="w">                   </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────────┐</span><span class="w">  </span><span class="err">┌──────────────┐</span><span class="w">  </span><span class="err">┌──────────────┐</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">CPU集群</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">CPU集群</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">CPU集群</span><span class="w">     </span><span class="err">│</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">3</span><span class="n">x</span><span class="w"> </span><span class="n">A72核心</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">3</span><span class="n">x</span><span class="w"> </span><span class="n">A72核心</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">3</span><span class="n">x</span><span class="w"> </span><span class="n">A72核心</span><span class="w">   </span><span class="err">│</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mf">@2.2</span><span class="n">GHz</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mf">@2.2</span><span class="n">GHz</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mf">@2.2</span><span class="n">GHz</span><span class="w">    </span><span class="err">│</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────┴──────────────────┴──────────────────┴───────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">                    </span><span class="n">系统总线</span><span class="w"> </span><span class="p">(</span><span class="n">NOC</span><span class="p">)</span><span class="w">                    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────┬──────────────────┬──────────────────┬───────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────┴───────┐</span><span class="w">  </span><span class="err">┌──────┴───────┐</span><span class="w">  </span><span class="err">┌──────┴───────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="n">NNA</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="n">NNA</span><span class="w"> </span><span class="mi">1</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">GPU</span><span class="w"> </span><span class="n">Mali</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mi">36</span><span class="w"> </span><span class="n">TOPS</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mi">36</span><span class="w"> </span><span class="n">TOPS</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="n">TFLOPS</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@2</span><span class="n">GHz</span><span class="w"> </span><span class="n">INT8</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@2</span><span class="n">GHz</span><span class="w"> </span><span class="n">INT8</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="mi">600</span><span class="n">MHz</span><span class="w">      </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">  </span><span class="err">└──────┬───────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">         </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">                  </span><span class="err">│</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────┴──────────────────┴──────────────────┴───────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">          </span><span class="n">LPDDR4</span><span class="w"> </span><span class="n">内存控制器</span><span class="w"> </span><span class="p">(</span><span class="mi">128</span><span class="o">-</span><span class="n">bit</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="p">)</span><span class="w">         </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─────────────────────────────────────────────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────────┐</span><span class="w">  </span><span class="err">┌──────────────┐</span><span class="w">  </span><span class="err">┌─────────────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">ISP</span><span class="w"> </span><span class="n">模块</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">视频编解码</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">安全岛</span><span class="p">(</span><span class="n">HSM</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">24</span><span class="o">-</span><span class="n">bit</span><span class="err">×</span><span class="mi">8</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">H</span><span class="mf">.265</span><span class="o">/</span><span class="n">H</span><span class="mf">.264</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">锁步CPU</span><span class="err">×</span><span class="mi">2</span><span class="w">     </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─────────────┘</span><span class="w">  </span><span class="err">└──────────────┘</span><span class="w">  </span><span class="err">└─────────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
+│                    FSD Computer 单芯片架构                   │
+├────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
+│  │   CPU集群     │  │   CPU集群     │  │   CPU集群     │    │
+│  │  3x A72核心   │  │  3x A72核心   │  │  3x A72核心   │    │
+│  │   @2.2GHz    │  │   @2.2GHz    │  │   @2.2GHz    │    │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘    │
+│         │                  │                  │            │
+│  ┌──────┴──────────────────┴──────────────────┴───────┐   │
+│  │                    系统总线 (NOC)                    │   │
+│  └──────┬──────────────────┬──────────────────┬───────┘   │
+│         │                  │                  │            │
+│  ┌──────┴───────┐  ┌──────┴───────┐  ┌──────┴───────┐   │
+│  │     NNA 0     │  │     NNA 1     │  │   GPU Mali    │   │
+│  │   36 TOPS     │  │   36 TOPS     │  │   1 TFLOPS    │   │
+│  │  @2GHz INT8   │  │  @2GHz INT8   │  │   600MHz      │   │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘   │
+│         │                  │                  │            │
+│  ┌──────┴──────────────────┴──────────────────┴───────┐   │
+│  │          LPDDR4 内存控制器 (128-bit, 68GB/s)         │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────┐  ┌──────────────┐  ┌─────────────────┐   │
+│  │  ISP 模块    │  │  视频编解码   │  │  安全岛(HSM)    │   │
+│  │  24-bit×8   │  │  H.265/H.264  │  │  锁步CPU×2     │   │
+│  └─────────────┘  └──────────────┘  └─────────────────┘   │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
 
 <p><strong>关键设计特点</strong>：</p>
 <ul>
@@ -239,7 +239,7 @@
 </ul>
 <h3 id="413">4.1.3 双芯片冗余设计</h3>
 <p>特斯拉采用完全冗余的双芯片设计，这在量产车中极为罕见：</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────┐
 │                  FSD Computer 双芯片系统                  │
 ├─────────────────────────────────────────────────────────┤
 │                                                          │
@@ -264,7 +264,7 @@
 │              最终控制信号                                │
 │                                                          │
 └─────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>冗余策略</strong>：</p>
 <ul>
@@ -276,7 +276,7 @@
 <h3 id="414-nna">4.1.4 神经网络加速器（NNA）</h3>
 <p>NNA是FSD Computer的核心创新，专门为特斯拉的神经网络设计：</p>
 <p><strong>架构细节</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │            NNA（神经网络加速器）单元            │
 ├──────────────────────────────────────────────┤
 │                                              │
@@ -302,7 +302,7 @@
 │  └─────────────────────────────────────┘    │
 │                                              │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键优化</strong>：</p>
 <ul>
@@ -314,7 +314,7 @@
 <h3 id="415">4.1.5 内存系统与数据流</h3>
 <p>内存带宽是AI芯片的关键瓶颈，FSD Computer采用多级优化：</p>
 <p><strong>内存层次结构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>寄存器文件 (RF)     : 256KB,  2TB/s,   1 cycle
+<pre class="codehilite"><code>寄存器文件 (RF)     : 256KB,  2TB/s,   1 cycle
     ↕
 L1 缓存           : 512KB,  1TB/s,   3 cycles  
     ↕
@@ -323,7 +323,7 @@ L2 缓存           : 4MB,    512GB/s, 12 cycles
 片上SRAM          : 32MB,   256GB/s, 20 cycles
     ↕
 LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
-</code></pre></div>
+</code></pre>
 
 <p><strong>数据流优化</strong>：</p>
 <ul>
@@ -348,7 +348,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <li><strong>算力调度</strong>：优先使用能效比高的计算单元</li>
 </ul>
 <p><strong>散热方案</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────┐
 │         散热系统设计                  │
 ├─────────────────────────────────────┤
 │                                     │
@@ -362,7 +362,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │   主动风扇 (温控PWM调速)             │
 │                                     │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="42-hardware-40-5nm5">4.2 Hardware 4.0 - 5nm制程与算力5倍提升</h2>
 <h3 id="421">4.2.1 升级动因分析</h3>
@@ -382,7 +382,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 </ul>
 <h3 id="422">4.2.2 制程工艺跃迁</h3>
 <p>从14nm到5nm的跃迁带来质的飞跃：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │              制程工艺对比                              │
 ├──────────────────────────────────────────────────────┤
 │                                                       │
@@ -396,7 +396,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  最高频率        2.2GHz          3.5GHz              │
 │                                                       │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>台积电5nm工艺特点</strong>：</p>
 <ul>
@@ -407,7 +407,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 </ul>
 <h3 id="423">4.2.3 架构创新点</h3>
 <p>HW4.0不是简单的规格提升，而是架构层面的革新：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────┐
 │                 Hardware 4.0 架构革新                    │
 ├────────────────────────────────────────────────────────┤
 │                                                         │
@@ -438,7 +438,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  └───────────────────────────────────────────────┘     │
 │                                                         │
 └────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键创新</strong>：</p>
 <ol>
@@ -464,7 +464,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 </ol>
 <h3 id="424">4.2.4 摄像头系统升级</h3>
 <p>HW4.0配套全新的摄像头系统，这是感知能力的根本提升：</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │              摄像头系统对比                          │
 ├─────────────────────────────────────────────────────┤
 │                                                      │
@@ -483,7 +483,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  ISP通道     8路             12路                 │
 │                                                      │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>感知能力提升</strong>：</p>
 <ul>
@@ -494,7 +494,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 </ul>
 <h3 id="425">4.2.5 算力分配策略</h3>
 <p>620 TOPS的算力如何高效分配是关键：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │            算力分配与任务调度                      │
 ├──────────────────────────────────────────────────┤
 │                                                   │
@@ -516,7 +516,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  预留冗余 (10%)          : 60 TOPS             │
 │                                                   │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>动态调度策略</strong>：</p>
 <ul>
@@ -534,7 +534,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <li><strong>尺寸适配</strong>：可直接替换HW3.0模块</li>
 </ul>
 <p><strong>软件兼容</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────┐
 │         软件兼容性架构                  │
 ├────────────────────────────────────────┤
 │                                        │
@@ -555,7 +555,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  └──────────────────────────────┘     │
 │                                        │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>模型兼容策略</strong>：</p>
 <ul>
@@ -568,7 +568,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="441-vs">4.4.1 传感器融合 vs 纯视觉</h3>
 <p>特斯拉选择纯视觉路线是基于第一性原理的思考：人类仅凭视觉就能驾驶，机器理应也能做到。但这一选择对硬件提出了极高要求。</p>
 <p><strong>传感器成本对比</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │              传感器方案成本分析（2024年）              │
 ├──────────────────────────────────────────────────────┤
 │                                                       │
@@ -588,7 +588,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  成本差异            : 2.8倍                         │
 │                                                       │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>纯视觉的技术挑战</strong>：</p>
 <ul>
@@ -607,7 +607,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="442-isp">4.4.2 ISP优化策略</h3>
 <p>图像信号处理器（ISP）是纯视觉方案的第一道关卡，直接影响后续所有算法的效果。</p>
 <p><strong>特斯拉定制ISP架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────┐
 │               FSD ISP Pipeline                      │
 ├────────────────────────────────────────────────────┤
 │                                                     │
@@ -655,7 +655,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │       输出到神经网络                                │
 │                                                     │
 └────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键优化技术</strong>：</p>
 <ol>
@@ -684,7 +684,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="443">4.4.3 多摄像头时间同步</h3>
 <p>8个摄像头的精确同步是构建统一3D世界模型的基础。</p>
 <p><strong>同步架构设计</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │            多摄像头同步系统                        │
 ├──────────────────────────────────────────────────┤
 │                                                   │
@@ -712,7 +712,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  └─────────────────────────────────────────┘    │
 │                                                   │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>同步精度要求</strong>：</p>
 <ul>
@@ -729,44 +729,44 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="444-bev">4.4.4 BEV感知的硬件加速</h3>
 <p>鸟瞰图（BEV）是特斯拉感知系统的核心创新，将多视角2D图像转换为统一的3D表示。</p>
 <p><strong>BEV转换流程</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">              </span><span class="nx">BEV感知硬件加速架构</span><span class="w">                     </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">                                                     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="nx">多视角图像输入</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="w"> </span><span class="nx">cameras</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="mi">1920</span><span class="err">×</span><span class="mi">1080</span><span class="p">)</span><span class="w">            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">         </span><span class="err">↓</span><span class="w">                                          </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="nx">特征提取网络</span><span class="w"> </span><span class="p">(</span><span class="nx">ResNet50</span><span class="w"> </span><span class="nx">backbone</span><span class="p">)</span><span class="w">      </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">深度可分离卷积加速</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">INT8量化推理</span><span class="w">                       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">特征金字塔</span><span class="p">(</span><span class="nx">FPN</span><span class="p">)</span><span class="w">                    </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────┬──────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                 </span><span class="err">↓</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">    </span><span class="nx">透视变换模块</span><span class="w"> </span><span class="p">(</span><span class="nx">Perspective</span><span class="w"> </span><span class="nx">Transform</span><span class="p">)</span><span class="w">   </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="mi">3</span><span class="nx">D</span><span class="o">-</span><span class="mi">2</span><span class="nx">D投影矩阵运算</span><span class="w">                  </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">双线性插值硬件单元</span><span class="w">                 </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">深度估计网络</span><span class="w">                       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────┬──────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                 </span><span class="err">↓</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">      </span><span class="nx">BEV特征聚合</span><span class="w"> </span><span class="p">(</span><span class="nx">Feature</span><span class="w"> </span><span class="nx">Aggregation</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">多尺度特征融合</span><span class="w">                     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">注意力机制</span><span class="p">(</span><span class="k">Self</span><span class="o">-</span><span class="nx">Attention</span><span class="p">)</span><span class="w">         </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">时序特征对齐</span><span class="w">                       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────────┬──────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                 </span><span class="err">↓</span><span class="w">                                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────────────────────────────────────┐</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">         </span><span class="nx">BEV解码器</span><span class="w"> </span><span class="p">(</span><span class="nx">Decoder</span><span class="p">)</span><span class="w">              </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="mi">3</span><span class="nx">D目标检测头</span><span class="w">                       </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">语义分割头</span><span class="w">                         </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">     </span><span class="err">•</span><span class="w"> </span><span class="nx">可行驶区域预测</span><span class="w">                     </span><span class="err">│</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─────────────────────────────────────────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="nx">输出</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="nx">m</span><span class="err">×</span><span class="mi">200</span><span class="nx">m</span><span class="w"> </span><span class="nx">BEV网格</span><span class="w"> </span><span class="p">(</span><span class="nx">分辨率</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="nx">cm</span><span class="o">/</span><span class="nx">pixel</span><span class="p">)</span><span class="w">     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                     </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────┐
+│              BEV感知硬件加速架构                     │
+├────────────────────────────────────────────────────┤
+│                                                     │
+│  多视角图像输入 (8 cameras × 1920×1080)            │
+│         ↓                                          │
+│  ┌─────────────────────────────────────────┐      │
+│  │     特征提取网络 (ResNet50 backbone)      │      │
+│  │     • 深度可分离卷积加速                  │      │
+│  │     • INT8量化推理                       │      │
+│  │     • 特征金字塔(FPN)                    │      │
+│  └──────────────┬──────────────────────────┘      │
+│                 ↓                                  │
+│  ┌─────────────────────────────────────────┐      │
+│  │    透视变换模块 (Perspective Transform)   │      │
+│  │     • 3D-2D投影矩阵运算                  │      │
+│  │     • 双线性插值硬件单元                 │      │
+│  │     • 深度估计网络                       │      │
+│  └──────────────┬──────────────────────────┘      │
+│                 ↓                                  │
+│  ┌─────────────────────────────────────────┐      │
+│  │      BEV特征聚合 (Feature Aggregation)    │      │
+│  │     • 多尺度特征融合                     │      │
+│  │     • 注意力机制(Self-Attention)         │      │
+│  │     • 时序特征对齐                       │      │
+│  └──────────────┬──────────────────────────┘      │
+│                 ↓                                  │
+│  ┌─────────────────────────────────────────┐      │
+│  │         BEV解码器 (Decoder)              │      │
+│  │     • 3D目标检测头                       │      │
+│  │     • 语义分割头                         │      │
+│  │     • 可行驶区域预测                     │      │
+│  └─────────────────────────────────────────┘      │
+│                                                     │
+│  输出: 200m×200m BEV网格 (分辨率: 10cm/pixel)     │
+│                                                     │
+└────────────────────────────────────────────────────┘
+</code></pre>
 
 <p><strong>硬件加速关键技术</strong>：</p>
 <ol>
@@ -792,7 +792,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="445-occupancy-network">4.4.5 占用网络（Occupancy Network）实现</h3>
 <p>占用网络是FSD V12的核心创新，将世界表示为3D体素网格，每个体素包含占用概率和语义信息。</p>
 <p><strong>占用网络架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │           占用网络硬件实现                         │
 ├──────────────────────────────────────────────────┤
 │                                                   │
@@ -828,7 +828,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  └───────────────────────────────────────┘      │
 │                                                   │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>稀疏处理优化</strong>：</p>
 <ul>
@@ -838,16 +838,16 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <li><strong>向量化运算</strong>：SIMD指令加速</li>
 </ul>
 <p><strong>内存需求分析</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">完整体素网格</span><span class="o">:</span><span class="w"> </span><span class="mi">256</span><span class="err">×</span><span class="mi">256</span><span class="err">×</span><span class="mi">32</span><span class="err">×</span><span class="mi">128</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">268</span><span class="n">MB</span><span class="w"> </span><span class="o">(</span><span class="err">密集存储</span><span class="o">)</span>
-<span class="err">稀疏存储</span><span class="o">:</span><span class="w">     </span><span class="mi">268</span><span class="n">MB</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="mi">10</span><span class="o">%</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="n">MB</span><span class="w"> </span><span class="o">(</span><span class="err">典型场景</span><span class="o">)</span>
-<span class="err">时序缓存</span><span class="o">:</span><span class="w">     </span><span class="mi">27</span><span class="n">MB</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="mi">5</span><span class="err">帧</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">135</span><span class="n">MB</span>
-<span class="err">总需求</span><span class="o">:</span><span class="w">       </span><span class="o">~</span><span class="mi">200</span><span class="n">MB片上缓存</span>
-</code></pre></div>
+<pre class="codehilite"><code>完整体素网格: 256×256×32×128 = 268MB (密集存储)
+稀疏存储:     268MB × 10% = 27MB (典型场景)
+时序缓存:     27MB × 5帧 = 135MB
+总需求:       ~200MB片上缓存
+</code></pre>
 
 <h3 id="446">4.4.6 实时性保证机制</h3>
 <p>自动驾驶要求严格的实时性，任何延迟都可能导致安全事故。</p>
 <p><strong>延迟预算分配</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │          端到端延迟预算 (100ms)              │
 ├──────────────────────────────────────────────┤
 │                                              │
@@ -873,7 +873,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  预留缓冲   : 10ms                          │
 │                                              │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>实时性保障技术</strong>：</p>
 <ol>
@@ -893,12 +893,12 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <p><strong>流水线优化</strong>：</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>时刻  T    T+1   T+2   T+3   T+4
+<pre class="codehilite"><code>时刻  T    T+1   T+2   T+3   T+4
 ────────────────────────────────
 帧N   采集  ISP   特征  BEV   输出
 帧N+1      采集  ISP   特征  BEV
 帧N+2           采集  ISP   特征
-</code></pre></div>
+</code></pre>
 
 <ol start="4">
 <li><strong>故障降级策略</strong>：
@@ -910,40 +910,40 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="451">4.5.1 影子模式原理</h3>
 <p>影子模式是特斯拉数据飞轮的核心，在后台运行新算法但不控制车辆，通过对比新旧算法差异来收集边缘案例。</p>
 <p><strong>影子模式架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
-│<span class="w">                 </span>影子模式系统架构<span class="w">                      </span>│
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
+│                 影子模式系统架构                      │
 ├──────────────────────────────────────────────────────┤
-│<span class="w">                                                       </span>│
-│<span class="w">  </span>感知输入<span class="w">                                             </span>│
-│<span class="w">     </span>↓<span class="w">                                                </span>│
-│<span class="w">  </span>┌──────────────────────────────────────────┐<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">           </span>数据分发器<span class="w">                       </span>│<span class="w">       </span>│
-│<span class="w">  </span>└────────┬──────────────┬──────────────────┘<span class="w">       </span>│
-│<span class="w">           </span>↓<span class="w">              </span>↓<span class="w">                           </span>│
-│<span class="w">  </span>┌──────────────┐<span class="w">  </span>┌──────────────┐<span class="w">                </span>│
-│<span class="w">  </span>│<span class="w">  </span>生产模型<span class="w">     </span>│<span class="w">  </span>│<span class="w">  </span>影子模型<span class="w">     </span>│<span class="w">                </span>│
-│<span class="w">  </span>│<span class="w">  </span><span class="ss">(</span>控制车辆<span class="ss">)</span><span class="w">   </span>│<span class="w">  </span>│<span class="w">  </span><span class="ss">(</span>仅推理<span class="ss">)</span><span class="w">     </span>│<span class="w">                </span>│
-│<span class="w">  </span>│<span class="w">              </span>│<span class="w">  </span>│<span class="w">              </span>│<span class="w">                </span>│
-│<span class="w">  </span>│<span class="w">  </span><span class="nv">v10</span>.<span class="mi">2</span><span class="w">      </span>│<span class="w">  </span>│<span class="w">  </span><span class="nv">v11</span>.<span class="mi">0</span><span class="w"> </span><span class="nv">Beta</span><span class="w">  </span>│<span class="w">                </span>│
-│<span class="w">  </span>└──────┬───────┘<span class="w">  </span>└──────┬───────┘<span class="w">                </span>│
-│<span class="w">         </span>↓<span class="w">                 </span>↓<span class="w">                          </span>│
-│<span class="w">     </span>控制输出<span class="w">          </span>影子输出<span class="w">                        </span>│
-│<span class="w">         </span>↓<span class="w">                 </span>↓<span class="w">                          </span>│
-│<span class="w">  </span>┌──────────────────────────────────────────┐<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">            </span>决策对比器<span class="w">                      </span>│<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>轨迹差异计算<span class="w">                           </span>│<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>行为一致性检查<span class="w">                         </span>│<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>安全性评估<span class="w">                             </span>│<span class="w">       </span>│
-│<span class="w">  </span>└──────────────┬───────────────────────────┘<span class="w">       </span>│
-│<span class="w">                 </span>↓<span class="w">                                    </span>│
-│<span class="w">  </span>┌──────────────────────────────────────────┐<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">          </span>触发条件判断<span class="w">                      </span>│<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span>差异<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>阈值<span class="ss">)</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="ss">(</span>罕见场景<span class="ss">)</span>:<span class="w">          </span>│<span class="w">       </span>│
-│<span class="w">  </span>│<span class="w">     </span>记录数据并标记上传<span class="w">                    </span>│<span class="w">       </span>│
-│<span class="w">  </span>└──────────────────────────────────────────┘<span class="w">       </span>│
-│<span class="w">                                                       </span>│
+│                                                       │
+│  感知输入                                             │
+│     ↓                                                │
+│  ┌──────────────────────────────────────────┐       │
+│  │           数据分发器                       │       │
+│  └────────┬──────────────┬──────────────────┘       │
+│           ↓              ↓                           │
+│  ┌──────────────┐  ┌──────────────┐                │
+│  │  生产模型     │  │  影子模型     │                │
+│  │  (控制车辆)   │  │  (仅推理)     │                │
+│  │              │  │              │                │
+│  │  v10.2      │  │  v11.0 Beta  │                │
+│  └──────┬───────┘  └──────┬───────┘                │
+│         ↓                 ↓                          │
+│     控制输出          影子输出                        │
+│         ↓                 ↓                          │
+│  ┌──────────────────────────────────────────┐       │
+│  │            决策对比器                      │       │
+│  │  • 轨迹差异计算                           │       │
+│  │  • 行为一致性检查                         │       │
+│  │  • 安全性评估                             │       │
+│  └──────────────┬───────────────────────────┘       │
+│                 ↓                                    │
+│  ┌──────────────────────────────────────────┐       │
+│  │          触发条件判断                      │       │
+│  │  if (差异 &gt; 阈值) or (罕见场景):          │       │
+│  │     记录数据并标记上传                    │       │
+│  └──────────────────────────────────────────┘       │
+│                                                       │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键性能指标</strong>：</p>
 <ul>
@@ -976,7 +976,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="452">4.5.2 边缘计算与数据筛选</h3>
 <p>车端智能筛选是数据质量的保证，避免上传冗余数据。</p>
 <p><strong>边缘筛选架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────┐
 │              边缘数据筛选系统                       │
 ├────────────────────────────────────────────────────┤
 │                                                     │
@@ -1009,17 +1009,17 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  最终上传数据: ~24MB/天 (压缩后)                   │
 │                                                     │
 └────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>智能筛选算法</strong>：</p>
 <ol>
 <li><strong>分布外检测（OOD）</strong>：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 伪代码</span>
-<span class="n">uncertainty</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_uncertainty</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">uncertainty</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-    <span class="n">mark_for_upload</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-python"># 伪代码
+uncertainty = model.predict_uncertainty(input)
+if uncertainty &gt; threshold:
+    mark_for_upload(input)
+</code></pre>
 
 <ol start="2">
 <li>
@@ -1039,41 +1039,41 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <h3 id="453-trigger">4.5.3 触发器（Trigger）机制</h3>
 <p>触发器定义了何时收集数据，是影子模式的执行规则引擎。</p>
 <p><strong>触发器类型与实现</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
-│<span class="w">              </span>触发器系统架构<span class="w">                       </span>│
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
+│              触发器系统架构                       │
 ├──────────────────────────────────────────────────┤
-│<span class="w">                                                   </span>│
-│<span class="w">  </span>┌───────────────────────────────────────┐<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">        </span>硬触发器<span class="w"> </span><span class="ss">(</span><span class="nv">Hard</span><span class="w"> </span><span class="nv">Triggers</span><span class="ss">)</span><span class="w">        </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>紧急制动<span class="w"> </span><span class="ss">(</span>减速度<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">5</span><span class="nv">g</span><span class="ss">)</span><span class="w">           </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>人工接管<span class="w"> </span><span class="ss">(</span>方向盘扭矩<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>阈值<span class="ss">)</span><span class="w">       </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>系统失败<span class="w"> </span><span class="ss">(</span>传感器故障<span class="o">/</span>计算超时<span class="ss">)</span><span class="w">     </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>碰撞预警激活<span class="w">                       </span>│<span class="w">      </span>│
-│<span class="w">  </span>└───────────────────────────────────────┘<span class="w">      </span>│
-│<span class="w">                                                   </span>│
-│<span class="w">  </span>┌───────────────────────────────────────┐<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">        </span>软触发器<span class="w"> </span><span class="ss">(</span><span class="nv">Soft</span><span class="w"> </span><span class="nv">Triggers</span><span class="ss">)</span><span class="w">        </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>预测轨迹偏差<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span>米<span class="w">                 </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>目标检测置信度<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">7</span><span class="w">               </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>新旧模型输出差异<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">30</span><span class="o">%</span><span class="w">             </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>场景复杂度分数<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">8</span><span class="w">               </span>│<span class="w">      </span>│
-│<span class="w">  </span>└───────────────────────────────────────┘<span class="w">      </span>│
-│<span class="w">                                                   </span>│
-│<span class="w">  </span>┌───────────────────────────────────────┐<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">      </span>统计触发器<span class="w"> </span><span class="ss">(</span><span class="nv">Statistical</span><span class="ss">)</span><span class="w">          </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>场景分布偏移检测<span class="w">                   </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>时序异常模式<span class="w">                       </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span>•<span class="w"> </span>聚类离群点<span class="w">                         </span>│<span class="w">      </span>│
-│<span class="w">  </span>└───────────────────────────────────────┘<span class="w">      </span>│
-│<span class="w">                                                   </span>│
-│<span class="w">  </span>┌───────────────────────────────────────┐<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">      </span>规则引擎<span class="w"> </span><span class="ss">(</span><span class="nv">Rule</span><span class="w"> </span><span class="nv">Engine</span><span class="ss">)</span><span class="w">            </span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="ss">(</span>硬触发<span class="w"> </span><span class="nv">OR</span><span class="w"> </span><span class="ss">(</span>软触发<span class="o">&gt;</span><span class="mi">2</span><span class="w"> </span><span class="nv">AND</span><span class="w"> </span>统计触发<span class="ss">))</span>│<span class="w">      </span>│
-│<span class="w">  </span>│<span class="w">  </span><span class="k">THEN</span><span class="w"> </span>记录前<span class="mi">30</span>秒<span class="o">+</span>后<span class="mi">10</span>秒数据<span class="w">            </span>│<span class="w">      </span>│
-│<span class="w">  </span>└───────────────────────────────────────┘<span class="w">      </span>│
-│<span class="w">                                                   </span>│
+│                                                   │
+│  ┌───────────────────────────────────────┐      │
+│  │        硬触发器 (Hard Triggers)        │      │
+│  │  • 紧急制动 (减速度 &gt; 0.5g)           │      │
+│  │  • 人工接管 (方向盘扭矩 &gt; 阈值)       │      │
+│  │  • 系统失败 (传感器故障/计算超时)     │      │
+│  │  • 碰撞预警激活                       │      │
+│  └───────────────────────────────────────┘      │
+│                                                   │
+│  ┌───────────────────────────────────────┐      │
+│  │        软触发器 (Soft Triggers)        │      │
+│  │  • 预测轨迹偏差 &gt; 2米                 │      │
+│  │  • 目标检测置信度 &lt; 0.7               │      │
+│  │  • 新旧模型输出差异 &gt; 30%             │      │
+│  │  • 场景复杂度分数 &gt; 0.8               │      │
+│  └───────────────────────────────────────┘      │
+│                                                   │
+│  ┌───────────────────────────────────────┐      │
+│  │      统计触发器 (Statistical)          │      │
+│  │  • 场景分布偏移检测                   │      │
+│  │  • 时序异常模式                       │      │
+│  │  • 聚类离群点                         │      │
+│  └───────────────────────────────────────┘      │
+│                                                   │
+│  ┌───────────────────────────────────────┐      │
+│  │      规则引擎 (Rule Engine)            │      │
+│  │  IF (硬触发 OR (软触发&gt;2 AND 统计触发))│      │
+│  │  THEN 记录前30秒+后10秒数据            │      │
+│  └───────────────────────────────────────┘      │
+│                                                   │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>触发器配置管理</strong>：</p>
 <ul>
@@ -1083,7 +1083,7 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 <li><strong>带宽控制</strong>：根据网络条件调整上传策略</li>
 </ul>
 <p><strong>触发数据规模</strong>：</p>
-<div class="codehilite"><pre><span></span><code>典型触发频率（每100km）：
+<pre class="codehilite"><code>典型触发频率（每100km）：
 
 - 硬触发: 0.1-1次
 - 软触发: 10-50次
@@ -1094,12 +1094,12 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 - 每次触发: 100-500MB原始数据
 - 压缩后: 10-50MB
 - 每车每月: 1-5GB上传量
-</code></pre></div>
+</code></pre>
 
 <h3 id="454">4.5.4 数据压缩与上传</h3>
 <p>高效的数据压缩是大规模数据收集的前提。</p>
 <p><strong>多级压缩策略</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────┐
 │           数据压缩流水线                        │
 ├────────────────────────────────────────────────┤
 │                                                 │
@@ -1138,18 +1138,18 @@ LPDDR4 主存       : 4GB,    68GB/s,  100 cycles
 │  总压缩比: 10000:1                             │
 │                                                 │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>上传策略优化</strong>：</p>
 <ol>
 <li><strong>网络感知上传</strong>：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>优先级队列：
+<pre class="codehilite"><code>优先级队列：
 P0: 安全关键事件 → 立即上传(LTE)
 P1: 模型错误案例 → WiFi可用时上传
 P2: 一般训练数据 → 夜间WiFi上传
 P3: 统计信息 → 批量压缩上传
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li>
@@ -1168,7 +1168,7 @@ P3: 统计信息 → 批量压缩上传
 <h3 id="455-ota">4.5.5 OTA更新架构</h3>
 <p>OTA不仅更新软件，还需要考虑芯片固件和配置。</p>
 <p><strong>OTA系统架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │              OTA更新系统                      │
 ├──────────────────────────────────────────────┤
 │                                               │
@@ -1201,17 +1201,17 @@ P3: 统计信息 → 批量压缩上传
 │  └─────────────────────────────────────┘     │
 │                                               │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>更新流程控制</strong>：</p>
 <ol>
 <li><strong>分阶段部署</strong>：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="err">阶段</span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="err">内部员工车队</span><span class="w"> </span><span class="o">(</span><span class="mi">1000</span><span class="err">辆</span><span class="o">)</span>
-<span class="err">阶段</span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="err">早期用户</span><span class="w"> </span><span class="o">(</span><span class="mi">1</span><span class="o">%)</span>
-<span class="err">阶段</span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="err">区域推送</span><span class="w"> </span><span class="o">(</span><span class="mi">10</span><span class="o">%)</span>
-<span class="err">阶段</span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="err">全球部署</span><span class="w"> </span><span class="o">(</span><span class="mi">100</span><span class="o">%)</span>
-</code></pre></div>
+<pre class="codehilite"><code>阶段1: 内部员工车队 (1000辆)
+阶段2: 早期用户 (1%)
+阶段3: 区域推送 (10%)
+阶段4: 全球部署 (100%)
+</code></pre>
 
 <ol start="2">
 <li>
@@ -1232,7 +1232,7 @@ P3: 统计信息 → 批量压缩上传
 <h3 id="456">4.5.6 版本管理与回滚机制</h3>
 <p>确保系统稳定性的最后一道防线。</p>
 <p><strong>版本管理架构</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │            版本管理系统                       │
 ├──────────────────────────────────────────────┤
 │                                               │
@@ -1268,10 +1268,10 @@ P3: 统计信息 → 批量压缩上传
 │  └─────────────────────────────────────┘     │
 │                                               │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>版本兼容性矩阵</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────┐
 │      兼容性检查表                   │
 ├────────────────────────────────────┤
 │ 组件      │ v12.2 │ v12.3 │ v12.4 │
@@ -1281,7 +1281,7 @@ P3: 统计信息 → 批量压缩上传
 │ MCU2      │  ✓    │  ✓    │  ✓    │
 │ MCU3      │  ✗    │  ✓    │  ✓    │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>故障恢复机制</strong>：</p>
 <ul>

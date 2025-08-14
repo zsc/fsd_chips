@@ -184,7 +184,7 @@
                 <h1 id="52022-2023">第5章：大模型驱动的架构革新（2022-2023）</h1>
 <h2 id="_1">章节概览</h2>
 <p>2022-2023年是自动驾驶芯片发展的分水岭。Transformer架构的成功不仅在NLP领域掀起革命，更深刻影响了自动驾驶感知算法和芯片设计。从BEVFormer到占据网络，从端到端学习到大模型部署，算法范式的转变倒逼芯片架构进行根本性革新。</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────┐
 │                 算法范式演进对芯片的影响                    │
 ├──────────────────────────────────────────────────────────┤
 │  2020-2021         2022            2023           2024    │
@@ -195,12 +195,12 @@
 │  固定算子    →   动态计算图   →   稀疏计算  →   可编程性    │
 │  TOPS竞赛   →   效率优先     →   灵活性    →   软硬协同    │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="51-transformer">5.1 Transformer对芯片设计的冲击</h2>
 <h3 id="511">5.1.1 计算模式的根本性转变</h3>
 <h4 id="cnntransformer">CNN到Transformer：计算特征对比</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                   CNN vs Transformer 计算特征                 │
 ├───────────────┬─────────────────────┬───────────────────────┤
 │     特征       │       CNN           │     Transformer       │
@@ -213,13 +213,13 @@
 │  精度需求      │  INT8友好           │  FP16/BF16敏感        │
 │  带宽需求      │  计算密集型         │  内存密集型           │
 └───────────────┴─────────────────────┴───────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_2">注意力机制的硬件挑战</h4>
 <ol>
 <li><strong>Self-Attention计算复杂度</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>传统实现：O(n²·d) 复杂度，其中n为序列长度，d为特征维度
+<pre class="codehilite"><code>传统实现：O(n²·d) 复杂度，其中n为序列长度，d为特征维度
 
 优化策略：
 ┌────────────────────────────────────────┐
@@ -243,35 +243,35 @@
 │     - kernel方法线性化                  │
 │     - 复杂度O(n·d²)                    │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>KV Cache管理挑战</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 典型的KV Cache内存需求计算</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">seq_length</span> <span class="o">=</span> <span class="mi">2048</span>  
-<span class="n">num_layers</span> <span class="o">=</span> <span class="mi">24</span>
-<span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">1024</span>
-<span class="n">num_heads</span> <span class="o">=</span> <span class="mi">16</span>
+<pre class="codehilite"><code class="language-python"># 典型的KV Cache内存需求计算
+batch_size = 8
+seq_length = 2048  
+num_layers = 24
+hidden_dim = 1024
+num_heads = 16
 
-<span class="c1"># 每层KV cache大小（字节）</span>
-<span class="n">kv_cache_per_layer</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="mi">2</span> <span class="o">*</span>  <span class="c1"># K和V</span>
-    <span class="n">batch_size</span> <span class="o">*</span> 
-    <span class="n">num_heads</span> <span class="o">*</span> 
-    <span class="n">seq_length</span> <span class="o">*</span> 
-    <span class="p">(</span><span class="n">hidden_dim</span> <span class="o">//</span> <span class="n">num_heads</span><span class="p">)</span> <span class="o">*</span> 
-    <span class="mi">2</span>  <span class="c1"># FP16</span>
-<span class="p">)</span>
+# 每层KV cache大小（字节）
+kv_cache_per_layer = (
+    2 *  # K和V
+    batch_size * 
+    num_heads * 
+    seq_length * 
+    (hidden_dim // num_heads) * 
+    2  # FP16
+)
 
-<span class="n">total_kv_cache</span> <span class="o">=</span> <span class="n">kv_cache_per_layer</span> <span class="o">*</span> <span class="n">num_layers</span>
-<span class="c1"># 结果：约1.6 GB，对车载芯片是巨大挑战</span>
-</code></pre></div>
+total_kv_cache = kv_cache_per_layer * num_layers
+# 结果：约1.6 GB，对车载芯片是巨大挑战
+</code></pre>
 
 <h3 id="512-bev">5.1.2 BEV感知算法的硬件需求</h3>
 <h4 id="bevformer">BEVFormer架构分析</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │                 BEVFormer 计算流程                     │
 ├──────────────────────────────────────────────────────┤
 │                                                       │
@@ -289,13 +289,13 @@
 │  检测头  ────────→  输出：3D框、语义分割、轨迹预测      │
 │                                                       │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_3">硬件加速需求分析</h4>
 <ol>
 <li><strong>Deformable Attention加速</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>标准Attention vs Deformable Attention 硬件需求
+<pre class="codehilite"><code>标准Attention vs Deformable Attention 硬件需求
 
 ┌─────────────────┬────────────────┬──────────────────┐
 │      指标        │   标准Attention │ Deformable Att.  │
@@ -308,12 +308,12 @@
 └─────────────────┴────────────────┴──────────────────┘
 
 K: 采样点数量（通常4-8）
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>多尺度特征融合</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────┐
 │         多尺度特征金字塔处理需求              │
 ├────────────────────────────────────────────┤
 │                                            │
@@ -328,14 +328,14 @@ K: 采样点数量（通常4-8）
 │  - 动态内存分配应对可变尺度                  │
 │  - 专用上/下采样单元                        │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="513">5.1.3 芯片架构创新响应</h3>
 <h4 id="_4">新型加速器设计</h4>
 <ol>
 <li><strong>Transformer专用处理单元(TPU)</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │          Transformer加速器微架构                  │
 ├──────────────────────────────────────────────────┤
 │                                                  │
@@ -362,7 +362,7 @@ K: 采样点数量（通常4-8）
 │   │        HBM3接口 (1.2TB/s)         │         │
 │   └──────────────────────────────────┘         │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>关键设计考虑：</strong></p>
 <p>矩阵乘法阵列(MMA)优化：</p>
@@ -389,7 +389,7 @@ K: 采样点数量（通常4-8）
 <ol start="2">
 <li><strong>动态可重构架构</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>可重构计算阵列示例：
+<pre class="codehilite"><code>可重构计算阵列示例：
 
         CNN模式                    Transformer模式
    ┌─────────────────┐         ┌─────────────────┐
@@ -405,7 +405,7 @@ K: 采样点数量（通常4-8）
 面积开销: +15%
 功耗开销: +8%
 性能提升: CNN持平, Transformer +2.5x
-</code></pre></div>
+</code></pre>
 
 <p><strong>可重构架构实现细节：</strong></p>
 <p>配置管理机制：</p>
@@ -416,7 +416,7 @@ K: 采样点数量（通常4-8）
 <li>调度策略：基于负载的动态配置选择</li>
 </ul>
 <p>互连网络设计：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
 │        可重构互连拓扑                      │
 ├──────────────────────────────────────────┤
 │                                          │
@@ -434,12 +434,12 @@ K: 采样点数量（通常4-8）
 │  • Virtual Channel支持QoS                │
 │  • Deadlock避免机制                      │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>稀疏计算加速架构</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>稀疏性感知处理单元设计：
+<pre class="codehilite"><code>稀疏性感知处理单元设计：
 
 ┌────────────────────────────────────────┐
 │         稀疏计算加速器                   │
@@ -465,13 +465,13 @@ K: 采样点数量（通常4-8）
 │  • 75%稀疏度 → 3.2x加速                │
 │  • 90%稀疏度 → 5.5x加速                │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_5">内存系统革新</h4>
 <ol>
 <li><strong>层次化缓存设计</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────┐
 │            新型缓存层次结构                      │
 ├───────────────────────────────────────────────┤
 │                                                │
@@ -490,12 +490,12 @@ K: 采样点数量（通常4-8）
 │  - 权重预取引擎                                │
 │  - 激活值压缩单元                              │
 └───────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>近数据计算(PIM)</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>HBM-PIM架构：
+<pre class="codehilite"><code>HBM-PIM架构：
 
 ┌─────────────────────────────────────┐
 │           HBM3-PIM 堆栈              │
@@ -516,7 +516,7 @@ K: 采样点数量（通常4-8）
 │  - 功耗降低 45%                      │
 │  - 适合稀疏矩阵运算                  │
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="52-nvidia-drive-thor2000-tops">5.2 NVIDIA Drive Thor发布：2000 TOPS的下一代平台</h2>
 <h3 id="521-thor">5.2.1 Thor架构深度解析</h3>
@@ -528,7 +528,7 @@ K: 采样点数量（通常4-8）
 <li>定位：L4/L5级自动驾驶中央计算平台</li>
 </ul>
 <p><strong>关键技术参数</strong></p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────────┐
 │              NVIDIA Drive Thor 核心规格                │
 ├───────────────────────────────────────────────────────┤
 │                                                        │
@@ -544,10 +544,10 @@ K: 采样点数量（通常4-8）
 │  接口：         PCIe 5.0, 100GbE                       │
 │                                                        │
 └───────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="grace-hopper">Grace-Hopper超异构架构</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────┐
 │                  Thor SoC 架构布局                       │
 ├─────────────────────────────────────────────────────────┤
 │                                                          │
@@ -573,13 +573,13 @@ K: 采样点数量（通常4-8）
 │  └────────────────────────────────────────────────┘    │
 │                                                          │
 └─────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="transformer">Transformer引擎革新</h4>
 <ol>
 <li><strong>第二代Transformer引擎</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>关键创新点：
+<pre class="codehilite"><code>关键创新点：
 
 1. FP8 Tensor Core
    - 动态精度切换 (FP8 ↔ FP16 ↔ FP32)
@@ -602,12 +602,12 @@ K: 采样点数量（通常4-8）
    - 2:4结构化稀疏
    - 硬件自动剪枝
    - 零开销稀疏计算
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>Multi-Instance GPU (MIG) 技术</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────┐
 │          MIG 资源划分示例                   │
 ├───────────────────────────────────────────┤
 │                                            │
@@ -628,11 +628,11 @@ K: 采样点数量（通常4-8）
 │  隔离级别：硬件级安全隔离                    │
 │  切换延迟：&lt;100ms                          │
 └───────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="522">5.2.2 软件栈与生态系统</h3>
 <h4 id="drive-os-60">DRIVE OS 6.0架构</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │           NVIDIA DRIVE Software Stack          │
 ├──────────────────────────────────────────────┤
 │                                               │
@@ -655,7 +655,7 @@ K: 采样点数量（通常4-8）
 │  硬件抽象      NvMedia | NvSCI                │
 │               驱动程序|固件|BSP                │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>DriveWorks 5.0关键模块详解：</strong></p>
 <p>感知模块优化：</p>
@@ -674,7 +674,7 @@ K: 采样点数量（通常4-8）
 <li>决策树优化：支持在线学习更新</li>
 </ul>
 <p><strong>TensorRT 9.0优化技术：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────┐
 │         TensorRT优化流水线                   │
 ├─────────────────────────────────────────────┤
 │                                             │
@@ -692,50 +692,50 @@ K: 采样点数量（通常4-8）
 │  • BERT-Base: 8x vs PyTorch                │
 │  • GPT-2: 6x vs PyTorch                    │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_7">开发工具链</h4>
 <ol>
 <li><strong>NVIDIA Omniverse仿真平台</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code>数字孪生驾驶仿真能力：
+<pre class="codehilite"><code>数字孪生驾驶仿真能力：
 
 - 物理精确渲染 (RTX光线追踪)
 - 传感器仿真 (相机/激光雷达/毫米波)
 - 场景生成 (程序化道路/天气/交通)
 - HIL/SIL/VIL测试
 - 每天10万+虚拟测试里程
-</code></pre></div>
+</code></pre>
 
 <ol start="2">
 <li><strong>DRIVE Sim配置</strong></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Thor仿真配置示例</span>
-<span class="n">sim_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vehicle&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;sensors&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;cameras&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>  <span class="c1"># 12个摄像头</span>
-            <span class="s2">&quot;lidars&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>    <span class="c1"># 2个激光雷达</span>
-            <span class="s2">&quot;radars&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>    <span class="c1"># 9个毫米波雷达</span>
-            <span class="s2">&quot;ultrasonics&quot;</span><span class="p">:</span> <span class="mi">12</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;compute&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;platform&quot;</span><span class="p">:</span> <span class="s2">&quot;DRIVE Thor&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ai_performance&quot;</span><span class="p">:</span> <span class="s2">&quot;2000 TOPS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;128GB&quot;</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;urban&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;weather&quot;</span><span class="p">:</span> <span class="s2">&quot;rain&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;traffic_density&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;test_cases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;cut_in&quot;</span><span class="p">,</span> <span class="s2">&quot;emergency_brake&quot;</span><span class="p">,</span> <span class="s2">&quot;pedestrian_cross&quot;</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-python"># Thor仿真配置示例
+sim_config = {
+    &quot;vehicle&quot;: {
+        &quot;sensors&quot;: {
+            &quot;cameras&quot;: 12,  # 12个摄像头
+            &quot;lidars&quot;: 2,    # 2个激光雷达
+            &quot;radars&quot;: 9,    # 9个毫米波雷达
+            &quot;ultrasonics&quot;: 12
+        },
+        &quot;compute&quot;: {
+            &quot;platform&quot;: &quot;DRIVE Thor&quot;,
+            &quot;ai_performance&quot;: &quot;2000 TOPS&quot;,
+            &quot;memory&quot;: &quot;128GB&quot;
+        }
+    },
+    &quot;scenario&quot;: {
+        &quot;location&quot;: &quot;urban&quot;,
+        &quot;weather&quot;: &quot;rain&quot;,
+        &quot;traffic_density&quot;: &quot;high&quot;,
+        &quot;test_cases&quot;: [&quot;cut_in&quot;, &quot;emergency_brake&quot;, &quot;pedestrian_cross&quot;]
+    }
+}
+</code></pre>
 
 <h3 id="523">5.2.3 与竞品对比分析</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────────┐
 │                    2023年旗舰芯片对比                          │
 ├────────────┬──────────┬──────────┬───────────┬──────────────┤
 │   指标      │   Thor    │  Orin-X   │   J6双芯   │  MDC Pro     │
@@ -749,12 +749,12 @@ K: 采样点数量（通常4-8）
 │ 量产时间    │ 2025      │ 2023      │ 2024       │ 2023         │
 │ 目标级别    │ L4/L5     │ L2+/L3    │ L3/L4      │ L3/L4        │
 └────────────┴──────────┴──────────┴───────────┴──────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="53-snapdragon-ride-flex">5.3 高通Snapdragon Ride Flex：异构计算新思路</h2>
 <h3 id="531">5.3.1 从通信到汽车的技术转型</h3>
 <h4 id="_8">高通汽车战略演进</h4>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────┐
 │              高通汽车业务发展路线                         │
 ├────────────────────────────────────────────────────────┤
 │                                                         │
@@ -775,11 +775,11 @@ K: 采样点数量（通常4-8）
 │  • 中央计算架构                                         │
 │  • 5G/V2X/AI融合                                       │
 └────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="532-snapdragon-ride-flex">5.3.2 Snapdragon Ride Flex架构深度剖析</h3>
 <h4 id="_9">核心技术规格</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │         Snapdragon Ride Flex SoC 规格                 │
 ├──────────────────────────────────────────────────────┤
 │                                                       │
@@ -799,10 +799,10 @@ K: 采样点数量（通常4-8）
 │  功耗：        130W (典型) / 180W (峰值)              │
 │                                                       │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="hexagon">Hexagon异构计算架构</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │             Hexagon 处理器微架构                      │
 ├─────────────────────────────────────────────────────┤
 │                                                      │
@@ -832,11 +832,11 @@ K: 采样点数量（通常4-8）
 │  │  L1: 512KB  L2: 4MB  L3: 16MB              │     │
 │  └───────────────────────────────────────────┘     │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="533">5.3.3 一芯多域融合技术</h3>
 <h4 id="_10">动态资源调度机制</h4>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────────┐
 │              Flex域融合架构                            │
 ├───────────────────────────────────────────────────────┤
 │                                                        │
@@ -861,10 +861,10 @@ K: 采样点数量（通常4-8）
 │  • QoS保证关键任务                                     │
 │  • 热迁移支持 (&lt;50ms)                                  │
 └───────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_11">安全隔离机制</h4>
-<div class="codehilite"><pre><span></span><code>硬件级虚拟化隔离：
+<pre class="codehilite"><code>硬件级虚拟化隔离：
 
 ┌─────────────────────────────────────────┐
 │           Hypervisor架构                 │
@@ -886,11 +886,11 @@ K: 采样点数量（通常4-8）
 • 内存: SMMU保护
 • 中断: GIC虚拟化
 • I/O: SR-IOV/IOMMU
-</code></pre></div>
+</code></pre>
 
 <h3 id="534-ai">5.3.4 AI模型优化与部署</h3>
 <h4 id="qualcomm-ai-stack">Qualcomm AI Stack</h4>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────┐
 │          Qualcomm AI Software Stack            │
 ├────────────────────────────────────────────────┤
 │                                                │
@@ -920,48 +920,48 @@ K: 采样点数量（通常4-8）
 │  │   CPU  |  GPU  |  DSP  |  NPU         │    │
 │  └──────────────────────────────────────┘    │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_12">模型部署优化实例</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># BEV感知模型在Ride Flex上的优化配置</span>
-<span class="n">optimization_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;BEVFormer&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;input_size&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1600</span><span class="p">],</span>  <span class="c1"># 6相机输入</span>
+<pre class="codehilite"><code class="language-python"># BEV感知模型在Ride Flex上的优化配置
+optimization_config = {
+    &quot;model&quot;: &quot;BEVFormer&quot;,
+    &quot;input_size&quot;: [6, 3, 900, 1600],  # 6相机输入
 
-    <span class="s2">&quot;quantization&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;backbone&quot;</span><span class="p">:</span> <span class="s2">&quot;INT8&quot;</span><span class="p">,</span>         <span class="c1"># ResNet量化</span>
-        <span class="s2">&quot;transformer&quot;</span><span class="p">:</span> <span class="s2">&quot;FP16&quot;</span><span class="p">,</span>       <span class="c1"># 注意力层保持精度</span>
-        <span class="s2">&quot;head&quot;</span><span class="p">:</span> <span class="s2">&quot;INT8&quot;</span>              <span class="c1"># 检测头量化</span>
-    <span class="p">},</span>
+    &quot;quantization&quot;: {
+        &quot;backbone&quot;: &quot;INT8&quot;,         # ResNet量化
+        &quot;transformer&quot;: &quot;FP16&quot;,       # 注意力层保持精度
+        &quot;head&quot;: &quot;INT8&quot;              # 检测头量化
+    },
 
-    <span class="s2">&quot;hardware_mapping&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;image_preprocessing&quot;</span><span class="p">:</span> <span class="s2">&quot;ISP&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;backbone&quot;</span><span class="p">:</span> <span class="s2">&quot;GPU&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;transformer_encoder&quot;</span><span class="p">:</span> <span class="s2">&quot;HTA&quot;</span><span class="p">,</span>  <span class="c1"># 张量加速器</span>
-        <span class="s2">&quot;transformer_decoder&quot;</span><span class="p">:</span> <span class="s2">&quot;HVX&quot;</span><span class="p">,</span>  <span class="c1"># 向量单元</span>
-        <span class="s2">&quot;postprocessing&quot;</span><span class="p">:</span> <span class="s2">&quot;CPU&quot;</span>
-    <span class="p">},</span>
+    &quot;hardware_mapping&quot;: {
+        &quot;image_preprocessing&quot;: &quot;ISP&quot;,
+        &quot;backbone&quot;: &quot;GPU&quot;,
+        &quot;transformer_encoder&quot;: &quot;HTA&quot;,  # 张量加速器
+        &quot;transformer_decoder&quot;: &quot;HVX&quot;,  # 向量单元
+        &quot;postprocessing&quot;: &quot;CPU&quot;
+    },
 
-    <span class="s2">&quot;optimization&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;graph_optimization&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;operator_fusion&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;memory_optimization&quot;</span><span class="p">:</span> <span class="s2">&quot;aggressive&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;sequence_parallel&quot;</span><span class="p">:</span> <span class="kc">False</span>
-    <span class="p">},</span>
+    &quot;optimization&quot;: {
+        &quot;graph_optimization&quot;: True,
+        &quot;operator_fusion&quot;: True,
+        &quot;memory_optimization&quot;: &quot;aggressive&quot;,
+        &quot;batch_size&quot;: 1,
+        &quot;sequence_parallel&quot;: False
+    },
 
-    <span class="s2">&quot;performance&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;latency&quot;</span><span class="p">:</span> <span class="s2">&quot;45ms&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;throughput&quot;</span><span class="p">:</span> <span class="s2">&quot;22 FPS&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="s2">&quot;35W&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;accuracy_drop&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8%&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+    &quot;performance&quot;: {
+        &quot;latency&quot;: &quot;45ms&quot;,
+        &quot;throughput&quot;: &quot;22 FPS&quot;,
+        &quot;power&quot;: &quot;35W&quot;,
+        &quot;accuracy_drop&quot;: &quot;0.8%&quot;
+    }
+}
+</code></pre>
 
 <h3 id="535-5g-ai">5.3.5 5G-AI融合创新</h3>
 <h4 id="c-v2x">C-V2X与边缘计算协同</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────┐
 │           5G + AI 协同架构                       │
 ├─────────────────────────────────────────────────┤
 │                                                  │
@@ -990,7 +990,7 @@ K: 采样点数量（通常4-8）
 │  │  • OTA更新                           │        │
 │  └────────────────────────────────────┘        │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>5G模组集成特性：</strong></p>
 <p>Snapdragon X70 5G调制解调器：</p>
@@ -1003,7 +1003,7 @@ K: 采样点数量（通常4-8）
 <li>网络切片：专用URLLC切片</li>
 </ul>
 <p>C-V2X直连通信：</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────┐
 │         C-V2X通信模式                   │
 ├────────────────────────────────────────┤
 │                                        │
@@ -1024,69 +1024,69 @@ K: 采样点数量（通常4-8）
 │  • AES-256数据加密                     │
 │  • 防重放攻击保护                      │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>边缘AI协同计算：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">V2XEdgeCollaboration</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;V2X边缘协同计算框架&quot;&quot;&quot;</span>
+<pre class="codehilite"><code class="language-python">class V2XEdgeCollaboration:
+    &quot;&quot;&quot;V2X边缘协同计算框架&quot;&quot;&quot;
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">local_compute</span> <span class="o">=</span> <span class="n">SnapdragonRideFlex</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">edge_server</span> <span class="o">=</span> <span class="n">MECServer</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">v2x_module</span> <span class="o">=</span> <span class="n">C_V2X_Module</span><span class="p">()</span>
+    def __init__(self):
+        self.local_compute = SnapdragonRideFlex()
+        self.edge_server = MECServer()
+        self.v2x_module = C_V2X_Module()
 
-    <span class="k">def</span> <span class="nf">collaborative_perception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor_data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;协同感知处理流程&quot;&quot;&quot;</span>
+    def collaborative_perception(self, sensor_data):
+        &quot;&quot;&quot;协同感知处理流程&quot;&quot;&quot;
 
-        <span class="c1"># 1. 本地快速检测</span>
-        <span class="n">local_objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_compute</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span>
-            <span class="n">sensor_data</span><span class="p">,</span> 
-            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;fast&quot;</span>  <span class="c1"># 低延迟模式</span>
-        <span class="p">)</span>
+        # 1. 本地快速检测
+        local_objects = self.local_compute.detect(
+            sensor_data, 
+            mode=&quot;fast&quot;  # 低延迟模式
+        )
 
-        <span class="c1"># 2. 关键区域识别</span>
-        <span class="n">roi_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_roi</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">,</span> <span class="n">local_objects</span><span class="p">)</span>
+        # 2. 关键区域识别
+        roi_data = self.extract_roi(sensor_data, local_objects)
 
-        <span class="c1"># 3. 边缘协同处理</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">needs_edge_assistance</span><span class="p">(</span><span class="n">local_objects</span><span class="p">):</span>
-            <span class="c1"># 压缩传输</span>
-            <span class="n">compressed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compress_data</span><span class="p">(</span><span class="n">roi_data</span><span class="p">)</span>
+        # 3. 边缘协同处理
+        if self.needs_edge_assistance(local_objects):
+            # 压缩传输
+            compressed = self.compress_data(roi_data)
 
-            <span class="c1"># V2X传输</span>
-            <span class="n">edge_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v2x_module</span><span class="o">.</span><span class="n">send_to_mec</span><span class="p">(</span>
-                <span class="n">compressed</span><span class="p">,</span>
-                <span class="n">priority</span><span class="o">=</span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
-                <span class="n">latency_budget</span><span class="o">=</span><span class="mi">10</span>  <span class="c1"># ms</span>
-            <span class="p">)</span>
+            # V2X传输
+            edge_result = self.v2x_module.send_to_mec(
+                compressed,
+                priority=&quot;high&quot;,
+                latency_budget=10  # ms
+            )
 
-            <span class="c1"># 融合结果</span>
-            <span class="n">final_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuse_results</span><span class="p">(</span>
-                <span class="n">local_objects</span><span class="p">,</span> 
-                <span class="n">edge_result</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">final_result</span> <span class="o">=</span> <span class="n">local_objects</span>
+            # 融合结果
+            final_result = self.fuse_results(
+                local_objects, 
+                edge_result
+            )
+        else:
+            final_result = local_objects
 
-        <span class="k">return</span> <span class="n">final_result</span>
+        return final_result
 
-    <span class="k">def</span> <span class="nf">bandwidth_adaptive_offloading</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;带宽自适应卸载策略&quot;&quot;&quot;</span>
-        <span class="n">available_bw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v2x_module</span><span class="o">.</span><span class="n">get_bandwidth</span><span class="p">()</span>
+    def bandwidth_adaptive_offloading(self):
+        &quot;&quot;&quot;带宽自适应卸载策略&quot;&quot;&quot;
+        available_bw = self.v2x_module.get_bandwidth()
 
-        <span class="k">if</span> <span class="n">available_bw</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># Mbps</span>
-            <span class="c1"># 高带宽：传输原始数据</span>
-            <span class="k">return</span> <span class="s2">&quot;raw_data&quot;</span>
-        <span class="k">elif</span> <span class="n">available_bw</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
-            <span class="c1"># 中带宽：传输特征图</span>
-            <span class="k">return</span> <span class="s2">&quot;feature_maps&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># 低带宽：仅传输元数据</span>
-            <span class="k">return</span> <span class="s2">&quot;metadata_only&quot;</span>
-</code></pre></div>
+        if available_bw &gt; 100:  # Mbps
+            # 高带宽：传输原始数据
+            return &quot;raw_data&quot;
+        elif available_bw &gt; 50:
+            # 中带宽：传输特征图
+            return &quot;feature_maps&quot;
+        else:
+            # 低带宽：仅传输元数据
+            return &quot;metadata_only&quot;
+</code></pre>
 
 <h3 id="536">5.3.6 产品化与市场策略</h3>
 <h4 id="_13">客户定制化方案</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │       Ride Flex平台化策略                      │
 ├──────────────────────────────────────────────┤
 │                                               │
@@ -1108,12 +1108,12 @@ K: 采样点数量（通常4-8）
 │  • 端到端自动驾驶                             │
 │  • 成本: $2800                               │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="54-mdc-pro">5.4 华为MDC Pro：端云协同计算架构</h2>
 <h3 id="541-mdc">5.4.1 MDC产品线演进历程</h3>
 <h4 id="mdcmdc-pro">从MDC到MDC Pro的技术跃迁</h4>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────┐
 │              华为MDC平台发展路线图                        │
 ├────────────────────────────────────────────────────────┤
 │                                                         │
@@ -1137,11 +1137,11 @@ K: 采样点数量（通常4-8）
 │  • 全场景自动驾驶                                       │
 │  • 光电混合计算                                         │
 └────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="542-mdc-pro">5.4.2 MDC Pro核心架构解析</h3>
 <h4 id="_14">硬件规格与特性</h4>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────┐
 │           MDC Pro 技术规格                          │
 ├───────────────────────────────────────────────────┤
 │                                                    │
@@ -1164,10 +1164,10 @@ K: 采样点数量（通常4-8）
 │                4x 1000BASE-T1                     │
 │                                                    │
 └───────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_15">达芬奇架构深度剖析</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │              昇腾710 达芬奇架构                        │
 ├──────────────────────────────────────────────────────┤
 │                                                       │
@@ -1198,11 +1198,11 @@ K: 采样点数量（通常4-8）
 │  • 全自研指令集：CISC + RISC混合                      │
 │  • 端云统一架构：训练推理一体化                        │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="543">5.4.3 端云协同计算创新</h3>
 <h4 id="_16">分层协同架构</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │            端云协同三层架构                           │
 ├─────────────────────────────────────────────────────┤
 │                                                      │
@@ -1235,54 +1235,54 @@ K: 采样点数量（通常4-8）
 │  │  • OTA推送                               │        │
 │  └────────────────────────────────────────┘        │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_17">智能调度机制</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># MDC Pro 端云协同调度策略</span>
-<span class="k">class</span> <span class="nc">EdgeCloudScheduler</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">edge_capacity</span> <span class="o">=</span> <span class="mi">480</span>  <span class="c1"># TOPS</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cloud_latency</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># ms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">edge_models</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cloud_models</span> <span class="o">=</span> <span class="p">{}</span>
+<pre class="codehilite"><code class="language-python"># MDC Pro 端云协同调度策略
+class EdgeCloudScheduler:
+    def __init__(self):
+        self.edge_capacity = 480  # TOPS
+        self.cloud_latency = 100  # ms
+        self.edge_models = {}
+        self.cloud_models = {}
 
-    <span class="k">def</span> <span class="nf">task_allocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;智能任务分配策略&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">priority</span> <span class="o">==</span> <span class="s2">&quot;critical&quot;</span><span class="p">:</span>
-            <span class="c1"># 关键任务本地处理</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_inference</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    def task_allocation(self, task):
+        &quot;&quot;&quot;智能任务分配策略&quot;&quot;&quot;
+        if task.priority == &quot;critical&quot;:
+            # 关键任务本地处理
+            return self.edge_inference(task)
 
-        <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">complexity</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_capacity</span><span class="p">:</span>
-            <span class="c1"># 复杂任务云端处理</span>
-            <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">latency_requirement</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cloud_latency</span><span class="p">:</span>
-                <span class="c1"># 降级处理</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_inference</span><span class="p">(</span>
-                    <span class="n">task</span><span class="p">,</span> 
-                    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;lightweight&quot;</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cloud_inference</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        elif task.complexity &gt; self.edge_capacity:
+            # 复杂任务云端处理
+            if task.latency_requirement &gt; self.cloud_latency:
+                # 降级处理
+                return self.edge_inference(
+                    task, 
+                    model=&quot;lightweight&quot;
+                )
+            else:
+                return self.cloud_inference(task)
 
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># 负载均衡决策</span>
-            <span class="n">edge_load</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_edge_load</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">edge_load</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_inference</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid_inference</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        else:
+            # 负载均衡决策
+            edge_load = self.get_edge_load()
+            if edge_load &lt; 0.7:
+                return self.edge_inference(task)
+            else:
+                return self.hybrid_inference(task)
 
-    <span class="k">def</span> <span class="nf">hybrid_inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;混合推理模式&quot;&quot;&quot;</span>
-        <span class="c1"># 特征提取在端侧</span>
-        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_extract_features</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="c1"># 深层推理在云端</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cloud_deep_inference</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-</code></pre></div>
+    def hybrid_inference(self, task):
+        &quot;&quot;&quot;混合推理模式&quot;&quot;&quot;
+        # 特征提取在端侧
+        features = self.edge_extract_features(task.data)
+        # 深层推理在云端
+        result = self.cloud_deep_inference(features)
+        return result
+</code></pre>
 
 <h3 id="544-ai">5.4.4 AI框架与工具链</h3>
 <h4 id="mindspore-lite">MindSpore Lite部署框架</h4>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────┐
 │         MindSpore Lite on MDC Pro              │
 ├────────────────────────────────────────────────┤
 │                                                │
@@ -1318,10 +1318,10 @@ K: 采样点数量（通常4-8）
 │  │  • 算子kernel优化                      │    │
 │  └──────────────────────────────────────┘    │
 └────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_18">典型模型性能表现</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │          MDC Pro 模型推理性能                      │
 ├───────────────┬──────────┬───────────┬──────────┤
 │    模型        │  精度     │   延迟     │  功耗    │
@@ -1334,11 +1334,11 @@ K: 采样点数量（通常4-8）
 │ LaneNet       │  INT8     │   6ms      │  35W     │
 │ TrafficSign   │  INT8     │   3ms      │  25W     │
 └───────────────┴──────────┴───────────┴──────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="545">5.4.5 功能安全与信息安全</h3>
 <h4 id="_19">多层安全防护体系</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────┐
 │           MDC Pro 安全架构                       │
 ├─────────────────────────────────────────────────┤
 │                                                  │
@@ -1373,12 +1373,12 @@ K: 采样点数量（通常4-8）
 │  │  • 差分隐私算法                     │        │
 │  └────────────────────────────────────┘        │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="55">5.5 技术对比与趋势分析</h2>
 <h3 id="551">5.5.1 主流平台综合对比</h3>
 <h4 id="_20">核心技术指标对比</h4>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────────────┐
 │                    2022-2023主流平台技术对比                         │
 ├──────────────┬────────────┬──────────────┬────────────┬──────────┤
 │   指标        │ NVIDIA Thor │ Snapdragon   │ MDC Pro    │ 地平线J6  │
@@ -1395,10 +1395,10 @@ K: 采样点数量（通常4-8）
 │ 量产时间      │ 2025       │ 2023         │ 2023       │ 2024     │
 │ 主要客户      │ 奔驰/捷豹   │ 通用/宝马     │ 长安/北汽   │ 理想/长城 │
 └──────────────┴────────────┴──────────────┴────────────┴──────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_21">架构特色对比</h4>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────────────────┐
 │                     架构创新特点对比                            │
 ├───────────────────────────────────────────────────────────────┤
 │                                                                │
@@ -1426,11 +1426,11 @@ K: 采样点数量（通常4-8）
 │ • 存算一体化探索                                               │
 │ • 本土化优势明显                                               │
 └───────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="552">5.5.2 大模型适配能力分析</h3>
 <h4 id="transformer_1">Transformer模型支持对比</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────────────┐
 │              Transformer模型运行能力评估                       │
 ├─────────────┬──────────┬──────────┬──────────┬─────────────┤
 │  平台        │ BEVFormer │ BEVDet4D │ PETRv2   │ UniAD       │
@@ -1443,10 +1443,10 @@ K: 采样点数量（通常4-8）
 ├─────────────┴──────────┴──────────┴──────────┴─────────────┤
 │ 测试条件：6路1080p相机输入，INT8/FP16混合精度                  │
 └──────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h4 id="_22">大模型部署挑战与解决方案</h4>
-<div class="codehilite"><pre><span></span><code>主要挑战：
+<pre class="codehilite"><code>主要挑战：
 
 1. 内存墙问题
    - KV Cache占用巨大
@@ -1480,11 +1480,11 @@ K: 采样点数量（通常4-8）
 │  • 端云协同                         │
 │  • 模型压缩部署                     │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="553">5.5.3 市场格局与竞争态势</h3>
 <h4 id="2022-2023">市场份额演变(2022-2023)</h4>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │         自动驾驶芯片市场份额变化               │
 ├──────────────────────────────────────────────┤
 │                                              │
@@ -1505,11 +1505,11 @@ K: 采样点数量（通常4-8）
 │  • Mobileye份额下滑                         │
 │  • 高通稳步增长                             │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="554">5.5.4 技术发展趋势</h3>
 <h4 id="2024-2025">2024-2025技术演进方向</h4>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │              未来技术发展趋势                         │
 ├─────────────────────────────────────────────────────┤
 │                                                      │
@@ -1533,7 +1533,7 @@ K: 采样点数量（通常4-8）
 │     端侧推理 → 边缘协同 → 云端训练                    │
 │     独立计算 → 分布式 → 联邦学习                      │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="56">5.6 本章总结</h2>
 <h3 id="561">5.6.1 关键技术突破</h3>
@@ -1559,7 +1559,7 @@ K: 采样点数量（通常4-8）
 </li>
 </ol>
 <h3 id="562">5.6.2 产业影响</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │             产业链影响分析                         │
 ├──────────────────────────────────────────────────┤
 │                                                   │
@@ -1578,7 +1578,7 @@ K: 采样点数量（通常4-8）
 │  • 硬件适配工作量增加                             │
 │  • 端云协同算法创新                               │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="563">5.6.3 未来展望</h3>
 <p>大模型驱动的架构革新将持续深化：</p>

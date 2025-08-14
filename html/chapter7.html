@@ -184,7 +184,7 @@
                 <h1 id="72024-2025">第7章：智能汽车计算平台时代（2024-2025）</h1>
 <h2 id="_1">概述</h2>
 <p>2024年标志着自动驾驶芯片发展的新纪元。从域控制器到中央计算单元（CCU），从传统AI加速到端到端神经网络，从单芯片到Chiplet架构，智能汽车正在经历一场前所未有的计算架构革命。本章将深入剖析2024-2025年间的技术突破、产业格局与未来趋势。</p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────────────┐
 │                  智能汽车计算平台演进                         │
 ├────────────────────────────────────────────────────────────┤
 │                                                            │
@@ -198,7 +198,7 @@
 │                                                            │
 │   100-500 TOPS    500-1000 TOPS    1000-3000 TOPS       │
 └────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="71-ccu">7.1 中央计算单元（CCU）架构演进</h2>
 <h3 id="711">7.1.1 从域控到中央计算的必然性</h3>
@@ -219,7 +219,7 @@
 <li><strong>软件定义汽车</strong>：OEM希望掌握软件开发主导权，统一平台便于自主开发</li>
 <li><strong>用户体验</strong>：智驾与座舱深度融合，需要统一的计算资源调度</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>传统域控架构（2023）                中央计算架构（2025）
+<pre class="codehilite"><code>传统域控架构（2023）                中央计算架构（2025）
 ┌─────────────────────┐            ┌─────────────────────┐
 │  智驾域 (500 TOPS)   │            │                     │
 ├─────────────────────┤            │    CCU主芯片        │
@@ -233,7 +233,7 @@
 成本：$2500                        成本：$1800
 功耗：450W                         功耗：350W
 延迟：80-120ms                     延迟：20-40ms
-</code></pre></div>
+</code></pre>
 
 <p><strong>实际案例分析：</strong></p>
 <ul>
@@ -299,7 +299,7 @@
 </ul>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │                   CCU内部架构                         │
 ├──────────────────────────────────────────────────────┤
 │                                                      │
@@ -321,7 +321,7 @@
 │  │         64GB HBM3 + 32GB LPDDR5X      │          │
 │  └────────────────────────────────────────┘          │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="713-2024ccu">7.1.3 2024年量产CCU方案对比</h3>
 <p><strong>主要厂商CCU产品详细分析：</strong></p>
@@ -402,7 +402,7 @@
 <li>云原生支持：Cloud-Native应用部署</li>
 <li>DevOps集成：CI/CD管道，自动化测试</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────┐
 │              应用层                          │
 │  自动驾驶 | 智能座舱 | 车身控制 | OTA服务    │
 ├─────────────────────────────────────────────┤
@@ -419,7 +419,7 @@
 ├─────────────────────────────────────────────┤
 │            CCU硬件平台                       │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="72">7.2 端到端自动驾驶的硬件需求</h2>
 <h3 id="721">7.2.1 从模块化到端到端的范式转变</h3>
@@ -432,7 +432,7 @@
 <li><strong>工程成熟</strong>：量化、剪枝、蒸馏等技术成熟</li>
 </ol>
 <p><strong>传统模块化 vs 端到端对比：</strong></p>
-<div class="codehilite"><pre><span></span><code>传统模块化架构                     端到端架构
+<pre class="codehilite"><code>传统模块化架构                     端到端架构
 
 感知 → 预测 → 规划 → 控制          传感器 → 神经网络 → 控制
 
@@ -451,7 +451,7 @@
 内存访问: 频繁                     内存访问: 流式
 可解释性: 高                       可解释性: 低
 调试难度: 低                       调试难度: 高
-</code></pre></div>
+</code></pre>
 
 <p><strong>各厂商E2E方案对比：</strong></p>
 <p>| 厂商 | 方案名称 | 模型规模 | 输入模态 | 输出 | 特点 |</p>
@@ -564,25 +564,25 @@
 </ul>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="err">┌────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">         </span><span class="n">E2E模型推理流程</span><span class="err">（</span><span class="n">硬件视角</span><span class="err">）</span><span class="w">              </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">                                                </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">输入预处理</span><span class="w">        </span><span class="n">Backbone</span><span class="w">         </span><span class="n">Decoder</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌─────────┐</span><span class="w">    </span><span class="err">┌──────────┐</span><span class="w">    </span><span class="err">┌─────────┐</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">ISP</span><span class="o">+</span><span class="n">VPU</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">→</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">Vision</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="err">→</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">Policy</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">6</span><span class="err">×</span><span class="mi">4</span><span class="n">K</span><span class="mi">@30</span><span class="w"> </span><span class="err">│</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">Transform</span><span class="err">│</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="n">Network</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─────────┘</span><span class="w">    </span><span class="err">└──────────┘</span><span class="w">    </span><span class="err">└─────────┘</span><span class="w"> </span><span class="err">│</span>
-<span class="err">│</span><span class="w">   </span><span class="mi">100</span><span class="w"> </span><span class="n">GOPS</span><span class="w">       </span><span class="mi">800</span><span class="w"> </span><span class="n">TOPS</span><span class="w">        </span><span class="mi">200</span><span class="w"> </span><span class="n">TOPS</span><span class="w">    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">内存需求</span><span class="err">：</span><span class="w">                                     </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">输入缓存</span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="n">GB</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="n">路4K视频</span><span class="p">)</span><span class="w">                  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">模型参数</span><span class="o">:</span><span class="w"> </span><span class="mi">40</span><span class="n">GB</span><span class="w"> </span><span class="p">(</span><span class="mi">20</span><span class="n">B</span><span class="w"> </span><span class="n">FP16</span><span class="p">)</span><span class="w">                 </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">├─</span><span class="w"> </span><span class="n">中间激活</span><span class="o">:</span><span class="w"> </span><span class="mi">16</span><span class="n">GB</span><span class="w">                            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└─</span><span class="w"> </span><span class="n">KV</span><span class="w"> </span><span class="n">Cache</span><span class="o">:</span><span class="w"> </span><span class="mi">8</span><span class="n">GB</span><span class="w">                             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">总计</span><span class="o">:</span><span class="w"> </span><span class="mi">66</span><span class="n">GB</span><span class="w">                                    </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌────────────────────────────────────────────────┐
+│         E2E模型推理流程（硬件视角）              │
+├────────────────────────────────────────────────┤
+│                                                │
+│  输入预处理        Backbone         Decoder    │
+│  ┌─────────┐    ┌──────────┐    ┌─────────┐ │
+│  │ ISP+VPU │ →  │ Vision   │ →  │ Policy  │ │
+│  │ 6×4K@30 │    │ Transform│    │ Network │ │
+│  └─────────┘    └──────────┘    └─────────┘ │
+│   100 GOPS       800 TOPS        200 TOPS    │
+│                                                │
+│  内存需求：                                     │
+│  ├─ 输入缓存: 2GB (6路4K视频)                  │
+│  ├─ 模型参数: 40GB (20B FP16)                 │
+│  ├─ 中间激活: 16GB                            │
+│  └─ KV Cache: 8GB                             │
+│  总计: 66GB                                    │
+└────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="723-2024e2e">7.2.3 2024年E2E方案硬件配置实例</h3>
 <p><strong>特斯拉FSD v12（2024年版）：</strong></p>
@@ -675,7 +675,7 @@
    - 场景自适应</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │              E2E推理优化策略                         │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
@@ -694,7 +694,7 @@
 │  - 推理延迟: 50ms → 35ms                          │
 │  - 功耗效率: 提升40%                               │
 └─────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="725">7.2.5 实时性保证机制</h3>
 <p>自动驾驶对实时性的苛刻要求推动了硬件层面的创新：</p>
@@ -706,11 +706,11 @@
 <li>缓存分区：避免缓存污染</li>
 </ul>
 <p><strong>时间确定性设计：</strong></p>
-<div class="codehilite"><pre><span></span><code>传感器采集 → 预处理 → 推理 → 决策 → 执行
+<pre class="codehilite"><code>传感器采集 → 预处理 → 推理 → 决策 → 执行
    10ms      5ms     20ms   5ms    10ms
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             总延迟 &lt; 50ms (硬性约束)
-</code></pre></div>
+</code></pre>
 
 <h2 id="73-chiplet">7.3 Chiplet与先进封装技术应用</h2>
 <h3 id="731-chiplet">7.3.1 Chiplet架构的兴起背景</h3>
@@ -722,7 +722,7 @@
 <li>灵活组合：模块化设计，快速迭代</li>
 <li>IP复用：标准化接口，生态共享</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>传统单片SoC (Monolithic)          Chiplet架构
+<pre class="codehilite"><code>传统单片SoC (Monolithic)          Chiplet架构
 ┌─────────────────────┐          ┌───┐ ┌───┐ ┌───┐
 │                     │          │CPU│ │NPU│ │GPU│
 │   800mm² @ 5nm      │    →     │7nm│ │5nm│ │5nm│
@@ -734,7 +734,7 @@
                                  └────────────────┘
                                  良率: 85%
                                  成本: $350
-</code></pre></div>
+</code></pre>
 
 <h3 id="732-2024chiplet">7.3.2 2024年Chiplet互联标准</h3>
 <p><strong>UCIe (Universal Chiplet Interconnect Express) 1.1规范：</strong></p>
@@ -828,7 +828,7 @@
 </tr>
 </tbody>
 </table>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │           CoWoS-S 封装剖面图                  │
 ├──────────────────────────────────────────────┤
 │                                              │
@@ -841,40 +841,40 @@
 │  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  基板      │
 │  ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○  BGA焊球   │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="734-chiplet">7.3.4 Chiplet在自动驾驶芯片的应用前景</h3>
 <p><strong>2025年Chiplet架构预测：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌────────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">         </span><span class="n">自动驾驶Chiplet系统架构</span><span class="err">（</span><span class="mi">2025</span><span class="err">）</span><span class="w">             </span><span class="err">│</span>
-<span class="err">├────────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w">                                                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">  </span><span class="err">┌──────────┐</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">主控</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">AI加速</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">AI加速</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w">  </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">8</span><span class="n">xA78</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">1000</span><span class="n">TOPS</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">1000</span><span class="n">TOPS</span><span class="w"> </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@7</span><span class="n">nm</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@5</span><span class="n">nm</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@5</span><span class="n">nm</span><span class="w">     </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────┬─────┘</span><span class="w">  </span><span class="err">└────┬──────┘</span><span class="w">  </span><span class="err">└────┬──────┘</span><span class="w">      </span><span class="err">│</span>
-<span class="err">│</span><span class="w">       </span><span class="err">│</span><span class="w">             </span><span class="err">│</span><span class="w">              </span><span class="err">│</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────┴─────────────┴──────────────┴──────┐</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">          </span><span class="n">高速串行总线</span><span class="w"> </span><span class="p">(</span><span class="n">UCIe</span><span class="p">)</span><span class="w">             </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">            </span><span class="mi">5</span><span class="n">TB</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="n">aggregate</span><span class="w">              </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└────┬─────────────┬──────────────┬──────┘</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">       </span><span class="err">│</span><span class="w">             </span><span class="err">│</span><span class="w">              </span><span class="err">│</span><span class="w">               </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">┌────┴─────┐</span><span class="w">  </span><span class="err">┌───┴──────┐</span><span class="w">  </span><span class="err">┌───┴──────┐</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">IO</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Memory</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Security</span><span class="w"> </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">Chiplet</span><span class="w">  </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">PCIe5</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">HBM3</span><span class="w">     </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="n">HSM</span><span class="w">      </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@12</span><span class="n">nm</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">128</span><span class="n">GB</span><span class="w">    </span><span class="err">│</span><span class="w">  </span><span class="err">│</span><span class="w">  </span><span class="mi">@28</span><span class="n">nm</span><span class="w">    </span><span class="err">│</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">└──────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">  </span><span class="err">└───────────┘</span><span class="w">       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">                                                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">优势</span><span class="err">：</span><span class="w">                                            </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">总算力</span><span class="o">:</span><span class="w"> </span><span class="mi">2000</span><span class="o">+</span><span class="w"> </span><span class="n">TOPS</span><span class="w">                             </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">混合制程</span><span class="o">:</span><span class="w"> </span><span class="mi">5</span><span class="n">nm</span><span class="o">/</span><span class="mi">7</span><span class="n">nm</span><span class="o">/</span><span class="mi">12</span><span class="n">nm</span><span class="o">/</span><span class="mi">28</span><span class="n">nm</span><span class="w">                    </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">成本降低</span><span class="o">:</span><span class="w"> </span><span class="n">相比单片降低40</span><span class="o">%</span><span class="w">                       </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">开发周期</span><span class="o">:</span><span class="w"> </span><span class="n">缩短6</span><span class="mi">-12</span><span class="n">个月</span><span class="w">                         </span><span class="err">│</span>
-<span class="err">└────────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌────────────────────────────────────────────────────┐
+│         自动驾驶Chiplet系统架构（2025）             │
+├────────────────────────────────────────────────────┤
+│                                                    │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐       │
+│  │  主控    │  │  AI加速   │  │  AI加速   │       │
+│  │  Chiplet │  │  Chiplet  │  │  Chiplet  │       │
+│  │  8xA78   │  │  1000TOPS │  │  1000TOPS │       │
+│  │  @7nm    │  │  @5nm     │  │  @5nm     │       │
+│  └────┬─────┘  └────┬──────┘  └────┬──────┘      │
+│       │             │              │               │
+│  ┌────┴─────────────┴──────────────┴──────┐       │
+│  │          高速串行总线 (UCIe)             │       │
+│  │            5TB/s aggregate              │       │
+│  └────┬─────────────┬──────────────┬──────┘       │
+│       │             │              │               │
+│  ┌────┴─────┐  ┌───┴──────┐  ┌───┴──────┐       │
+│  │   IO     │  │  Memory   │  │  Security │       │
+│  │  Chiplet │  │  Chiplet  │  │  Chiplet  │       │
+│  │  PCIe5   │  │  HBM3     │  │  HSM      │       │
+│  │  @12nm   │  │  128GB    │  │  @28nm    │       │
+│  └──────────┘  └───────────┘  └───────────┘       │
+│                                                    │
+│  优势：                                            │
+│  • 总算力: 2000+ TOPS                             │
+│  • 混合制程: 5nm/7nm/12nm/28nm                    │
+│  • 成本降低: 相比单片降低40%                       │
+│  • 开发周期: 缩短6-12个月                         │
+└────────────────────────────────────────────────────┘
+</code></pre>
 
 <h2 id="74-3nm">7.4 下一代芯片预测：3nm工艺与光子计算</h2>
 <h3 id="741-3nm">7.4.1 3nm制程在自动驾驶芯片的应用</h3>
@@ -930,7 +930,7 @@
 </tbody>
 </table>
 <p><strong>2025年3nm自动驾驶芯片路线图：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
 │            3nm自动驾驶芯片发展时间线               │
 ├──────────────────────────────────────────────────┤
 │                                                  │
@@ -945,7 +945,7 @@
 │  • 2025 Q1: Samsung 3nm GAA第二代               │
 │  • 2025 Q3: Intel 18A (1.8nm级别)试产           │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="742-3nm">7.4.2 3nm工艺的技术挑战与解决方案</h3>
 <p><strong>主要挑战：</strong></p>
@@ -966,7 +966,7 @@
    - 方案：Chiplet分解、良率优化</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>功耗密度分布（W/mm²）
+<pre class="codehilite"><code>功耗密度分布（W/mm²）
 ┌────────────────────────────────────┐
 │         3nm芯片热力图              │
 │  ┌──────────────────────────┐     │
@@ -978,7 +978,7 @@
 │  └──────────────────────────┘     │
 │  峰值: 150W/mm²  平均: 80W/mm²    │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="743">7.4.3 光子计算：自动驾驶的未来？</h3>
 <p>光子计算作为颠覆性技术，有望在2025-2030年间实现商用突破。</p>
@@ -990,7 +990,7 @@
 <li>并行：波分复用天然并行</li>
 </ul>
 <p><strong>技术架构概念：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────┐
 │          混合光电计算架构（2025-2027）          │
 ├───────────────────────────────────────────────┤
 │                                               │
@@ -1012,7 +1012,7 @@
 │  • 功耗: 50W                                 │
 │  • 延迟: &lt;1ms                                │
 └───────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="744-">7.4.4 量子-经典混合计算探索</h3>
 <p>虽然全量子计算仍然遥远，但量子-经典混合架构可能在特定场景发挥作用：</p>
@@ -1037,7 +1037,7 @@
 <li>算力达到5000 TOPS</li>
 <li>边缘-云协同计算</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────┐
 │           算力增长预测（2024-2027）              │
 ├─────────────────────────────────────────────────┤
 │                                                 │
@@ -1059,7 +1059,7 @@
 │  • 架构创新 (Chiplet/3D堆叠)                   │
 │  • 新型计算 (光子/量子辅助)                     │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="75">7.5 产业格局与竞争态势</h2>
 <h3 id="751-2024-2025">7.5.1 2024-2025主要玩家战略布局</h3>
@@ -1107,7 +1107,7 @@
 </ol>
 <h3 id="752">7.5.2 技术路线之争</h3>
 <p><strong>纯视觉 vs 多传感器融合：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────┐
 │              技术路线对比（2024）                │
 ├─────────────────────────────────────────────────┤
 │                                                 │
@@ -1129,7 +1129,7 @@
 │  • 高算力NPU             • 异构计算            │
 │  • 大容量内存            • 实时同步            │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="753">7.5.3 供应链格局重塑</h3>
 <p><strong>2024-2025供应链变化：</strong></p>
@@ -1144,13 +1144,13 @@
 <p><strong>代工厂格局</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>市场份额（2024 Q3，自动驾驶芯片）
+<pre class="codehilite"><code>市场份额（2024 Q3，自动驾驶芯片）
 TSMC:     ████████████████████ 55%
 Samsung:  ████████ 20%
 Intel:    ████ 10%
 SMIC:     ████ 8%
 Others:   ███ 7%
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>关键IP供应商</strong>
@@ -1162,7 +1162,7 @@ Others:   ███ 7%
 <h3 id="761">7.6.1 存算一体化技术</h3>
 <p>存算一体（Processing-In-Memory, PIM）是解决"内存墙"问题的关键技术。</p>
 <p><strong>技术原理与优势：</strong></p>
-<div class="codehilite"><pre><span></span><code>传统架构                    存算一体架构
+<pre class="codehilite"><code>传统架构                    存算一体架构
 ┌──────┐     数据搬运      ┌──────────────┐
 │ CPU  │ ←───────────→    │              │
 │ /GPU │     高功耗        │   PIM芯片     │
@@ -1175,7 +1175,7 @@ Others:   ███ 7%
 能效：1 TOPS/W             • 带宽提升100倍
                           • 延迟降低90%
                           能效：10+ TOPS/W
-</code></pre></div>
+</code></pre>
 
 <p><strong>2024年商用进展：</strong></p>
 <ul>
@@ -1191,7 +1191,7 @@ Others:   ███ 7%
 <li>CGRA架构：平衡性能与灵活性</li>
 <li>指令集扩展：RISC-V custom指令</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────┐
 │      可重构计算单元（RCU）              │
 ├────────────────────────────────────────┤
 │                                        │
@@ -1205,7 +1205,7 @@ Others:   ███ 7%
 │  配置存储: 4MB                         │
 │  能效比: 5 TOPS/W                      │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="763">7.6.3 安全与可信计算</h3>
 <p>功能安全和信息安全成为2024-2025年的核心需求。</p>
@@ -1226,7 +1226,7 @@ Others:   ███ 7%
    - 抗侧信道攻击</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────┐
 │         安全架构分层                      │
 ├─────────────────────────────────────────┤
 │                                         │
@@ -1239,11 +1239,11 @@ Others:   ███ 7%
 │  物理层    │  防拆、防侧信道              │
 │                                         │
 └─────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="77">7.7 成本与商业模式创新</h2>
 <h3 id="771-2024">7.7.1 芯片成本结构分析（2024）</h3>
-<div class="codehilite"><pre><span></span><code>高端方案成本构成（NVIDIA Thor级别）
+<pre class="codehilite"><code>高端方案成本构成（NVIDIA Thor级别）
 ┌────────────────────────────────────┐
 │  芯片制造: $450 (45%)              │
 │  ├─ 晶圆: $280                     │
@@ -1260,7 +1260,7 @@ Others:   ███ 7%
 │  ────────────────────────          │
 │  总计: $1000                       │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="772">7.7.2 新商业模式探索</h3>
 <p><strong>2024-2025商业模式趋势：</strong></p>
@@ -1330,7 +1330,7 @@ Others:   ███ 7%
 </tbody>
 </table>
 <h3 id="782">7.8.2 跨域协同挑战</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
 │          跨域数据流（2024现状）           │
 ├──────────────────────────────────────────┤
 │                                          │
@@ -1349,7 +1349,7 @@ Others:   ███ 7%
 │  总延迟: &lt;30ms                           │
 │  同步开销: &lt;10%                          │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="79">7.9 标准化进展</h2>
 <h3 id="791">7.9.1 行业标准制定</h3>
@@ -1375,7 +1375,7 @@ Others:   ███ 7%
 </li>
 </ol>
 <h3 id="792">7.9.2 芯片接口标准化</h3>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────┐
 │         标准化接口架构                    │
 ├─────────────────────────────────────────┤
 │                                         │
@@ -1394,7 +1394,7 @@ Others:   ███ 7%
 │  • FlexRay                             │
 │  • Automotive Ethernet TSN             │
 └─────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="710">7.10 总结与展望</h2>
 <h3 id="7101-2024-2025">7.10.1 2024-2025关键里程碑</h3>
@@ -1407,7 +1407,7 @@ Others:   ███ 7%
 <li><strong>2025 Q4</strong>: 光电混合计算原型验证</li>
 </ul>
 <h3 id="7102-2025">7.10.2 长期技术展望（2025+）</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │           未来技术演进路线                     │
 ├──────────────────────────────────────────────┤
 │                                              │
@@ -1429,7 +1429,7 @@ Others:   ███ 7%
 │  • 车路云一体化                              │
 │  • 新型计算范式                              │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>智能汽车计算平台的演进不仅是技术的进步，更是整个产业生态的重构。从2024到2025年，我们将见证自动驾驶从辅助到自主、从分散到集中、从传统到智能的全面转型。中央计算单元、端到端神经网络、Chiplet架构、3nm工艺等技术的融合，将推动自动驾驶进入真正的智能时代。</p>
 <hr />

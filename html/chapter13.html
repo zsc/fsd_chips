@@ -184,7 +184,7 @@
                 <h1 id="13">第13章：软件生态与开发工具链</h1>
 <h2 id="_1">引言</h2>
 <p>自动驾驶芯片的成功不仅取决于硬件性能，更依赖于完善的软件生态系统。从底层操作系统到上层应用框架，从开发工具到部署流程，软件栈的每一层都直接影响着芯片的实际效能。本章将深入剖析2019-2025年间自动驾驶软件生态的演进，以及各大芯片厂商在软件工具链上的布局与竞争。</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                    自动驾驶软件栈架构                          │
 ├─────────────────────────────────────────────────────────────┤
 │  应用层     │  感知  │  规划  │  控制  │  HMI  │  OTA        │
@@ -201,7 +201,7 @@
 ├─────────────────────────────────────────────────────────────┤
 │  硬件抽象   │ BSP │ 驱动 │ HAL │ 硬件加速接口              │
 └─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="131">13.1 操作系统层：实时性与安全性的平衡</h2>
 <h3 id="1311-linux">13.1.1 Linux及其实时变体</h3>
@@ -280,11 +280,11 @@
 <p><strong>CPU隔离（CPU Isolation）</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 隔离CPU 2-7用于实时任务</span>
-<span class="nv">isolcpus</span><span class="o">=</span><span class="m">2</span>-7<span class="w"> </span><span class="nv">nohz_full</span><span class="o">=</span><span class="m">2</span>-7<span class="w"> </span><span class="nv">rcu_nocbs</span><span class="o">=</span><span class="m">2</span>-7
-<span class="c1"># 绑定中断到CPU 0-1</span>
-<span class="nb">echo</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/irq/default_smp_affinity
-</code></pre></div>
+<pre class="codehilite"><code class="language-bash"># 隔离CPU 2-7用于实时任务
+isolcpus=2-7 nohz_full=2-7 rcu_nocbs=2-7
+# 绑定中断到CPU 0-1
+echo 3 &gt; /proc/irq/default_smp_affinity
+</code></pre>
 
 <p><strong>2023-2024年的重要进展：</strong></p>
 <ul>
@@ -341,7 +341,7 @@
 <h3 id="1312-qnx">13.1.2 QNX：安全关键系统的首选</h3>
 <p>BlackBerry QNX凭借微内核架构和ASIL-D认证，在安全关键领域占据重要地位。</p>
 <p><strong>QNX技术优势：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────┐
 │          QNX微内核架构                │
 ├──────────────────────────────────────┤
 │  用户空间                              │
@@ -353,7 +353,7 @@
 │  微内核 (&lt;10K行代码)                   │
 │  • 进程调度  • IPC  • 内存管理         │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>QNX 7.1 (2022) 关键特性：</strong></p>
 <ul>
@@ -418,12 +418,12 @@
 <h3 id="1321-autosar-adaptive-platform">13.2.1 AUTOSAR Adaptive Platform</h3>
 <p>AUTOSAR AP作为面向高性能计算平台的标准，正在成为域控制器的事实标准。</p>
 <p><strong>AUTOSAR发展时间线：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mi">2017</span><span class="o">:</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="n">R17</span><span class="o">-</span><span class="mi">03</span><span class="err">发布，基础规范确立</span>
-<span class="mi">2019</span><span class="o">:</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="n">R19</span><span class="o">-</span><span class="mi">11</span><span class="err">，引入服务化架构（</span><span class="n">SOA</span><span class="err">）</span>
-<span class="mi">2021</span><span class="o">:</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="n">R21</span><span class="o">-</span><span class="mi">11</span><span class="err">，支持端到端通信保护</span>
-<span class="mi">2023</span><span class="o">:</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="n">R23</span><span class="o">-</span><span class="mi">11</span><span class="err">，集成</span><span class="n">AI</span><span class="o">/</span><span class="n">ML服务接口</span>
-<span class="mi">2024</span><span class="o">:</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="n">R24</span><span class="o">-</span><span class="mi">11</span><span class="o">(</span><span class="err">预期</span><span class="o">)</span><span class="err">，云原生支持</span>
-</code></pre></div>
+<pre class="codehilite"><code>2017: AP R17-03发布，基础规范确立
+2019: AP R19-11，引入服务化架构（SOA）
+2021: AP R21-11，支持端到端通信保护
+2023: AP R23-11，集成AI/ML服务接口
+2024: AP R24-11(预期)，云原生支持
+</code></pre>
 
 <p><strong>主要芯片平台的AUTOSAR支持：</strong></p>
 <p>| 芯片平台 | AUTOSAR版本 | 实现方式 | 特色功能 |</p>
@@ -464,37 +464,37 @@
 </tbody>
 </table>
 <p><strong>AUTOSAR AP核心服务实现：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 示例：AUTOSAR AP服务发现机制</span>
-<span class="k">namespace</span><span class="w"> </span><span class="nn">ara</span><span class="w"> </span><span class="p">{</span>
-<span class="k">namespace</span><span class="w"> </span><span class="nn">com</span><span class="w"> </span><span class="p">{</span>
+<pre class="codehilite"><code class="language-cpp">// 示例：AUTOSAR AP服务发现机制
+namespace ara {
+namespace com {
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ServiceProxy</span><span class="w"> </span><span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="c1">// 服务发现</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">Future</span><span class="o">&lt;</span><span class="n">HandleContainer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">FindService</span><span class="p">(</span>
-<span class="w">        </span><span class="n">InstanceIdentifier</span><span class="w"> </span><span class="n">instance</span><span class="p">);</span>
+class ServiceProxy {
+public:
+    // 服务发现
+    static Future&lt;HandleContainer&gt; FindService(
+        InstanceIdentifier instance);
 
-<span class="w">    </span><span class="c1">// 事件订阅</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">Subscribe</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">maxSampleCount</span><span class="p">);</span>
+    // 事件订阅
+    void Subscribe(size_t maxSampleCount);
 
-<span class="w">    </span><span class="c1">// 方法调用</span>
-<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span><span class="w"> </span><span class="n">Args</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="n">Future</span><span class="o">&lt;</span><span class="n">Output</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Method</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-<span class="p">};</span>
+    // 方法调用
+    template&lt;typename... Args&gt;
+    Future&lt;Output&gt; Method(Args&amp;&amp;... args);
+};
 
-<span class="c1">// 自适应应用示例</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PerceptionService</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">skeleton</span><span class="o">::</span><span class="n">PerceptionServiceSkeleton</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">ProcessCamera</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CameraFrame</span><span class="o">&amp;</span><span class="w"> </span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// DNN推理调用</span>
-<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ara</span><span class="o">::</span><span class="n">ai</span><span class="o">::</span><span class="n">Infer</span><span class="p">(</span><span class="n">model_handle</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// 发布感知结果</span>
-<span class="w">        </span><span class="n">ObjectListEvent</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
+// 自适应应用示例
+class PerceptionService : public skeleton::PerceptionServiceSkeleton {
+    void ProcessCamera(const CameraFrame&amp; frame) override {
+        // DNN推理调用
+        auto result = ara::ai::Infer(model_handle, frame);
+        // 发布感知结果
+        ObjectListEvent.Send(result);
+    }
+};
 
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace com</span>
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace ara</span>
-</code></pre></div>
+} // namespace com
+} // namespace ara
+</code></pre>
 
 <h3 id="1322-ros-2">13.2.2 ROS 2：从原型到量产</h3>
 <p>ROS 2的DDS通信机制和实时性改进，使其逐渐被量产项目采纳。</p>
@@ -543,20 +543,20 @@
 </tbody>
 </table>
 <p><strong>ROS 2性能优化实践：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># DDS QoS配置示例</span>
-<span class="nt">reliability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RELIABLE</span>
-<span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TRANSIENT_LOCAL</span>
-<span class="nt">history</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">KEEP_LAST</span>
-<span class="w">  </span><span class="nt">depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="nt">deadline</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">  </span><span class="nt">nsec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100000000</span><span class="w">  </span><span class="c1"># 100ms</span>
-<span class="nt">liveliness</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AUTOMATIC</span>
-<span class="w">  </span><span class="nt">lease_duration</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-</code></pre></div>
+<pre class="codehilite"><code class="language-yaml"># DDS QoS配置示例
+reliability: RELIABLE
+durability: TRANSIENT_LOCAL
+history:
+  kind: KEEP_LAST
+  depth: 10
+deadline:
+  sec: 0
+  nsec: 100000000  # 100ms
+liveliness:
+  kind: AUTOMATIC
+  lease_duration:
+    sec: 1
+</code></pre>
 
 <p><strong>主要厂商的ROS 2实践：</strong></p>
 <ul>
@@ -610,7 +610,7 @@
 </tbody>
 </table>
 <p><strong>DDS在域控制器中的应用架构：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────┐
 │         域控制器DDS通信架构              │
 ├────────────────────────────────────────┤
 │  感知域         规划域         控制域     │
@@ -627,7 +627,7 @@
 │  • Latency: &lt;1ms                       │
 │  • Throughput: &gt;10Gbps                 │
 └────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="133-ai">13.3 AI框架适配：从训练到部署的鸿沟</h2>
 <h3 id="1331-tensorrtnvidia">13.3.1 TensorRT：NVIDIA生态的核心</h3>
@@ -677,7 +677,7 @@
 </tbody>
 </table>
 <p><strong>TensorRT优化技术栈：</strong></p>
-<div class="codehilite"><pre><span></span><code>训练框架                 优化过程                部署目标
+<pre class="codehilite"><code>训练框架                 优化过程                部署目标
 ┌──────┐              ┌──────────┐           ┌────────┐
 │PyTorch│              │          │           │        │
 │      │──→ ONNX ──→  │TensorRT  │──→ Plan──→│Drive   │
@@ -689,35 +689,35 @@
                       │•内核自动调优│
                       │•内存优化   │
                       └──────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>典型优化案例 - BEVFormer：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># TensorRT优化BEVFormer示例</span>
-<span class="kn">import</span> <span class="nn">tensorrt</span> <span class="k">as</span> <span class="nn">trt</span>
+<pre class="codehilite"><code class="language-python"># TensorRT优化BEVFormer示例
+import tensorrt as trt
 
-<span class="k">def</span> <span class="nf">optimize_bevformer</span><span class="p">():</span>
-    <span class="n">builder</span> <span class="o">=</span> <span class="n">trt</span><span class="o">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">create_builder_config</span><span class="p">()</span>
+def optimize_bevformer():
+    builder = trt.Builder(logger)
+    config = builder.create_builder_config()
 
-    <span class="c1"># 设置优化参数</span>
-    <span class="n">config</span><span class="o">.</span><span class="n">set_memory_pool_limit</span><span class="p">(</span>
-        <span class="n">trt</span><span class="o">.</span><span class="n">MemoryPoolType</span><span class="o">.</span><span class="n">WORKSPACE</span><span class="p">,</span> <span class="mi">8</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span><span class="p">)</span>  <span class="c1"># 8GB</span>
+    # 设置优化参数
+    config.set_memory_pool_limit(
+        trt.MemoryPoolType.WORKSPACE, 8 &lt;&lt; 30)  # 8GB
 
-    <span class="c1"># 启用FP16精度</span>
-    <span class="n">config</span><span class="o">.</span><span class="n">set_flag</span><span class="p">(</span><span class="n">trt</span><span class="o">.</span><span class="n">BuilderFlag</span><span class="o">.</span><span class="n">FP16</span><span class="p">)</span>
+    # 启用FP16精度
+    config.set_flag(trt.BuilderFlag.FP16)
 
-    <span class="c1"># 稀疏性优化（针对Ampere架构）</span>
-    <span class="n">config</span><span class="o">.</span><span class="n">set_flag</span><span class="p">(</span><span class="n">trt</span><span class="o">.</span><span class="n">BuilderFlag</span><span class="o">.</span><span class="n">SPARSE_WEIGHTS</span><span class="p">)</span>
+    # 稀疏性优化（针对Ampere架构）
+    config.set_flag(trt.BuilderFlag.SPARSE_WEIGHTS)
 
-    <span class="c1"># 构建引擎</span>
-    <span class="n">engine</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build_engine</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+    # 构建引擎
+    engine = builder.build_engine(network, config)
 
-    <span class="c1"># 性能提升：</span>
-    <span class="c1"># FP32: 15ms/frame</span>
-    <span class="c1"># FP16: 7ms/frame  </span>
-    <span class="c1"># INT8: 4ms/frame</span>
-    <span class="k">return</span> <span class="n">engine</span>
-</code></pre></div>
+    # 性能提升：
+    # FP32: 15ms/frame
+    # FP16: 7ms/frame  
+    # INT8: 4ms/frame
+    return engine
+</code></pre>
 
 <h3 id="1332-onnx-runtime">13.3.2 ONNX Runtime：跨平台部署方案</h3>
 <p>ONNX作为开放标准，实现了不同框架和硬件之间的互操作性。</p>
@@ -778,45 +778,45 @@
 </tbody>
 </table>
 <p><strong>ONNX模型优化流程：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># ONNX优化pipeline</span>
-<span class="kn">import</span> <span class="nn">onnx</span>
-<span class="kn">from</span> <span class="nn">onnxruntime.quantization</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
-<span class="kn">from</span> <span class="nn">onnxruntime.transformers</span> <span class="kn">import</span> <span class="n">optimizer</span>
+<pre class="codehilite"><code class="language-python"># ONNX优化pipeline
+import onnx
+from onnxruntime.quantization import quantize_dynamic
+from onnxruntime.transformers import optimizer
 
-<span class="c1"># 1. 图优化</span>
-<span class="n">optimized_model</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize_model</span><span class="p">(</span>
-    <span class="s2">&quot;bevdet.onnx&quot;</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;bert&#39;</span><span class="p">,</span>  <span class="c1"># 使用transformer优化</span>
-    <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">hidden_size</span><span class="o">=</span><span class="mi">256</span>
-<span class="p">)</span>
+# 1. 图优化
+optimized_model = optimizer.optimize_model(
+    &quot;bevdet.onnx&quot;,
+    model_type='bert',  # 使用transformer优化
+    num_heads=8,
+    hidden_size=256
+)
 
-<span class="c1"># 2. 量化</span>
-<span class="n">quantize_dynamic</span><span class="p">(</span>
-    <span class="n">model_input</span><span class="o">=</span><span class="s2">&quot;optimized.onnx&quot;</span><span class="p">,</span>
-    <span class="n">model_output</span><span class="o">=</span><span class="s2">&quot;quantized.onnx&quot;</span><span class="p">,</span>
-    <span class="n">weight_type</span><span class="o">=</span><span class="n">QuantType</span><span class="o">.</span><span class="n">QInt8</span><span class="p">,</span>
-    <span class="n">optimize_model</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
+# 2. 量化
+quantize_dynamic(
+    model_input=&quot;optimized.onnx&quot;,
+    model_output=&quot;quantized.onnx&quot;,
+    weight_type=QuantType.QInt8,
+    optimize_model=True
+)
 
-<span class="c1"># 3. 部署配置</span>
-<span class="n">providers</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;TensorrtExecutionProvider&#39;</span><span class="p">,</span> <span class="p">{</span>
-        <span class="s1">&#39;device_id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s1">&#39;trt_max_workspace_size&#39;</span><span class="p">:</span> <span class="mi">2147483648</span><span class="p">,</span>
-        <span class="s1">&#39;trt_fp16_enable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">}),</span>
-    <span class="p">(</span><span class="s1">&#39;CUDAExecutionProvider&#39;</span><span class="p">,</span> <span class="p">{</span>
-        <span class="s1">&#39;device_id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s1">&#39;arena_extend_strategy&#39;</span><span class="p">:</span> <span class="s1">&#39;kNextPowerOfTwo&#39;</span><span class="p">,</span>
-    <span class="p">})</span>
-<span class="p">]</span>
-</code></pre></div>
+# 3. 部署配置
+providers = [
+    ('TensorrtExecutionProvider', {
+        'device_id': 0,
+        'trt_max_workspace_size': 2147483648,
+        'trt_fp16_enable': True,
+    }),
+    ('CUDAExecutionProvider', {
+        'device_id': 0,
+        'arena_extend_strategy': 'kNextPowerOfTwo',
+    })
+]
+</code></pre>
 
 <h3 id="1333">13.3.3 专有框架：芯片厂商的差异化竞争</h3>
 <p>各芯片厂商都推出了针对自家硬件优化的AI框架。</p>
 <p><strong>主要专有框架对比：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
 │              专有AI框架生态对比                       │
 ├──────────┬───────────┬──────────┬─────────────────┤
 │ 厂商      │ 框架名称   │ 支持模型  │ 特色优化         │
@@ -836,10 +836,10 @@
 │ Tesla    │ PyTorch+  │ 端到端    │ 垂直整合         │
 │          │ 自研      │          │ 影子模式         │
 └──────────┴───────────┴──────────┴─────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>地平线OpenExplorer工具链架构：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
 │         OpenExplorer工具链                │
 ├──────────────────────────────────────────┤
 │  模型转换器                                │
@@ -861,7 +861,7 @@
 │  • 多模型并发                             │
 │  • 动态batch                             │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="134">13.4 仿真与验证平台：数字孪生时代</h2>
 <h3 id="1341">13.4.1 主流仿真平台演进</h3>
@@ -931,39 +931,39 @@
 </tbody>
 </table>
 <p><strong>仿真平台架构演进：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mi">2019</span><span class="o">:</span><span class="w"> </span><span class="err">单机仿真</span>
-<span class="w">      </span><span class="err">┌─────────┐</span>
-<span class="w">      </span><span class="err">│单一场景</span><span class="w">  </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│本地运行</span><span class="w">  </span><span class="err">│</span>
-<span class="w">      </span><span class="err">└─────────┘</span>
-<span class="w">           </span><span class="err">↓</span>
-<span class="mi">2021</span><span class="o">:</span><span class="w"> </span><span class="err">并行加速</span>
-<span class="w">      </span><span class="err">┌─────────────────┐</span>
-<span class="w">      </span><span class="err">│多场景并行</span><span class="w">        </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│</span><span class="n">GPU加速渲染</span><span class="w">      </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│分布式架构</span><span class="w">       </span><span class="err">│</span>
-<span class="w">      </span><span class="err">└─────────────────┘</span>
-<span class="w">           </span><span class="err">↓</span>
-<span class="mi">2023</span><span class="o">:</span><span class="w"> </span><span class="err">云原生化</span>
-<span class="w">      </span><span class="err">┌──────────────────────┐</span>
-<span class="w">      </span><span class="err">│容器化部署</span><span class="w">             </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│</span><span class="n">K8s编排</span><span class="w">               </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│弹性伸缩</span><span class="w">             </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│千万公里</span><span class="o">/</span><span class="err">天</span><span class="w">           </span><span class="err">│</span>
-<span class="w">      </span><span class="err">└──────────────────────┘</span>
-<span class="w">           </span><span class="err">↓</span>
-<span class="mi">2025</span><span class="o">:</span><span class="w"> </span><span class="err">生成式</span><span class="n">AI驱动</span>
-<span class="w">      </span><span class="err">┌──────────────────────┐</span>
-<span class="w">      </span><span class="err">│扩散模型生成场景</span><span class="w">        </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│大模型行为建模</span><span class="w">         </span><span class="err">│</span>
-<span class="w">      </span><span class="err">│自动化测试用例生成</span><span class="w">      </span><span class="err">│</span>
-<span class="w">      </span><span class="err">└──────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>2019: 单机仿真
+      ┌─────────┐
+      │单一场景  │
+      │本地运行  │
+      └─────────┘
+           ↓
+2021: 并行加速
+      ┌─────────────────┐
+      │多场景并行        │
+      │GPU加速渲染      │
+      │分布式架构       │
+      └─────────────────┘
+           ↓
+2023: 云原生化
+      ┌──────────────────────┐
+      │容器化部署             │
+      │K8s编排               │
+      │弹性伸缩             │
+      │千万公里/天           │
+      └──────────────────────┘
+           ↓
+2025: 生成式AI驱动
+      ┌──────────────────────┐
+      │扩散模型生成场景        │
+      │大模型行为建模         │
+      │自动化测试用例生成      │
+      └──────────────────────┘
+</code></pre>
 
 <h3 id="1342-hil">13.4.2 硬件在环（HIL）测试</h3>
 <p>HIL测试是验证实际硬件性能的关键环节。</p>
 <p><strong>典型HIL测试系统架构：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌────────────────────────────────────────────┐
 │              HIL测试系统                     │
 ├────────────────────────────────────────────┤
 │  真实硬件                仿真环境             │
@@ -983,7 +983,7 @@
 │  • 通信延迟: &lt;100μs                        │
 │  • 数据吞吐: &gt;1Gbps                        │
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>主要HIL供应商方案：</strong></p>
 <ul>
@@ -995,38 +995,38 @@
 <h3 id="1343">13.4.3 数据回放与影子模式</h3>
 <p>特斯拉开创的影子模式正在被广泛采用。</p>
 <p><strong>影子模式实现架构：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ShadowMode</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">production_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;v1.0&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shadow_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;v2.0_beta&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">divergence_logger</span> <span class="o">=</span> <span class="n">DivergenceLogger</span><span class="p">()</span>
+<pre class="codehilite"><code class="language-python">class ShadowMode:
+    def __init__(self):
+        self.production_model = load_model(&quot;v1.0&quot;)
+        self.shadow_model = load_model(&quot;v2.0_beta&quot;)
+        self.divergence_logger = DivergenceLogger()
 
-    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor_data</span><span class="p">):</span>
-        <span class="c1"># 生产模型执行（控制车辆）</span>
-        <span class="n">prod_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">production_model</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">)</span>
+    def process(self, sensor_data):
+        # 生产模型执行（控制车辆）
+        prod_output = self.production_model(sensor_data)
 
-        <span class="c1"># 影子模型并行执行（仅记录）</span>
-        <span class="n">shadow_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shadow_model</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">)</span>
+        # 影子模型并行执行（仅记录）
+        shadow_output = self.shadow_model(sensor_data)
 
-        <span class="c1"># 记录决策差异</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_divergence</span><span class="p">(</span><span class="n">prod_output</span><span class="p">,</span> <span class="n">shadow_output</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">divergence_logger</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
-                <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                <span class="s1">&#39;sensor_data&#39;</span><span class="p">:</span> <span class="n">sensor_data</span><span class="p">,</span>
-                <span class="s1">&#39;prod_decision&#39;</span><span class="p">:</span> <span class="n">prod_output</span><span class="p">,</span>
-                <span class="s1">&#39;shadow_decision&#39;</span><span class="p">:</span> <span class="n">shadow_output</span><span class="p">,</span>
-                <span class="s1">&#39;gps_location&#39;</span><span class="p">:</span> <span class="n">get_gps</span><span class="p">(),</span>
-                <span class="s1">&#39;weather&#39;</span><span class="p">:</span> <span class="n">get_weather</span><span class="p">()</span>
-            <span class="p">})</span>
+        # 记录决策差异
+        if self.detect_divergence(prod_output, shadow_output):
+            self.divergence_logger.log({
+                'timestamp': time.now(),
+                'sensor_data': sensor_data,
+                'prod_decision': prod_output,
+                'shadow_decision': shadow_output,
+                'gps_location': get_gps(),
+                'weather': get_weather()
+            })
 
-        <span class="k">return</span> <span class="n">prod_output</span>  <span class="c1"># 只使用生产模型输出</span>
+        return prod_output  # 只使用生产模型输出
 
-    <span class="k">def</span> <span class="nf">detect_divergence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">):</span>
-        <span class="c1"># 轨迹差异 &gt; 0.5m 或 </span>
-        <span class="c1"># 速度差异 &gt; 2m/s 时触发</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">trajectory_diff</span><span class="p">(</span><span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="ow">or</span>
-                <span class="n">speed_diff</span><span class="p">(</span><span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">)</span>
-</code></pre></div>
+    def detect_divergence(self, out1, out2):
+        # 轨迹差异 &gt; 0.5m 或 
+        # 速度差异 &gt; 2m/s 时触发
+        return (trajectory_diff(out1, out2) &gt; 0.5 or
+                speed_diff(out1, out2) &gt; 2.0)
+</code></pre>
 
 <p><strong>国内厂商影子模式实践：</strong></p>
 <ul>
@@ -1039,7 +1039,7 @@
 <h3 id="1351-cicd">13.5.1 CI/CD流水线架构</h3>
 <p>现代自动驾驶开发需要完善的CI/CD体系支撑快速迭代。</p>
 <p><strong>典型CI/CD流水线：</strong></p>
-<div class="codehilite"><pre><span></span><code>代码提交 → 构建 → 测试 → 部署 → 监控
+<pre class="codehilite"><code>代码提交 → 构建 → 测试 → 部署 → 监控
     │        │      │      │      │
     ↓        ↓      ↓      ↓      ↓
 ┌────────────────────────────────────┐
@@ -1060,7 +1060,7 @@
 │     ├─→ 测试车队 (影子模式)         │
 │     └─→ 量产OTA (灰度发布)         │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>主要工具链对比：</strong></p>
 <p>| 工具类型 | 开源方案 | 商业方案 | 云原生方案 |</p>
@@ -1109,41 +1109,41 @@
 <h3 id="1352">13.5.2 模型版本管理</h3>
 <p>AI模型的版本管理是自动驾驶DevOps的特殊挑战。</p>
 <p><strong>模型管理最佳实践：</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># model_manifest.yaml</span>
-<span class="nt">model_info</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;BEVFormer_v2.3&quot;</span>
-<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.3.0&quot;</span>
-<span class="w">  </span><span class="nt">framework</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PyTorch</span><span class="nv"> </span><span class="s">1.13&quot;</span>
-<span class="w">  </span><span class="nt">created_date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2024-01-15&quot;</span>
+<pre class="codehilite"><code class="language-yaml"># model_manifest.yaml
+model_info:
+  name: &quot;BEVFormer_v2.3&quot;
+  version: &quot;2.3.0&quot;
+  framework: &quot;PyTorch 1.13&quot;
+  created_date: &quot;2024-01-15&quot;
 
-<span class="nt">training</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nuScenes_v1.0&quot;</span>
-<span class="w">  </span><span class="nt">epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-<span class="w">  </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0001</span>
+training:
+  dataset: &quot;nuScenes_v1.0&quot;
+  epochs: 100
+  batch_size: 8
+  learning_rate: 0.0001
 
-<span class="nt">performance</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">mAP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.456</span>
-<span class="w">  </span><span class="nt">NDS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.534</span>
-<span class="w">  </span><span class="nt">FPS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15.2</span>
-<span class="w">  </span><span class="nt">latency_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65.8</span>
+performance:
+  mAP: 0.456
+  NDS: 0.534
+  FPS: 15.2
+  latency_ms: 65.8
 
-<span class="nt">deployment</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">target_hardware</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;Orin&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;J5&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;A1000&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">  </span><span class="nt">optimization</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;FP16&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;INT8&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">  </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;TensorRT</span><span class="nv"> </span><span class="s">8.5&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;ONNX</span><span class="nv"> </span><span class="s">1.14&quot;</span><span class="p p-Indicator">]</span>
+deployment:
+  target_hardware: [&quot;Orin&quot;, &quot;J5&quot;, &quot;A1000&quot;]
+  optimization: [&quot;FP16&quot;, &quot;INT8&quot;]
+  runtime: [&quot;TensorRT 8.5&quot;, &quot;ONNX 1.14&quot;]
 
-<span class="nt">validation</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">test_scenarios</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
-<span class="w">  </span><span class="nt">total_miles</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100000</span>
-<span class="w">  </span><span class="nt">pass_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">99.7%</span>
+validation:
+  test_scenarios: 5000
+  total_miles: 100000
+  pass_rate: 99.7%
 
-<span class="nt">dependencies</span><span class="p">:</span>
+dependencies:
 
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cuda</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;11.8&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cudnn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8.6&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tensorrt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8.5.3&quot;</span>
-</code></pre></div>
+  - cuda: &quot;11.8&quot;
+  - cudnn: &quot;8.6&quot;
+  - tensorrt: &quot;8.5.3&quot;
+</code></pre>
 
 <p><strong>MLOps工具生态：</strong></p>
 <ul>
@@ -1156,7 +1156,7 @@
 <h3 id="1353-ota">13.5.3 OTA更新机制</h3>
 <p>OTA是持续改进的关键能力，但也带来安全挑战。</p>
 <p><strong>OTA系统架构：</strong></p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────┐
 │              OTA更新系统                  │
 ├─────────────────────────────────────────┤
 │  云端                                     │
@@ -1181,7 +1181,7 @@
 │  │   └────┘  └────┘    │               │
 │  └──────────────────────┘               │
 └─────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>OTA安全机制：</strong></p>
 <ol>
@@ -1200,7 +1200,7 @@
 </ul>
 <h2 id="136">13.6 开发工具链整合案例</h2>
 <h3 id="1361-nvidia-drive">13.6.1 NVIDIA DRIVE开发栈</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
 │         NVIDIA DRIVE 开发栈               │
 ├──────────────────────────────────────────┤
 │  应用开发                                  │
@@ -1224,10 +1224,10 @@
 │  • NGC (容器仓库)                         │
 │  • Fleet Command (车队管理)              │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="1362">13.6.2 地平线天工开物</h3>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
 │         地平线天工开物工具链                │
 ├──────────────────────────────────────────┤
 │  AI工具链                                  │
@@ -1250,7 +1250,7 @@
 │  • AUTOSAR集成                           │
 │  • Android支持                           │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h2 id="137-2025">13.7 未来展望：2025年及以后</h2>
 <h3 id="1371">13.7.1 云原生与边缘协同</h3>

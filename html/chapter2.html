@@ -184,7 +184,7 @@
                 <h1 id="22020-2021">第2章：算力军备竞赛（2020-2021）</h1>
 <h2 id="_1">章节概述</h2>
 <p>2020-2021年是自动驾驶芯片发展的分水岭。随着特斯拉FSD Beta的推出和蔚小理等新势力量产交付，市场对算力的需求呈指数级增长。这一时期，NVIDIA凭借Orin系列确立了高算力平台的标杆，传统汽车芯片巨头被迫加速转型，而中国本土力量也开始崭露头角。</p>
-<div class="codehilite"><pre><span></span><code>算力演进时间轴（2020-2021）
+<pre class="codehilite"><code>算力演进时间轴（2020-2021）
 ┌─────────────────────────────────────────────────────────────┐
 │ 2020 Q1  │ 2020 Q2  │ 2020 Q3  │ 2020 Q4  │ 2021 Q1  │ 2021 Q2 │
 ├─────────────────────────────────────────────────────────────┤
@@ -192,13 +192,13 @@
 │ TDA4量产  │ 275 TOPS │ 地平线J3  │ 样片流片  │ SD Ride │ MDC810  │
 │ 8 TOPS   │          │ 5 TOPS   │ 24 TOPS  │ 发布     │ 400+TOPS│
 └─────────────────────────────────────────────────────────────┐
-</code></pre></div>
+</code></pre>
 
 <h2 id="21-nvidia-orinagx-orin-orin-nx-orin-nano">2.1 NVIDIA Orin横空出世：AGX Orin / Orin NX / Orin Nano</h2>
 <h3 id="211-orinxavierorin">2.1.1 Orin架构革新：从Xavier到Orin的跨越</h3>
 <p>2020年5月，NVIDIA在GTC大会上正式发布了Drive AGX Orin平台，这标志着自动驾驶计算进入了新纪元。相比前代Xavier的30 TOPS算力，Orin实现了近10倍的性能提升。</p>
 <p><strong>核心架构升级</strong>：</p>
-<div class="codehilite"><pre><span></span><code>Xavier (2018) vs Orin (2020) 架构对比
+<pre class="codehilite"><code>Xavier (2018) vs Orin (2020) 架构对比
 ┌──────────────────────────────┬──────────────────────────────┐
 │         Xavier SoC           │          Orin SoC            │
 ├──────────────────────────────┼──────────────────────────────┤
@@ -219,7 +219,7 @@
 │ 总算力: 30 TOPS (INT8)        │ 总算力: 275 TOPS (INT8)       │
 │ 功耗: 30W                    │ 功耗: 60W                    │
 └──────────────────────────────┴──────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="212-ampere-gpu">2.1.2 Ampere GPU架构的自动驾驶优化</h3>
 <p>Orin采用的Ampere架构GPU不仅仅是CUDA核心数量的增加，更重要的是引入了多项针对自动驾驶场景的优化：</p>
@@ -244,7 +244,7 @@
 </li>
 </ol>
 <h3 id="213-nvdla-20">2.1.3 NVDLA 2.0深度学习加速器</h3>
-<div class="codehilite"><pre><span></span><code>NVDLA 2.0 微架构
+<pre class="codehilite"><code>NVDLA 2.0 微架构
 ┌─────────────────────────────────────────────┐
 │              NVDLA 2.0 Core                 │
 ├─────────────────────────────────────────────┤
@@ -261,7 +261,7 @@
 │  │         Up to 512 GB/s BW             │  │
 │  └──────────────────────────────────────┘  │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>NVDLA 2.0的关键改进：</p>
 <ul>
@@ -337,7 +337,7 @@
 </table>
 <h3 id="215">2.1.5 软件栈与生态系统</h3>
 <p>NVIDIA Drive OS 5.0的推出配合Orin硬件形成完整解决方案：</p>
-<div class="codehilite"><pre><span></span><code>NVIDIA Drive软件栈架构
+<pre class="codehilite"><code>NVIDIA Drive软件栈架构
 ┌─────────────────────────────────────────────┐
 │          应用层 (OEM定制)                     │
 │   感知  │  定位  │  规划  │  控制  │  HMI     │
@@ -355,7 +355,7 @@
 ├─────────────────────────────────────────────┤
 │         硬件抽象层 (HAL)                     │
 └─────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>DriveWorks SDK深度功能</strong>：</p>
 <ol>
@@ -382,12 +382,12 @@
 </li>
 </ol>
 <p><strong>软件性能优化技术</strong>：</p>
-<div class="codehilite"><pre><span></span><code>TensorRT优化流程
+<pre class="codehilite"><code>TensorRT优化流程
 原始模型 ──→ 图优化 ──→ 层融合 ──→ 精度校准 ──→ 内核自动调优 ──→ 优化模型
    │          │         │          │            │              │
  PyTorch    删除冗余   Conv+BN   INT8量化    选择最优      推理加速
  TensorFlow  节点      +ReLU     PTQ/QAT     CUDA核函数     3-5倍
-</code></pre></div>
+</code></pre>
 
 <p>关键软件特性：</p>
 <ul>
@@ -514,7 +514,7 @@
 </li>
 </ol>
 <p><strong>技术集成挑战与解决方案</strong>：</p>
-<div class="codehilite"><pre><span></span><code>Orin量产集成关键环节
+<pre class="codehilite"><code>Orin量产集成关键环节
 ┌──────────────────────────────────────────┐
 │           热管理设计                       │
 │  被动散热(散热片) + 主动散热(风扇/液冷)      │
@@ -532,7 +532,7 @@
 │  BSP移植 + 驱动开发 + 中间件集成           │
 │  启动时间优化：冷启动 &lt; 30s               │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>供应链与产能布局</strong>：</p>
 <ul>
@@ -552,26 +552,26 @@
 <h2 id="22-mobileye-eyeq5">2.2 Mobileye EyeQ5的反击：自研加速器战略</h2>
 <h3 id="221-eyeq5">2.2.1 EyeQ5架构设计理念</h3>
 <p>面对NVIDIA的强势进攻，Intel旗下的Mobileye推出了EyeQ5作为回应。与追求通用算力的Orin不同，EyeQ5坚持专用ASIC路线：</p>
-<div class="codehilite"><pre><span></span><code><span class="n">EyeQ5</span><span class="w"> </span><span class="n">SoC架构布局</span>
-<span class="err">┌───────────────────────────────────────────────────┐</span>
-<span class="err">│</span><span class="w">                   </span><span class="n">EyeQ5</span><span class="w"> </span><span class="n">Die</span><span class="w"> </span><span class="n">Layout</span><span class="w">                </span><span class="err">│</span>
-<span class="err">├───────────────────────────────────────────────────┤</span>
-<span class="err">│</span><span class="w"> </span><span class="err">┌─────────┐</span><span class="w"> </span><span class="err">┌───────────────┐</span><span class="w"> </span><span class="err">┌─────────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">8</span><span class="n">x</span><span class="w"> </span><span class="n">MIPS</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">18</span><span class="n">x</span><span class="w"> </span><span class="n">Vision</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">2</span><span class="n">x</span><span class="w"> </span><span class="n">MPC</span><span class="w">      </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">I6500</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">Processors</span><span class="w">    </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">Clusters</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">@1</span><span class="n">GHz</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">CVP</span><span class="p">)</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">             </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">└─────────┘</span><span class="w"> </span><span class="err">└───────────────┘</span><span class="w"> </span><span class="err">└─────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">┌───────────────────────────────────────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">          </span><span class="n">DLA</span><span class="w"> </span><span class="p">(</span><span class="n">Deep</span><span class="w"> </span><span class="n">Learning</span><span class="w"> </span><span class="n">Accel</span><span class="p">.)</span><span class="w">        </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">         </span><span class="mf">2.4</span><span class="w"> </span><span class="n">TOPS</span><span class="w"> </span><span class="p">@</span><span class="w"> </span><span class="n">INT8</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">core</span><span class="w">          </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">              </span><span class="n">Total</span><span class="o">:</span><span class="w"> </span><span class="mi">4</span><span class="n">x</span><span class="w"> </span><span class="n">DLA</span><span class="w">                 </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">└───────────────────────────────────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">┌───────────────────────────────────────────┐</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">│</span><span class="w">     </span><span class="n">Memory</span><span class="w"> </span><span class="n">Controller</span><span class="w"> </span><span class="p">(</span><span class="n">LPDDR4</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">40</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="p">)</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w"> </span><span class="err">└───────────────────────────────────────────┘</span><span class="w">   </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="n">总算力</span><span class="o">:</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="n">TOPS</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">功耗</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span><span class="n">W</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">制程</span><span class="o">:</span><span class="w"> </span><span class="mi">7</span><span class="n">nm</span><span class="w"> </span><span class="n">FinFET</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└───────────────────────────────────────────────────┘</span>
-</code></pre></div>
+<pre class="codehilite"><code>EyeQ5 SoC架构布局
+┌───────────────────────────────────────────────────┐
+│                   EyeQ5 Die Layout                │
+├───────────────────────────────────────────────────┤
+│ ┌─────────┐ ┌───────────────┐ ┌─────────────┐   │
+│ │ 8x MIPS │ │ 18x Vision    │ │ 2x MPC      │   │
+│ │ I6500   │ │ Processors    │ │ Clusters    │   │
+│ │ @1GHz   │ │ (CVP)         │ │             │   │
+│ └─────────┘ └───────────────┘ └─────────────┘   │
+│ ┌───────────────────────────────────────────┐   │
+│ │          DLA (Deep Learning Accel.)        │   │
+│ │         2.4 TOPS @ INT8 per core          │   │
+│ │              Total: 4x DLA                 │   │
+│ └───────────────────────────────────────────┘   │
+│ ┌───────────────────────────────────────────┐   │
+│ │     Memory Controller (LPDDR4 - 40GB/s)    │   │
+│ └───────────────────────────────────────────┘   │
+│  总算力: 24 TOPS | 功耗: 10W | 制程: 7nm FinFET  │
+└───────────────────────────────────────────────────┘
+</code></pre>
 
 <h3 id="222-cvp">2.2.2 计算机视觉处理器(CVP)创新</h3>
 <p>EyeQ5的核心竞争力在于18个专用视觉处理器：</p>
@@ -597,11 +597,11 @@
 </li>
 </ol>
 <h3 id="223-mpc">2.2.3 多策略计算(MPC)集群</h3>
-<div class="codehilite"><pre><span></span><code>MPC工作原理
+<pre class="codehilite"><code>MPC工作原理
 输入图像 ──→ [特征提取] ──→ [多假设生成] ──→ [概率融合] ──→ 输出
              ↓               ↓                ↓
           CVP处理         MPC并行计算      贝叶斯推理
-</code></pre></div>
+</code></pre>
 
 <p>MPC的独特优势：</p>
 <ul>
@@ -656,11 +656,11 @@
 </table>
 <h3 id="225-rem">2.2.5 REM地图众包策略</h3>
 <p>EyeQ5的独特优势是与Road Experience Management (REM)系统的深度集成：</p>
-<div class="codehilite"><pre><span></span><code>REM数据流架构
+<pre class="codehilite"><code>REM数据流架构
 车端EyeQ5 ──→ 特征提取 ──→ 压缩上传 ──→ 云端聚合
     ↑                                      ↓
  地图更新 ←── 差分下载 ←── 变化检测 ←── 地图生成
-</code></pre></div>
+</code></pre>
 
 <p>关键技术点：</p>
 <ul>
@@ -738,7 +738,7 @@
 <li>自动泊车辅助(APA)</li>
 </ul>
 <p><strong>算法性能指标</strong>：</p>
-<div class="codehilite"><pre><span></span><code>检测精度基准（KITTI数据集）
+<pre class="codehilite"><code>检测精度基准（KITTI数据集）
 ┌────────────────────────────────────┐
 │ 类别      │ 精度(AP) │ 召回率  │ FPS │
 ├────────────────────────────────────┤
@@ -748,7 +748,7 @@
 │ 车道线    │ 97.2%   │ 95.8%   │ 60  │
 │ 交通标志  │ 98.1%   │ 96.5%   │ 60  │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <ol start="3">
 <li><strong>主要设计获胜详情</strong>：</li>
@@ -818,14 +818,14 @@
 </li>
 </ul>
 <h3 id="227">2.2.7 技术演进路线图</h3>
-<div class="codehilite"><pre><span></span><code>Mobileye产品演进（2019-2025）
+<pre class="codehilite"><code>Mobileye产品演进（2019-2025）
 ┌──────────────────────────────────────────────────┐
 │ EyeQ4 → EyeQ5 → EyeQ6L → EyeQ6H → EyeQ Ultra     │
 │ 2.5T  → 24T  → 64T   → 128T  → 176T (2025)      │
 │ 28nm  → 7nm  → 7nm   → 5nm   → 5nm              │
 │ L2    → L2+  → L2++  → L3    → L4               │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>EyeQ6系列预览（2023-2024）</strong>：</p>
 <ul>
@@ -857,11 +857,11 @@
 </li>
 </ol>
 <p><strong>开发工具链</strong>：</p>
-<div class="codehilite"><pre><span></span><code>开发流程
+<pre class="codehilite"><code>开发流程
 数据采集 → 标注训练 → 模型优化 → 硬件部署 → 实车验证
     ↓          ↓          ↓          ↓          ↓
 REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
-</code></pre></div>
+</code></pre>
 
 <h3 id="229">2.2.9 竞争优势与局限性</h3>
 <p><strong>核心竞争优势</strong>：</p>
@@ -916,7 +916,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </ol>
 <h3 id="232-snapdragon-ride">2.3.2 Snapdragon Ride平台架构</h3>
 <p>高通采用了可扩展的平台化设计，提供从10 TOPS到700 TOPS的完整产品线：</p>
-<div class="codehilite"><pre><span></span><code>Snapdragon Ride 产品矩阵
+<pre class="codehilite"><code>Snapdragon Ride 产品矩阵
 ┌──────────────────────────────────────────────────────┐
 │                  性能等级划分                          │
 ├──────────────────────────────────────────────────────┤
@@ -928,11 +928,11 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │               │           │ └────────────────────┘   │
 │  单芯片方案    │  单芯片   │  多芯片级联                │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="233-sa8540psa8295p">2.3.3 SA8540P/SA8295P双芯片架构深度解析</h3>
 <p><strong>SA8540P (视觉处理芯片)</strong>：</p>
-<div class="codehilite"><pre><span></span><code>SA8540P 内部架构
+<pre class="codehilite"><code>SA8540P 内部架构
 ┌─────────────────────────────────────────────────┐
 │ CPU: 9x Kryo 695 (Cortex-A78 based)            │
 │      1x Prime @ 2.9GHz                         │
@@ -954,7 +954,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │      - 硬件HDR和降噪                            │
 │      - 计算摄影算法加速                          │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>SA8295P (中央计算芯片)</strong>：</p>
 <ul>
@@ -964,7 +964,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </ul>
 <h3 id="234-hexagon-dsp">2.3.4 Hexagon DSP的独特优势</h3>
 <p>高通Hexagon处理器是业界最先进的DSP架构之一：</p>
-<div class="codehilite"><pre><span></span><code>Hexagon 798 执行单元
+<pre class="codehilite"><code>Hexagon 798 执行单元
 ┌──────────────────────────────────────────┐
 │          Hexagon 798 Core                │
 ├──────────────────────────────────────────┤
@@ -976,7 +976,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │                                          │
 │   指令级并行 + 数据级并行 + 张量级并行       │
 └──────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>关键特性：</p>
 <ol>
@@ -1001,7 +1001,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </ol>
 <h3 id="235-5g-v2x">2.3.5 5G-V2X集成：车路协同优势</h3>
 <p>高通独特的5G调制解调器集成为自动驾驶带来新维度：</p>
-<div class="codehilite"><pre><span></span><code>V2X通信架构
+<pre class="codehilite"><code>V2X通信架构
         ┌──────────────┐
         │   路侧单元    │
         │    (RSU)     │
@@ -1015,7 +1015,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 └───┬───┘ └───┬───┘ └───┬───┘
     │   V2V    │   V2V    │
     └──────────┴──────────┘
-</code></pre></div>
+</code></pre>
 
 <p>V2X带来的能力提升：</p>
 <ul>
@@ -1088,7 +1088,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 <h2 id="24-mdc-810">2.4 华为MDC 810：鲲鹏+昇腾的本土化方案</h2>
 <h3 id="241">2.4.1 华为智能驾驶全栈布局</h3>
 <p>2021年4月，华为在上海车展发布MDC 810，这是其智能汽车解决方案的核心硬件平台。MDC 810代表了中国在高端自动驾驶芯片领域的最高水平。</p>
-<div class="codehilite"><pre><span></span><code>华为智能汽车业务架构
+<pre class="codehilite"><code>华为智能汽车业务架构
 ┌────────────────────────────────────────────┐
 │            华为智能汽车解决方案 BU            │
 ├────────────────────────────────────────────┤
@@ -1098,11 +1098,11 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │  │ 810  │ │ │  车机 ││ │三合一  ││ │ 5G   ││  八爪鱼 │
 │  └──────┘ │ └──────┘│ └──────┘│ └──────┘│└──────┘│
 └────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="242-mdc-810">2.4.2 MDC 810硬件架构详解</h3>
 <p>MDC 810采用华为自研的鲲鹏CPU和昇腾AI处理器：</p>
-<div class="codehilite"><pre><span></span><code>MDC 810 系统架构
+<pre class="codehilite"><code>MDC 810 系统架构
 ┌──────────────────────────────────────────────────┐
 │                  MDC 810 (400+ TOPS)             │
 ├──────────────────────────────────────────────────┤
@@ -1121,11 +1121,11 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │  接口: 16x GMSL2 + 8x CAN-FD + 2x 10GbE        │
 │  功耗: 250W (典型) | 安全: ASIL-D + 信息安全     │
 └──────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="243">2.4.3 达芬奇架构创新</h3>
 <p>昇腾310的达芬奇架构是华为AI处理器的核心：</p>
-<div class="codehilite"><pre><span></span><code>达芬奇 AI Core 微架构
+<pre class="codehilite"><code>达芬奇 AI Core 微架构
 ┌────────────────────────────────────┐
 │        AI Core (达芬奇架构)          │
 ├────────────────────────────────────┤
@@ -1144,7 +1144,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │  │  控制流和地址计算              │  │
 │  └──────────────────────────────┘  │
 └────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>关键创新点：</p>
 <ol>
@@ -1185,7 +1185,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </ul>
 <h3 id="245-ads">2.4.5 ADS自动驾驶算法栈</h3>
 <p>华为提供完整的算法解决方案：</p>
-<div class="codehilite"><pre><span></span><code>ADS算法架构
+<pre class="codehilite"><code>ADS算法架构
 ┌──────────────────────────────────────┐
 │          应用层算法                    │
 ├──────────────────────────────────────┤
@@ -1201,7 +1201,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │         系统软件                       │
 │   实时Linux + Hypervisor + TEE        │
 └──────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>核心算法特色：</p>
 <ol>
@@ -1345,7 +1345,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </tbody>
 </table>
 <h3 id="252">2.5.2 架构路线对比分析</h3>
-<div class="codehilite"><pre><span></span><code>四种技术路线对比
+<pre class="codehilite"><code>四种技术路线对比
 ┌────────────────────────────────────────────────────────┐
 │                    架构哲学对比                          │
 ├────────────────────────────────────────────────────────┤
@@ -1369,7 +1369,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │  优势：供应链安全，本土化好                               │
 │  劣势：国际化受限，功耗较高                               │
 └────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="253">2.5.3 算法适配性分析</h3>
 <p>不同架构对主流算法的支持度：</p>
@@ -1430,7 +1430,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 </tbody>
 </table>
 <h3 id="254-2020-2021">2.5.4 市场竞争格局（2020-2021）</h3>
-<div class="codehilite"><pre><span></span><code>市场份额演变
+<pre class="codehilite"><code>市场份额演变
 2020年                           2021年
 ┌──────────────────┐            ┌──────────────────┐
 │ Mobileye   45%   │            │ Mobileye   35%   │
@@ -1440,7 +1440,7 @@ REM平台    DL Toolkit  Compiler   EyeQ SDK   VSIL仿真
 │ Others     10%   │            │ 高通        5%   │
 │                  │            │ Others     15%   │
 └──────────────────┘            └──────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="255">2.5.5 成本分析</h3>
 <p>单车智驾硬件成本构成（L2+级别）：</p>

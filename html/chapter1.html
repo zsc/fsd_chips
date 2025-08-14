@@ -188,7 +188,7 @@
 <h3 id="111-jacinto-7">1.1.1 Jacinto 7平台概述</h3>
 <p>德州仪器在2019年CES上正式发布TDA4系列处理器，这是Jacinto 7平台的首款产品。作为专为ADAS和自动驾驶设计的SoC，TDA4采用了革命性的异构计算架构，将传统汽车MCU的可靠性与现代AI计算需求完美结合。</p>
 <p>Jacinto 7平台基于28nm FD-SOI工艺制造，这一选择体现了TI在功耗、性能和成本之间的精妙平衡。FD-SOI（全耗尽绝缘体上硅）技术相比传统bulk CMOS，在低功耗应用中具有显著优势，特别适合汽车环境下的严苛功耗要求。</p>
-<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────┐
 │                     TDA4 SoC 顶层架构                        │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  │
@@ -210,7 +210,7 @@
 │  │         外部接口：PCIe, USB3, MIPI CSI, Ethernet       │  │
 │  └──────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <h3 id="112-tda4">1.1.2 TDA4系列产品线</h3>
 <p>TDA4系列包含多个型号，针对不同的应用场景和成本需求：</p>
@@ -271,7 +271,7 @@
 <p><strong>MCU子系统</strong>：独立的MCU域包含2个R5F核心，负责系统启动、电源管理和外设控制。即使主处理器进入低功耗状态，MCU域仍可独立运行，实现快速唤醒和始终在线功能。</p>
 <h3 id="114-c71x-dsp">1.1.4 C71x DSP深度解析</h3>
 <p>C71x是TI专为深度学习推理设计的新一代DSP核心，采用256位VLIW架构，支持定点和浮点运算：</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────┐
 │              C71x DSP 微架构                   │
 ├──────────────────────────────────────────────┤
 │  ┌────────────────────────────────────────┐  │
@@ -295,7 +295,7 @@
 │  │         L2 Cache: 256KB Unified         │  │
 │  └────────────────────────────────────────┘  │
 └──────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>关键特性：</p>
 <ul>
@@ -328,7 +328,7 @@
 </ul>
 <h3 id="116-mma">1.1.6 深度学习加速器（MMA）</h3>
 <p>矩阵乘法加速器（MMA）是TDA4实现高效AI推理的核心：</p>
-<div class="codehilite"><pre><span></span><code>性能指标：
+<pre class="codehilite"><code>性能指标：
 ┌─────────────────────────────────────┐
 │ 数据类型  │ 峰值性能  │ 能效比     │
 ├─────────────────────────────────────┤
@@ -336,7 +336,7 @@
 │ INT16    │ 4 TOPS   │ 1.5 TOPS/W │
 │ FP16     │ 2 TFLOPS │ 0.8 TFLOPS/W│
 └─────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p>MMA采用脉动阵列架构，优化了数据重用和功耗效率。支持的深度学习框架包括：</p>
 <ul>
@@ -377,13 +377,13 @@
 <li>时钟监控和看门狗</li>
 </ul>
 <p><strong>安全启动流程</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────┐</span><span class="w">     </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w">  </span><span class="n">ROM启动</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">MCU</span><span class="w"> </span><span class="n">R5F</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">主域启动</span><span class="w">  </span><span class="err">│</span>
-<span class="err">│</span><span class="w">  </span><span class="p">(</span><span class="err">安全根</span><span class="p">)</span><span class="w"> </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">RTOS</span><span class="p">)</span><span class="w">   </span><span class="err">│</span><span class="w">     </span><span class="err">│</span><span class="w"> </span><span class="p">(</span><span class="n">Linux</span><span class="p">)</span><span class="w">  </span><span class="err">│</span>
-<span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────┘</span><span class="w">     </span><span class="err">└──────────┘</span>
-<span class="w">     </span><span class="err">↓</span><span class="w">                 </span><span class="err">↓</span><span class="w">                 </span><span class="err">↓</span>
-<span class="w">  </span><span class="err">验证签名</span><span class="w">          </span><span class="err">安全配置</span><span class="w">          </span><span class="err">应用加载</span>
-</code></pre></div>
+<pre class="codehilite"><code>┌──────────┐     ┌──────────┐     ┌──────────┐
+│  ROM启动  │ --&gt; │ MCU R5F  │ --&gt; │ 主域启动  │
+│  (安全根) │     │ (RTOS)   │     │ (Linux)  │
+└──────────┘     └──────────┘     └──────────┘
+     ↓                 ↓                 ↓
+  验证签名          安全配置          应用加载
+</code></pre>
 
 <p><strong>故障处理机制</strong>：</p>
 <ul>
@@ -400,7 +400,7 @@
 <p><strong>规模化成本优势</strong>：2019年，Mobileye芯片年出货量超过1700万颗，规模效应带来的成本优势让竞争对手难以匹敌。单颗EyeQ4的成本控制在50美元以下，而性能相近的竞品成本往往超过100美元。</p>
 <h3 id="122-eyeq4">1.2.2 EyeQ4技术特点</h3>
 <p>EyeQ4于2018年量产，代表了当时ADAS芯片的最高水平：</p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────┐
 │                EyeQ4 架构框图                      │
 ├───────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐                │
@@ -429,7 +429,7 @@
 │  制程: 28nm FD-SOI  │  算力: 2.5 TOPS            │
 │  功耗: 3W          │  ASIL-B认证                │
 └───────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>核心创新点</strong>：</p>
 <ol>
@@ -538,7 +538,7 @@
 </ul>
 <h3 id="125">1.2.5 市场份额数据</h3>
 <p>2019年全球ADAS芯片市场格局：</p>
-<div class="codehilite"><pre><span></span><code>市场份额分布（2019年）：
+<pre class="codehilite"><code>市场份额分布（2019年）：
 ┌────────────────────────────────────────────┐
 │ Mobileye         ████████████████████ 71%  │
 │ NVIDIA           ████ 8%                    │
@@ -559,7 +559,7 @@
 │ HWA(L2)    │   65%    │   15%  │ 5% │   15%  │
 │ TJP(L2+)   │   45%    │   30%  │ 3% │   22%  │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>市场规模与增长</strong>：</p>
 <ul>
@@ -580,12 +580,12 @@
 <h3 id="131-adas">1.3.1 ADAS功能演进驱动力</h3>
 <p>2019年是ADAS功能从"锦上添花"到"标配必需"的转折点。各国新车评价体系（NCAP）的更新直接推动了算力需求的跃升：</p>
 <p><strong>法规推动时间表</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="mi">2018</span><span class="o">:</span><span class="w"> </span><span class="n">Euro</span><span class="w"> </span><span class="n">NCAP将AEB纳入五星评级必需项</span>
-<span class="mi">2019</span><span class="o">:</span><span class="w"> </span><span class="n">C</span><span class="o">-</span><span class="n">NCAP增加AEB行人检测要求</span>
-<span class="mi">2020</span><span class="o">:</span><span class="w"> </span><span class="n">Euro</span><span class="w"> </span><span class="n">NCAP要求车道保持辅助</span><span class="err">（</span><span class="n">LKA</span><span class="err">）</span>
-<span class="mi">2021</span><span class="o">:</span><span class="w"> </span><span class="err">中国要求商用车强制安装</span><span class="n">AEBS</span>
-<span class="mi">2022</span><span class="o">:</span><span class="w"> </span><span class="n">EU规定所有新车必须配备ISA</span><span class="err">（智能速度辅助）</span>
-</code></pre></div>
+<pre class="codehilite"><code>2018: Euro NCAP将AEB纳入五星评级必需项
+2019: C-NCAP增加AEB行人检测要求
+2020: Euro NCAP要求车道保持辅助（LKA）
+2021: 中国要求商用车强制安装AEBS
+2022: EU规定所有新车必须配备ISA（智能速度辅助）
+</code></pre>
 
 <p>这种强制性要求带来的算力需求增长是指数级的：</p>
 <p>| 功能级别 | 典型功能 | 所需算力 | 算法类型 |</p>
@@ -639,7 +639,7 @@
 </table>
 <h3 id="132">1.3.2 传感器融合需求</h3>
 <p>多传感器融合成为2019年后的主流趋势，这直接推高了计算需求：</p>
-<div class="codehilite"><pre><span></span><code>传感器配置演进（典型L2级系统）：
+<pre class="codehilite"><code>传感器配置演进（典型L2级系统）：
 
 2017年前（纯视觉）：              2019年后（多传感器融合）：
 ┌─────────────┐                  ┌──────────────────────────┐
@@ -650,7 +650,7 @@
                                  └──────────────────────────┘
      ↓                                      ↓
   0.5 TOPS                              5-10 TOPS
-</code></pre></div>
+</code></pre>
 
 <p><strong>融合算法的计算开销分解</strong>：</p>
 <ul>
@@ -663,12 +663,12 @@
 <h3 id="133">1.3.3 算法复杂度提升</h3>
 <p>深度学习模型的快速演进是算力需求暴增的核心原因：</p>
 <p><strong>2017-2019年主流视觉模型演进</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="n">MobileNet</span><span class="w"> </span><span class="n">V1</span><span class="w"> </span><span class="p">(</span><span class="mi">2017</span><span class="p">)</span><span class="w">          </span><span class="n">ResNet</span><span class="mi">-50</span><span class="w"> </span><span class="p">(</span><span class="mi">2018</span><span class="p">)</span><span class="w">         </span><span class="n">EfficientDet</span><span class="w"> </span><span class="p">(</span><span class="mi">2019</span><span class="p">)</span>
-<span class="err">├─</span><span class="w"> </span><span class="n">参数量</span><span class="err">：</span><span class="mf">4.2</span><span class="n">M</span><span class="w">              </span><span class="err">├─</span><span class="w"> </span><span class="n">参数量</span><span class="err">：</span><span class="mf">25.6</span><span class="n">M</span><span class="w">          </span><span class="err">├─</span><span class="w"> </span><span class="n">参数量</span><span class="err">：</span><span class="mi">52</span><span class="n">M</span>
-<span class="err">├─</span><span class="w"> </span><span class="n">FLOPs</span><span class="err">：</span><span class="mi">569</span><span class="n">M</span><span class="w">              </span><span class="err">├─</span><span class="w"> </span><span class="n">FLOPs</span><span class="err">：</span><span class="mf">4.1</span><span class="n">G</span><span class="w">           </span><span class="err">├─</span><span class="w"> </span><span class="n">FLOPs</span><span class="err">：</span><span class="mi">20</span><span class="n">G</span>
-<span class="err">├─</span><span class="w"> </span><span class="n">精度</span><span class="err">：</span><span class="mf">70.6</span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="n">ImageNet</span><span class="p">)</span><span class="w">   </span><span class="err">├─</span><span class="w"> </span><span class="n">精度</span><span class="err">：</span><span class="mf">76.2</span><span class="o">%</span><span class="w">           </span><span class="err">├─</span><span class="w"> </span><span class="n">精度</span><span class="err">：</span><span class="mf">81.5</span><span class="o">%</span>
-<span class="err">└─</span><span class="w"> </span><span class="n">推理</span><span class="err">：</span><span class="mi">10</span><span class="n">ms</span><span class="w"> </span><span class="mi">@2</span><span class="n">TOPS</span><span class="w">        </span><span class="err">└─</span><span class="w"> </span><span class="n">推理</span><span class="err">：</span><span class="mi">25</span><span class="n">ms</span><span class="w"> </span><span class="mi">@2</span><span class="n">TOPS</span><span class="w">     </span><span class="err">└─</span><span class="w"> </span><span class="n">推理</span><span class="err">：</span><span class="mi">100</span><span class="n">ms</span><span class="w"> </span><span class="mi">@2</span><span class="n">TOPS</span>
-</code></pre></div>
+<pre class="codehilite"><code>MobileNet V1 (2017)          ResNet-50 (2018)         EfficientDet (2019)
+├─ 参数量：4.2M              ├─ 参数量：25.6M          ├─ 参数量：52M
+├─ FLOPs：569M              ├─ FLOPs：4.1G           ├─ FLOPs：20G
+├─ 精度：70.6% (ImageNet)   ├─ 精度：76.2%           ├─ 精度：81.5%
+└─ 推理：10ms @2TOPS        └─ 推理：25ms @2TOPS     └─ 推理：100ms @2TOPS
+</code></pre>
 
 <p><strong>关键算法升级带来的算力需求</strong>：</p>
 <ol>
@@ -695,7 +695,7 @@
 </ol>
 <h3 id="134">1.3.4 实时性要求</h3>
 <p>自动驾驶对延迟的苛刻要求进一步推高了算力需求：</p>
-<div class="codehilite"><pre><span></span><code>端到端延迟预算（L2级系统）：
+<pre class="codehilite"><code>端到端延迟预算（L2级系统）：
 ┌────────────────────────────────────────────────┐
 │ 感知 │ 融合 │ 规划 │ 控制 │ 执行 │ 总计      │
 ├────────────────────────────────────────────────┤
@@ -709,7 +709,7 @@
 - 3D重建：8ms
 - 跟踪关联：5ms
 - 属性识别：5ms
-</code></pre></div>
+</code></pre>
 
 <p>为了达到实时性要求，芯片必须具备：</p>
 <ul>
@@ -728,7 +728,7 @@
 <li>功耗预算：域控制器总功耗&lt;50W</li>
 </ul>
 <p><strong>不同算力芯片的功耗对比</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────┐
 │ 算力(TOPS) │ 典型功耗 │ 能效比 │ 散热方案        │
 ├───────────────────────────────────────────────────┤
 │    2       │   3W     │  0.67  │ 自然散热        │
@@ -737,7 +737,7 @@
 │    30      │   35W    │  0.86  │ 主动散热        │
 │    100     │   75W    │  1.33  │ 液冷            │
 └───────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>功耗优化技术路线</strong>：</p>
 <ol>
@@ -754,7 +754,7 @@
 <p>地平线机器人成立于2015年，创始人余凯曾任百度深度学习研究院（IDL）创始负责人。公司从创立之初就明确了"AI芯片+算法"的技术路线，这与Mobileye的垂直整合模式相似，但在开放性上更进一步。</p>
 <p><strong>征程2（Journey 2）芯片详解</strong>：</p>
 <p>2019年8月，地平线正式发布征程2芯片，这是中国首款车规级AI芯片，也是全球首个采用"矩阵架构"的自动驾驶处理器。</p>
-<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────────┐
 │              征程2 (Journey 2) 架构                    │
 ├──────────────────────────────────────────────────────┤
 │  ┌────────────────────────────────────────────────┐  │
@@ -781,7 +781,7 @@
 │  工艺: 28nm HPC+  │ 算力: 4 TOPS  │ 功耗: 2W       │
 │  AEC-Q100 Grade 2 │ ISO 26262 ASIL-B               │
 └──────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>BPU架构创新</strong>：</p>
 <p>地平线的BPU（Brain Processing Unit）采用独特的"矩阵架构"设计理念：</p>
@@ -847,7 +847,7 @@
 <h3 id="142-a500">1.4.2 黑芝麻华山一号A500</h3>
 <p>黑芝麻智能成立于2016年，创始团队来自OmniVision、Marvell、华为海思等芯片公司。与地平线的"算法定义芯片"不同，黑芝麻采用"感知优先"的技术路线。</p>
 <p><strong>A500架构特点</strong>：</p>
-<div class="codehilite"><pre><span></span><code>┌───────────────────────────────────────────────────────┐
+<pre class="codehilite"><code>┌───────────────────────────────────────────────────────┐
 │            华山一号 A500 系统架构                       │
 ├───────────────────────────────────────────────────────┤
 │  ┌─────────────────────────────────────────────────┐  │
@@ -877,7 +877,7 @@
 │  工艺：16nm FinFET  │ 总算力：5-10 TOPS              │
 │  功耗：8-10W       │ ASIL-B (部分模块ASIL-D)        │
 └───────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>核心技术亮点</strong>：</p>
 <ol>
@@ -948,7 +948,7 @@
 </table>
 <h3 id="143">1.4.3 技术路线对比</h3>
 <p>中国芯片企业的技术路线选择反映了不同的市场定位和技术理念：</p>
-<div class="codehilite"><pre><span></span><code>技术路线对比矩阵：
+<pre class="codehilite"><code>技术路线对比矩阵：
 ┌──────────────────────────────────────────────────────────┐
 │            │ 地平线  │ 黑芝麻  │ Mobileye │ NVIDIA  │
 ├──────────────────────────────────────────────────────────┤
@@ -960,7 +960,7 @@
 │ 成本(推测) │ $30-50  │ $40-60 │ $50-80  │ $200+  │
 │ 交付模式   │ 芯片+参考│ 芯片    │ 完整方案 │ SDK    │
 └──────────────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>差异化竞争策略</strong>：</p>
 <ol>
@@ -1013,7 +1013,7 @@
 </li>
 </ol>
 <p><strong>客户拓展策略</strong>：</p>
-<div class="codehilite"><pre><span></span><code>市场切入路径：
+<pre class="codehilite"><code>市场切入路径：
                   2019年          2020年          2021年
 传统路线：  后装市场 ──→ 前装项目 ──→ 量产交付
            (试错成本低)  (建立信任)    (规模化)
@@ -1023,7 +1023,7 @@
 
 政府项目：  示范项目 ──→ 行业标准 ──→ 规模推广
           (政策支持)   (标准制定)    (强制应用)
-</code></pre></div>
+</code></pre>
 
 <p><strong>典型合作案例</strong>：</p>
 <ol>
@@ -1051,7 +1051,7 @@
 <h3 id="145">1.4.5 产业链本土化趋势</h3>
 <p><strong>供应链安全驱动</strong>：</p>
 <p>2019年的国际形势变化让供应链安全成为首要考虑：</p>
-<div class="codehilite"><pre><span></span><code>供应链本土化程度（2019年底）：
+<pre class="codehilite"><code>供应链本土化程度（2019年底）：
 ┌─────────────────────────────────────────────────┐
 │ 环节         │ 本土化率 │ 主要玩家           │
 ├─────────────────────────────────────────────────┤
@@ -1062,7 +1062,7 @@
 │ 封装测试    │   70%    │ 长电、通富、华天    │
 │ 车规认证    │   90%    │ 国内认证机构       │
 └─────────────────────────────────────────────────┘
-</code></pre></div>
+</code></pre>
 
 <p><strong>政策支持体系</strong>：</p>
 <ol>
